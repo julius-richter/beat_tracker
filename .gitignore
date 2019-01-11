@@ -1,0 +1,11 @@
+# Ignore data folder
+data/
+
+# Ignore python folder
+python/
+
+# Ignore models folder
+models/
+
+.DS_Store
+.ipynb_checkpoints/
