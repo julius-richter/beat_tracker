@@ -181,7 +181,7 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4, betas=(0.9, 0.999), eps=1e-0
 # In[12]:
 
 
-for epoch in range(2):  
+for epoch in range(100):  
     for i, (feature, label) in enumerate(trainloader):
         
         # Clear out accumulates gradients 
@@ -205,6 +205,10 @@ for epoch in range(2):
         del feature, label, out
     gc.collect()
 
+
+torch.save(model.state_dict(), '../models/model_boeck100.pt')
+
+pickle.dump(loss_vec, open('../data/pickle/loss_vec.npy', 'wb'), protocol=2)
 
 
 
