@@ -1,2 +1,1 @@
-# beat_tracker
-Framework for a beat tracking system based on recurrent neural networks.
+# Style-specific Beat Tracking with Deep Neural Networks 
