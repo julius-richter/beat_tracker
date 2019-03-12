@@ -39,17 +39,25 @@ def get_input(file):
     return pickle.load(open('../data/inputs/'+ file + '.npy', 'rb'))
 
 
+def get_labels(file):
+    return pickle.load(open('../data/labels/'+ file + '.npy', 'rb'))
+
+
 def get_annotations(file):
     return np.loadtxt('../data/annotations/' + file + '.beats', ndmin=2)[:, 0]
 
 
-def get_predictions(file):
-    return np.loadtxt('../data/predictions/' + file + '.beats')
+def get_predictions(file, subfolder = None):
+    if subfolder:
+        return np.loadtxt('../data/predictions/' + subfolder + '/' + file + '.beats')
+    else:
+        return np.loadtxt('../data/predictions/' + file + '.beats')
 
 
-def play_annotations(file, normalize=True):
+def play_annotations(file, section=None, normalize=True):
     sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
     
+
     if normalize:
         signal = signal / np.max(np.abs(signal))
         
@@ -57,11 +65,14 @@ def play_annotations(file, normalize=True):
 
     signal = signal + metronome    
     signal = signal / np.max(np.abs(signal))
+
+    if section:
+        signal = signal[int(sr/100*section[0]):int(sr/100*section[1])]
         
     return ipd.Audio(signal, rate=sr)
 
 
-def play_predictions(file, normalize=True):
+def play_predictions(file, section=None, normalize=True):
     sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
     
     if normalize:
@@ -72,6 +83,9 @@ def play_predictions(file, normalize=True):
     signal = signal + metronome
         
     signal = signal / np.max(np.abs(signal))
+
+    if section:
+        signal = signal[int(sr/100*section[0]):int(sr/100*section[1])]
         
     return ipd.Audio(signal, rate=sr)
 

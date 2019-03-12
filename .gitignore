@@ -1,11 +1,17 @@
-# Ignore data folder
-data/
+# data 
+*.wav
+*.WAV
+*.Wav
+*.beats
+*.npy
+*.pt
+*.c
+*.so
 
-# Ignore python folder
-python/
 
-# Ignore models folder
-models/
-
+# OS generated files
 .DS_Store
 .ipynb_checkpoints/
+
+python/build/*
+python/__pycache__/*
