@@ -1,10 +1,45 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
-from librosa import clicks
 import IPython.display as ipd
 import pickle
 import torch
+
+
+def clicks(times=None, sr=44100, length=None):
+    positions = (np.asanyarray(times) * sr).astype(int)
+
+    click_freq=1000.0
+    click_duration=0.1
+
+    angular_freq = 2 * np.pi * click_freq / float(sr)
+
+    click = np.logspace(0, -10,
+                        num=int(np.round(sr * click_duration)),
+                        base=2.0)
+
+    click *= np.sin(angular_freq * np.arange(len(click)))
+
+    if length is None:
+        length = positions.max() + click.shape[0]
+    else:
+        positions = positions[positions < length]
+
+    click_signal = np.zeros(length, dtype=np.float32)
+
+    for start in positions:
+        end = start + click.shape[0]
+
+        if end >= length:
+            click_signal[start:] += click[:length - start]
+        else:
+            click_signal[start:end] += click
+
+    return click_signal
+
+
+def count_parameters(model):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
 def get_audio(file, normalize=False):
