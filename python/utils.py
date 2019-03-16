@@ -107,13 +107,13 @@ def play_annotations(file, section=None, normalize=True):
     return ipd.Audio(signal, rate=sr)
 
 
-def play_predictions(file, section=None, normalize=True):
+def play_predictions(file, subfolder = None, section=None, normalize=True):
     sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
     
     if normalize:
         signal = signal / np.max(np.abs(signal))
         
-    metronome = clicks(get_predictions(file), sr=sr, length=len(signal))
+    metronome = clicks(get_predictions(file, subfolder), sr=sr, length=len(signal))
 
     signal = signal + metronome
         
@@ -134,11 +134,13 @@ def get_activations(file, model):
     return np.exp(np.array(out[0,1,:]))
 
 
-def show_activations(file, model):
+def show_activations(file, model, subfolder = None):
     
     input = get_input(file)
     annotations = get_annotations(file)
-    predictions = get_predictions(file)
+
+    predictions = get_predictions(file, subfolder)
+
 
     with torch.no_grad():
         out = model(input.view(1, len(input),-1))
@@ -150,7 +152,6 @@ def show_activations(file, model):
     plt.plot(activations)
     plt.xlabel('Frames')
     plt.ylabel('Beat activation')
-#     plt.title('Example: {}   F-measure: {:.3f}'.format(file, data.at[index,'f_measure']))
 
     for ann in annotations:
         plt.axvline(x=ann*100, color='k', linestyle=':', linewidth=2)
