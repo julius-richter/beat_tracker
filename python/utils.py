@@ -70,8 +70,11 @@ def play_audio(file, normalize=False):
     return ipd.Audio(signal, rate=sr)
 
 
-def get_input(file):
-    return pickle.load(open('../data/inputs/'+ file + '.npy', 'rb'))
+def get_input(file, subfolder = None):
+    if subfolder:
+        return pickle.load(open('../data/inputs/'+ subfolder + '/' + file + '.npy', 'rb'))
+    else:
+        return pickle.load(open('../data/inputs/'+ file + '.npy', 'rb'))
 
 
 def get_labels(file):
