@@ -7,6 +7,15 @@
 *.pt
 *.c
 *.so
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.pdf
+*.gz
+*.ipe
 
 
 # OS generated files
