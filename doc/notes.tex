@@ -39,6 +39,7 @@ It is difficult to reliably extract high-level rhythm related features from musi
 \begin{itemize}
 \item absence of a clear rhythmic structure (Classical music)
 \item soft onsets
+\item blurred note transitions (e.g. classigal music dominated by string instruments)
 \item heavy syncopation
 \item expressive timing (e.g. rubato playing)
 \item the problem of 'octave errors' (detecting double or half time the rate of the ground truth)
@@ -88,6 +89,7 @@ The whole training data gets separated in different clusters. Each cluster repre
 \item ``\emph{Many artificial intelligence tasks can be solved by designing the right set of features to extraxt for that task, then providing theses features to a simple machine learning algorithm.}'' \cite[Goodfellow2016]{Goodfellow2016}
 \item Two different types of input features: Onset events and harmonic changes
 \item Assumtion: Most harmonic changes occur inside a piece of music are located at metric bars \cite[Khadkevich2012]{Khadkevich2012}
+\item in complex polyphonic mixtures of music, simultaneously occurring events of high intensities lead to masking effects that prevent any observation of an energy increase of a low intensity onset. To circumbent thesse masking effects, detection functions were proposed that analyze the signal in a bandwise fashion to extract transients occurring in certain frequency regions of the signal [Grosche2011]
 \end{itemize}
 
 
@@ -159,6 +161,16 @@ The goal of learning in the sequence modeling setting is to find a network $f$ t
 
 \subsection{Data representation}
 
+% https://musicinformationretrieval.wordpress.com/2017/04/25/audio-beat-tracking-human-annotation-strategies/
+
+The Beat Tracking task requires annotations in the form of time instants of beats from a musical excerpt. Additionally, the tempo, metrical level of the beat and downbeat positions can also be annotated for related tasks like downbeat tracking/ meter tracking/ tempo tracking etc.
+
+The method for obtaining ground truth annotations depends on whether the aim is to identify descriptive beat locations or to replicate a human tapping response. In the former case, an initial estimate of the beat locations can be obtained by recording tap times for a given musical excerpt and iteratively modifying and auditing the obtained beat positions while in the latter case, the ground truth can be completely defined by the tapping response \cite{Davies2009b}.
+
+The audio excerpt in time domain and its spectrogram can be visualised using tools like Sonic Visualizer. Beat locations can first be obtained by recording the tap locations the musical excerpt and then manually correcting these locations for exact onsets.  Annotators can also follow a semi-automatic process, for example in [2], where beats and downbeats were first obtained through the ircambeat software and then errors were manually corrected by human annotators.
+
+
+
 \paragraph{General:}
 
 After preprocessing the audio we obtain the observation set $ O = \left\{ \mathbf x^{(\alpha)}, \,\mathbf y_T^{(\alpha)} \right \}_{\alpha = 1}^p$, with $p$ samples in total. As elements the set cointains:
@@ -179,9 +191,7 @@ After preprocessing the audio we obtain the observation set $ O = \left\{ \mathb
 \item $\mathbf y_T \in \{0,1\}^{(3015)}$
 \end{itemize}
 
-\subsection{Model class}
-
-\subsubsection{Recurrent Networks}
+\subsection{Recurrent Networks (RNNs)}
 
 % As the model class we choose a recurrent neural network as seen in Fig. 
 % \begin{figure}[htbp]
@@ -198,7 +208,7 @@ After preprocessing the audio we obtain the observation set $ O = \left\{ \mathb
 \label{fig:}
 \end{figure}	
 
-\subsubsection{Temporal Convolutional Netwoks}
+\subsection{Temporal Convolutional Netwoks (TCNs)}
 
 \begin{itemize}
 \item the convolutions are casual, i.e, no information leakage from future to past (compare to bidirectional RNN).
@@ -229,6 +239,23 @@ where $d = 2^\nu$ is the delation factor, $\nu$ is the level of the network and 
 \end{itemize}
 
 
+\subsection{Trellis networks (TrellisNets)}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1.0]{figures/trellis_net_atomic_level.pdf}
+\caption{TrellisNet at an atomic level.}
+\label{fig:TrellisNetAtomic}
+\end{figure}	
+
+\begin{itemize}
+\item[\textbf{Input:}] $x_{1:T} = x_1, \dots, x_T, \quad x_t \in \mathbb R^p, \quad x_{1:T} \in \mathbb R^{T \times p}$ \vspace{0.5em}\\ 
+with sequence length  $T$  input dimensionality  $p$
+\item[\textbf{Output:}] $y_{1:T} = y_1, \dots, y_T = G(x_1, \dots, x_T)$ \vspace{0.5em} \\
+with function $G: \mathcal X^T \rightarrow \mathcal Y^T$ 
+\item[\textbf{Hidden:}] $z_t^{(i)} \in \mathbb R^q$
+\end{itemize}
+
+
 
 
 \paragraph{LogSoftmax:}
@@ -250,6 +277,7 @@ H(p,q) = - \sum_{x \in \mathcal X} p(x) \log q(x).
 In machine learning cross entropy can be used as a loss funciton to measures the performance of a classification model. The probability $p_{i}$ is the true label (binary indicator 0 or 1), where as the distribution $q_{i}$ is the predicted value of the current model. 
 
 
+\subsection{Regularization techniques}
 
 
 \subsection{Optimization}
@@ -280,6 +308,8 @@ Estimate generalization error with a validation set during training. Stop traini
 
 
 \section{Postprocessing}
+
+We use a probabilistic dynamic model to exploit the seqential structure of music, generally resulting in a more robust estimation.
 
 As a postprocessing step we make use of a dynamic Bayesian network (DBN) which jointly infers tempo an phase of the beat.
 

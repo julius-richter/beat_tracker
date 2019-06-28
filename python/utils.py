@@ -157,7 +157,30 @@ def show_activations(file, model, subfolder = None):
     plt.ylabel('Beat activation')
 
     for ann in annotations:
-        plt.axvline(x=ann*100, color='k', linestyle=':', linewidth=2)
+        plt.axvline(x=ann*100, color='k', linestyle='-', linewidth=2)
 
     for ann in predictions:
         plt.axvline(x=ann*100, color='r', linestyle=':', linewidth=2)
+
+
+def plot_audio(file):
+
+	sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
+	annotations = get_annotations(file)
+	time_vec = np.linspace(0, len(signal)/sr, len(signal))
+
+	signal = signal / np.max(np.abs(signal))
+
+	plt.figure(figsize=(9,2))
+	plt.plot(time_vec, signal);
+	plt.xlabel('Time [s]')
+	plt.ylabel('Amplitude')
+
+	for ann in annotations:
+	    plt.axvline(x=ann, color='k', linestyle=':', linewidth=0.5)
+	plt.tight_layout()
+
+
+
+
+
