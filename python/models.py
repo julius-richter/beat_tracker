@@ -97,19 +97,11 @@ class TemporalConvNet(nn.Module):
     
     
 class TCN(nn.Module):
-    def __init__(self):
+    def __init__(self, input_size, output_size, nhid, levels, kernel_size, dropout):
         super(TCN, self).__init__()
-
-        self.input_size = 120
-        self.output_size = 2
-        self.nhid = 100
-        self.levels = 6
-        self.num_channels = [self.nhid] * self.levels
-        self.kernel_size = 5
-        self.dropout = 0.25
-
-        self.tcn = TemporalConvNet(self.input_size, self.num_channels, self.kernel_size, dropout=self.dropout)
-        self.linear = nn.Linear(self.num_channels[-1], self.output_size)
+        self.num_channels = [nhid] * levels
+        self.tcn = TemporalConvNet(input_size, self.num_channels, kernel_size, dropout=dropout)
+        self.linear = nn.Linear(self.num_channels[-1], output_size)
 
     def forward(self, x):
         # x needs to have dimension (N, C, L) in order to be passed into CNN
