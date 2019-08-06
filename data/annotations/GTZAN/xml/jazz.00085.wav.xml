@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<musicdescription xmlns="http://www.ircam.fr/musicdescription/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ircam.fr/musicdescription/1.1 http://recherche.ircam.fr/anasyn/xsd/musicdescription_1.1.xsd" format="20140305A" date="2015-10-28" >
+<media>./jazz/jazz.00085.wav</media>
+<descriptiondefinition id="1" >
+	<type>beattype</type>
+	<generator name="AudioSculpt" version="3.3.9" date="2015-10-28" />
+</descriptiondefinition>
+<segment time="0.325286293689041" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="0.671629124965832" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="1.0376970509" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="1.4208263026" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="1.7981505656" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="2.16966984" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="2.54118919372559" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="2.9069034001" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="3.2900326518" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="3.6673569148" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="3.910752" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="4.0504861665" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="4.4336154182" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="4.673323" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="4.8109396813" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="5.194068933" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="5.433776" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="5.571393196" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="5.948717459" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="6.3318467107" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="6.58535080633545" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="6.7091709738" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="6.96097106716919" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="7.0864952368" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="7.4696244885" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="7.713019" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="7.8527537402" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="8.11371949560547" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="8.2358829919" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="8.6190122436" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="9.00999026188799" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="9.249697" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="9.38731452488799" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="9.622036" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="9.7567900214" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="10.000185" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="10.1399192731" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="10.5288535135" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="10.772248" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="10.9119827652" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="11.2951120169" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="11.534819" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="11.6724362799" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="12.0555655316" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="12.295273" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="12.4328897946" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="12.672597" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="12.8102140577" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="13.053681" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="13.1934558967973" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="13.436851" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="13.5765851484973" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="13.816292" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="13.9539094114973" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="14.3344590010354" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="14.583816" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="14.7269724349728" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="15.0799646246" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="15.331532" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="15.4759586078252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="15.8358679049252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="16.075575" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="16.2131921679252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="16.5963214196252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="16.836029" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="16.9736456827252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="17.3567749344252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="17.596482" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="17.7340991974252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="17.973806" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="18.1114234605252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="18.351131" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="18.4887477235252" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="18.721043" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="18.8544047349383" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="19.090424" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="19.2259240093383" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="19.461943" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="19.5974432837383" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="20.001004053993" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="20.3597946103279" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="20.7504413807605" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="21.1672525019674" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="21.5161544362795" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="21.8605721401279" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="22.09859590625" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="22.2437013918279" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="22.6086507231703" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="22.8427476794434" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="23.0099598952279" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="23.3477104887943" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="23.7277984462354" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="24.102782338735" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="24.4868033027848" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="24.8485597325158" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="25.131411" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="25.2937979777461" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="25.6450439897" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="26.0281732414" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="26.271568" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="26.4113024931" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="26.654697" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="26.7944317448" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="27.034139" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="27.1717560078" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="27.5606902482" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="27.800397" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="27.9380145112" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="28.174034" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="28.3095337856" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+<segment time="28.7449079352" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="29.1802820849" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="29.5634113366" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="1" tatum="1" />
+</segment>
+<segment time="29.777304" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="0" beat="0" tatum="1" />
+</segment>
+<segment time="29.900100679" length="0" sourcetrack="0"  >
+	<beattype id="1" pattern="0" measure="1" beat="1" tatum="1" />
+</segment>
+</musicdescription>

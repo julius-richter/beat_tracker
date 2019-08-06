@@ -10,6 +10,7 @@
 \begin{document}
 \pagestyle{empty}
 
+
 \section*{General notes}
 \begin{itemize}
 \item Goal of supervised learning: predict not yet observed input
@@ -24,6 +25,25 @@
 \item ``\emph{Feature extraction is an essential step towards efective and accurate beat/downbeat positions extraction.}'' \cite[Khadkevich2012]{Khadkevich2012}
 \item ``\emph{The system shows state-of-the-art beat and downbeat tracking performance on a wide range of different musical genres and sryles. It does so ny avoiding hand-crafted features such as harmonic changes, or rhythmic patterns, but rather leans the relevant features directly from audio.}'' \cite[Boeck2016b]{Boeck2016b}
 \end{itemize} 
+\end{itemize}
+
+
+\section{Introduction}
+
+\begin{itemize}
+\item A fundamental research topic in music information retrieval is the automatic extraction of beat locations from music signals. 
+\item The aim of a beat tracker is to recover a sequence of time instants from a musical input that are consitent with the times when a human might tap their foot. \cite{Ellis2007}
+\end{itemize}
+
+
+\subsection{Applications of beat tracking}
+
+\begin{itemize}
+\item Musical interaction systems \cite{Robertson2007}
+\item Content-based audio effects 
+\item Temoral segmentation fo higher level MIR tasks such as chord extraction
+\item Structural segmentaion of audio
+\item Music similarity
 \end{itemize}
 
 
@@ -131,8 +151,13 @@ X(n,k) = |X(n,k)| \, e^{\, j \phi(n,k)}
 \subsection{Chroma representation}
 
 \begin{itemize}
+\item A chromagram comprises a time-series of chroma vectors. which represent harmonic content at a specific time in the audio.
+\item Chromagrams are concise descriptors of harmony because they encode tone quality and neglect tone height.
 \item CRP (chroma DCT-reduced log-pitch) features have significant amount of robustness to changes in timbre an instrumentation \cite[Mueller2010]{Mueller2010}
+\item Employ data-driven approach to extract chromagrams that specifically encode content relevant to harmony 
+\item Chroma features are noisy in their basic formulation be- cause they are affected by various interferences: musical instruments produce overtones in addition to the funda- mental frequency; percussive instruments pollute the spec- trogram with broadband frequency activations (e.g. snare drums) and/or pitch-like sounds (tom-toms, bass drums); different combinations of instruments (and different, pos- sibly genre-dependent mixing techniques) create different timbres and thus increase variance [7,20] \cite{Korzeniowski2016}
 \end{itemize}
+
 
 
 
@@ -174,6 +199,37 @@ The method for obtaining ground truth annotations depends on whether the aim is 
 
 The audio excerpt in time domain and its spectrogram can be visualised using tools like Sonic Visualizer. Beat locations can first be obtained by recording the tap locations the musical excerpt and then manually correcting these locations for exact onsets.  Annotators can also follow a semi-automatic process, for example in [2], where beats and downbeats were first obtained through the ircambeat software and then errors were manually corrected by human annotators.
 
+
+\subsection{Datasets}
+For training and evaluation we use the datasets listed in Table \ref{tab:datasets}.
+
+\begin{itemize}
+\item The ideal outcome of the annotation is an unambigous representation of the start points of musical events
+\item Due to uncertainties in the annotation process, for many types of inpit signals (especially multi-instriment exerpts) it may not possible to determine onset locations with greater precision than $50\,\text{ms}$. \cite{Leveau2004}
+\end{itemize}
+
+\begin{table}[htbp]
+	\caption{Datasets used for training.}
+	\label{tab:datasets}
+	\centering
+
+	\begin{tabular}{lrr}
+	\hline
+
+	\hline
+	\textbf{Dataset} & \textbf{files} & \textbf{length} \\
+	\hline
+		Ballroom \cite{Gouyon2006b, Krebs2013} & $685$ & $5\,\text{h} \;57\,\text{m}$\\
+		GTZAN \cite{Tzanetakis2002b, marchand2015swing} & $1000$ & $8\,\text{h}\;20\,\text{m}$\\
+		Hainsworth \cite{Hainsworth2004} & $222$ & $3\,\text{h}\;19\,\text{m}$\\
+		SMC \cite{Holzapfel2012} & $217$ & $2\,\text{h}\;25\,\text{m}$\\	
+	\hline
+		Total & $ $ & $ \,\text{h}\; \,\text{m}$\\	
+	\hline
+
+	\hline
+	\end{tabular}
+\end{table}
 
 
 \paragraph{General:}
@@ -295,6 +351,25 @@ In machine learning cross entropy can be used as a loss funciton to measures the
 
 Estimate generalization error with a validation set during training. Stop training when the error on the validation set rises (early stopping).
 
+
+\subsection{Hyperparameter Optimization}
+
+\begin{itemize}
+\item optimzie hyperparameters with nevergrad
+\item instrumentation: turn a piece of code with parameters into a function defined on an n-dimensional continous data space
+\end{itemize}
+
+
+\subsection{Multi Task Learning}
+
+\begin{itemize}
+\item It is the information in these extra training signals that helps the hidden layer learn a better internal representation for the door recognition domain, and this better representation in turn helps the net better learn to recognize [Caruana1997]
+\item Information in the extra tasks is helping the hidden layer learn a better internal representation
+\item 
+\end{itemize}
+
+
+
 \subsection{Valididation}
 
 \paragraph{Test set method} Split the observarions into to disjunct subsets 
@@ -394,6 +469,14 @@ T_{\text{max}} = 215 \,\text{BPM} &\;\rightarrow \; M(T_{\text{max}}) = 28
 \section{Evaluation}
 
 
+\begin{itemize}
+\item annotations tapped at different metrical levels in beat tracking
+\item a evaluation method should adequately contend with the inherent uncertainty and/or ambiguity while providing a measurement of performance which is both meaningful and easy to interpret. \cite{Davies2009b}
+\item objective methods for beat tracking evaluation compare the output beat times from a beat tracking algorithm against one or more sequences of ground truth annotated beat times. \cite{Davies2009b}
+\item 
+\end{itemize}
+
+
 \subsection{Performance measures}
 
 Set of annotated beat times $\mathcal A = \{a_1, \dots, a_A\}$ \\
@@ -428,27 +511,30 @@ $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(
 
 
 
+\subsection{Saliency maps}
+
+\begin{itemize}
+\item Artificial neural networks often give good results, but it is difficult to understand what they learned, or on which basis they generate their output.
+\item compute saliency maps using guided back-propagation [25]
+\end{itemize}
 
 
 
+\subsection{Network training}
 
-% \subsection{Network training}
+\begin{itemize}
+\item To achieve better results, we could use DNN ensembles instead of a single DNN. We could ensure that the network sees data for which its pre- dictions are wrong more often during training, or similarly, we could simulate a more balanced dataset by showing the net super-frames of rare chords more often \cite{Korzeniowski2016}
+\end{itemize}
 
-% \begin{figure}[htbp]
-% \centering
-% \includegraphics[scale=0.6]{figures/loss_bs-10_fold_0.eps}
-% \caption{Loss function for 30 epechs with batch size 30 and learning rate $10^{-4}
-% $}
-% \label{fig:loss}
-% \end{figure}	
 
-% \begin{figure}[htbp]
-% \centering
-% \includegraphics[scale=0.6]{figures/loss_bs-100_w-70__fold-1.eps}
-% \caption{Loss function for 30 epechs with batch size 100 and learning rate $10^{-4}
-% $}
-% \label{fig:loss}
-% \end{figure}	
+\section{Conclusion}
+
+\begin{itemize}
+\item Limitations in both the amount of training data and the variable quality of the annotations 
+\end{itemize}
+
+
+
 
 
 \section{Appendix}

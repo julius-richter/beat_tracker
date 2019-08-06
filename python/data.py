@@ -12,7 +12,7 @@ class Data(Dataset):
         self.data.index = np.arange(len(self.data))
  
     def __getitem__(self, i): 
-        return get_input(self.data.at[i,'file']), get_labels(self.data.at[i,'file'])
+        return get_input(i), get_labels(i)
 
     def __len__(self):
         return len(self.data)
@@ -23,7 +23,6 @@ def collate_fn(batch):
     features, labels = zip(*batch)
     
     features = pad_sequence(features, batch_first=True)
-    
     labels = pad_sequence(labels, batch_first=True)
     
     return features, labels

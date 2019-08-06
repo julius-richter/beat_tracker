@@ -1,9 +1,13 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
 import IPython.display as ipd
 import pickle
 import torch
+
+
+data = pd.read_csv('../data/data.csv', index_col=0)
 
 
 def clicks(times=None, sr=44100, length=None):
@@ -42,81 +46,104 @@ def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
-def get_audio(file, normalize=False):
-    _, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
-    if normalize:
-        signal = signal / np.max(np.abs(signal))
+def get_dataset(idx):
+    if idx == 1: return 'Ballroom'
+    elif idx == 2: return 'SMC'
+    elif idx == 3: return 'Hainsworth'
+    elif idx == 4: return 'GTZAN'
+    elif idx == 5: return 'Beatles'
+    else: return None
+
+
+def index_to_file(index):
+    file = data.at[index, 'file']
+    idx = data.at[index, 'data_set']
+    dataset = get_dataset(idx)
+    return file, dataset
+
+
+def get_audio(input, normalize=False):
+    file, dataset = index_to_file(input)
+    _, signal = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
+
+    if normalize: signal = signal / np.max(np.abs(signal))
     return signal
 
 
-def get_signal(file, normalize=False):
-    _, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
-    if normalize:
-        signal = signal / np.max(np.abs(signal))
-    return signal
+def get_signal(input, normalize=False):
+    return get_audio(input, normalize=False)
 
 
-def get_sample_rate(file, normalize=False):
-    sr, _ = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
+def read_wav(input, normalize=False):
+    file, dataset = index_to_file(input)
+    sr, signal = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
+
+    if normalize: signal = signal / np.max(np.abs(signal))
+    return sr, signal
+
+
+def get_sample_rate(file):
+    file, dataset = index_to_file(input)
+    sr, _ = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
     return sr
 
 
-def play_audio(file, normalize=False):
-    sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
-    
-    if normalize:
-        signal = signal / np.max(np.abs(signal))    
-        
+def play_audio(input, normalize=False):
+    sr, signal = read_wav(input, normalize=False)        
     return ipd.Audio(signal, rate=sr)
 
 
-def get_input(file, subfolder = None):
-    if subfolder:
-        return pickle.load(open('../data/inputs/'+ subfolder + '/' + file + '.npy', 'rb'))
-    else:
-        return pickle.load(open('../data/inputs/'+ file + '.npy', 'rb'))
+def get_input(input):
+    file, dataset = index_to_file(input)
+    return pickle.load(open('../data/inputs/{}/{}.npy'.format(dataset, file), 'rb'))
 
 
-def get_labels(file):
-    return pickle.load(open('../data/labels/'+ file + '.npy', 'rb'))
+def get_labels(input):
+    file, dataset = index_to_file(input)
+    return pickle.load(open('../data/labels/{}/{}.npy'.format(dataset, file), 'rb'))
 
 
-def get_annotations(file):
-    return np.loadtxt('../data/annotations/' + file + '.beats', ndmin=2)[:, 0]
+def get_annotations(input):
+    file, dataset = index_to_file(input)
+    return np.loadtxt('../data/annotations/{}/{}.beats'.format(dataset, file), 
+        ndmin=2)[:, 0]
 
 
-def get_predictions(file, subfolder = None):
-    if subfolder:
-        return np.loadtxt('../data/predictions/' + subfolder + '/' + file + '.beats')
-    else:
-        return np.loadtxt('../data/predictions/' + file + '.beats')
+def get_predictions(input, subfolder):
+    file, dataset = index_to_file(input)
+    return np.loadtxt('../data/predictions/{}/{}/{}.beats'.format(subfolder, dataset, file))
 
 
-def play_annotations(file, section=None, normalize=True):
-    sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
+def play_annotations(input, modified=False, normalize=True):
+    file, dataset = index_to_file(input)
+
+    sr, signal = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
     
-
     if normalize:
         signal = signal / np.max(np.abs(signal))
-        
-    metronome = clicks(get_annotations(file), sr=sr, length=len(signal))
+
+    if modified:
+        annotations = np.loadtxt('../data/annotations/modified/{}.beats'.format(file), 
+        ndmin=2)[:, 0] 
+        metronome = clicks(annotations, sr=sr, length=len(signal))   
+    else:
+        metronome = clicks(get_annotations(input), sr=sr, length=len(signal))
 
     signal = signal + metronome    
     signal = signal / np.max(np.abs(signal))
-
-    if section:
-        signal = signal[int(sr/100*section[0]):int(sr/100*section[1])]
         
     return ipd.Audio(signal, rate=sr)
 
 
-def play_predictions(file, subfolder = None, section=None, normalize=True):
-    sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
+def play_predictions(input, subfolder, section=None, normalize=True):
+    file, dataset = index_to_file(input)
+
+    sr, signal = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
     
     if normalize:
         signal = signal / np.max(np.abs(signal))
         
-    metronome = clicks(get_predictions(file, subfolder), sr=sr, length=len(signal))
+    metronome = clicks(get_predictions(input, subfolder), sr=sr, length=len(signal))
 
     signal = signal + metronome
         
@@ -128,39 +155,37 @@ def play_predictions(file, subfolder = None, section=None, normalize=True):
     return ipd.Audio(signal, rate=sr)
 
 
-def get_activations(file, model):
-    input = get_input(file)
+def get_activations(input, model):
+    file, dataset = index_to_file(input)
+    feature = get_input(input)
 
     with torch.no_grad():
-        out = model(input.view(1, len(input),-1))
+        out = model(feature.view(1, len(feature),-1))
 
     return np.exp(np.array(out[0,1,:]))
 
 
-def show_activations(file, model, subfolder = None):
-    
-    input = get_input(file)
-    annotations = get_annotations(file)
+def show_activations(input, model, subfolder):
+    file, dataset = index_to_file(input)
 
-    predictions = get_predictions(file, subfolder)
+    feature = get_input(input)
 
+    annotations = get_annotations(input)
+    predictions = get_predictions(input, subfolder)
 
     with torch.no_grad():
-        out = model(input.view(1, len(input),-1))
+        out = model(feature.view(1, len(feature),-1))
 
     activations = np.exp(np.array(out[0,1,:]))
 
     plt.figure(figsize=(9,2))
-
     plt.plot(activations)
     plt.xlabel('Frames')
     plt.ylabel('Beat activation')
-
     for ann in annotations:
-        plt.axvline(x=ann*100, color='k', linestyle='-', linewidth=2)
-
+        plt.axvline(x=ann*100, color='k', linestyle='-', linewidth=1)
     for ann in predictions:
-        plt.axvline(x=ann*100, color='r', linestyle=':', linewidth=2)
+        plt.axvline(x=ann*100, color='r', linestyle=':', linewidth=1)
 
 
 def plot_audio(file):
