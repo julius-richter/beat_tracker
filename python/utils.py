@@ -165,7 +165,7 @@ def get_activations(input, model):
     return np.exp(np.array(out[0,1,:]))
 
 
-def show_activations(input, model, subfolder):
+def show_activations(input, model, subfolder, show_annotations=True, show_predictions=True):
     file, dataset = index_to_file(input)
 
     feature = get_input(input)
@@ -178,14 +178,19 @@ def show_activations(input, model, subfolder):
 
     activations = np.exp(np.array(out[0,1,:]))
 
-    plt.figure(figsize=(9,2))
+    plt.figure(figsize=(8,2))
     plt.plot(activations)
+    plt.xlim(0, len(activations))
+    plt.ylim(0, 1)
     plt.xlabel('Frames')
-    plt.ylabel('Beat activation')
-    for ann in annotations:
-        plt.axvline(x=ann*100, color='k', linestyle='-', linewidth=1)
-    for ann in predictions:
-        plt.axvline(x=ann*100, color='r', linestyle=':', linewidth=1)
+    plt.ylabel('Activation')
+    if show_annotations:
+        for ann in annotations:
+            plt.axvline(x=ann*100, color='k', linestyle='-', linewidth=1)
+    if show_predictions:
+        for ann in predictions:
+            plt.axvline(x=ann*100, color='r', linestyle=':', linewidth=1)
+    plt.tight_layout()
 
 
 def plot_audio(file):

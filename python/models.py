@@ -8,12 +8,14 @@ class TCN_Davies(nn.Module):
     def __init__(self, nhid, levels, kernel_size, dropout):
         super(TCN_Davies, self).__init__()
 
-        self.conv2d_1 = nn.Conv2d(in_channels=1, out_channels=16, kernel_size=(3,3), stride=1)
+        self.conv2d_1 = nn.Conv2d(in_channels=1, out_channels=16, kernel_size=(3,3), 
+                                  stride=1, padding=(1,0), padding_mode='edge')
         self.elu_1 = nn.ELU()
         self.max_pooling_1 = nn.MaxPool2d(kernel_size=(1,3))
         self.dropout_1 = nn.Dropout(dropout)      
         
-        self.conv2d_2 = nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(3,3), stride=1)
+        self.conv2d_2 = nn.Conv2d(in_channels=16, out_channels=16, kernel_size=(3,3), 
+                                  stride=1, padding=(1,0), padding_mode='edge')
         self.elu_2 = nn.ELU()
         self.max_pooling_2 = nn.MaxPool2d(kernel_size=(1,3))
         self.dropout_2 = nn.Dropout(dropout)
