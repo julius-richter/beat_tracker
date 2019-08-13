@@ -46,12 +46,28 @@ def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
+def remix(signal, num_channels=1):
+    if num_channels == signal.ndim:
+        return signal
+    elif num_channels == 1 and signal.ndim > 1:
+        # down-mix to mono
+        return np.mean(signal, axis=-1).astype(signal.dtype)
+    elif num_channels > 1 and signal.ndim == 1:
+        # up-mix a mono signal simply by copying channels
+        return np.tile(signal[:, np.newaxis], num_channels)
+    else:
+        raise NotImplementedError("Requested %d channels, but got %d channels "
+                                  "and channel conversion is not implemented."
+                                  % (num_channels, signal.shape[1]))
+
+
 def get_dataset(idx):
     if idx == 1: return 'Ballroom'
     elif idx == 2: return 'SMC'
     elif idx == 3: return 'Hainsworth'
     elif idx == 4: return 'GTZAN'
     elif idx == 5: return 'Beatles'
+    elif idx == 6: return 'MIREX'
     else: return None
 
 
