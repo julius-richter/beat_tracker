@@ -1,30 +1,31 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Related Work}{}% 2
-\BOOKMARK [1][-]{section.3}{Basic Principles of Rhythm}{}% 3
+\BOOKMARK [1][-]{section.3}{Rhythm}{}% 3
 \BOOKMARK [2][-]{subsection.3.1}{Terminology}{section.3}% 4
 \BOOKMARK [2][-]{subsection.3.2}{Rhythm Perception}{section.3}% 5
-\BOOKMARK [1][-]{section.4}{Foundations of Machine Learning}{}% 6
-\BOOKMARK [2][-]{subsection.4.1}{Sequence Modeling}{section.4}% 7
+\BOOKMARK [1][-]{section.4}{Machine Learning}{}% 6
+\BOOKMARK [2][-]{subsection.4.1}{Sequence Labelling}{section.4}% 7
 \BOOKMARK [2][-]{subsection.4.2}{Feature Extraction}{section.4}% 8
 \BOOKMARK [2][-]{subsection.4.3}{Performance Measure}{section.4}% 9
 \BOOKMARK [2][-]{subsection.4.4}{Model Selection}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.5}{Network Training}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.5}{Optimization}{section.4}% 11
 \BOOKMARK [2][-]{subsection.4.6}{Regularization}{section.4}% 12
 \BOOKMARK [2][-]{subsection.4.7}{Validation}{section.4}% 13
 \BOOKMARK [2][-]{subsection.4.8}{Hyperparameters}{section.4}% 14
 \BOOKMARK [1][-]{section.5}{Deep Neural Networks}{}% 15
 \BOOKMARK [2][-]{subsection.5.1}{Feedforward Neural Networks}{section.5}% 16
-\BOOKMARK [2][-]{subsection.5.2}{Recurrent Neural Networks}{section.5}% 17
-\BOOKMARK [2][-]{subsection.5.3}{Convolutional Neural Networks}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.2}{Convolutional Neural Networks}{section.5}% 17
+\BOOKMARK [2][-]{subsection.5.3}{Recurrent Neural Networks}{section.5}% 18
 \BOOKMARK [2][-]{subsection.5.4}{Temporal Convolutional Networks}{section.5}% 19
-\BOOKMARK [1][-]{section.6}{Method}{}% 20
-\BOOKMARK [2][-]{subsection.6.1}{Dataset}{section.6}% 21
-\BOOKMARK [2][-]{subsection.6.2}{Data Preprocessing}{section.6}% 22
-\BOOKMARK [2][-]{subsection.6.3}{Feature Learning}{section.6}% 23
-\BOOKMARK [2][-]{subsection.6.4}{Temporal Decoding}{section.6}% 24
-\BOOKMARK [1][-]{section.7}{Evaluation}{}% 25
-\BOOKMARK [2][-]{subsection.7.1}{Performance Measure}{section.7}% 26
-\BOOKMARK [2][-]{subsection.7.2}{Saliency Maps}{section.7}% 27
-\BOOKMARK [2][-]{subsection.7.3}{Network Training}{section.7}% 28
-\BOOKMARK [2][-]{subsection.7.4}{Labeling}{section.7}% 29
-\BOOKMARK [1][-]{section.8}{Conclusion}{}% 30
+\BOOKMARK [2][-]{subsection.5.5}{General-Purpose Computing on GPUs}{section.5}% 20
+\BOOKMARK [1][-]{section.6}{Method}{}% 21
+\BOOKMARK [2][-]{subsection.6.1}{Dataset}{section.6}% 22
+\BOOKMARK [2][-]{subsection.6.2}{Data Preprocessing}{section.6}% 23
+\BOOKMARK [2][-]{subsection.6.3}{Feature Learning}{section.6}% 24
+\BOOKMARK [2][-]{subsection.6.4}{Temporal Decoding}{section.6}% 25
+\BOOKMARK [1][-]{section.7}{Evaluation}{}% 26
+\BOOKMARK [2][-]{subsection.7.1}{Performance Measure}{section.7}% 27
+\BOOKMARK [2][-]{subsection.7.2}{Saliency Maps}{section.7}% 28
+\BOOKMARK [2][-]{subsection.7.3}{Network Training}{section.7}% 29
+\BOOKMARK [2][-]{subsection.7.4}{Labeling}{section.7}% 30
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 31

@@ -17,7 +17,7 @@
     }
 
 \begin{document}
-\pagestyle{empty}
+\pagestyle{plain}
 
 
 \tableofcontents
@@ -200,7 +200,8 @@ Davies and Böck \cite{Davies2019} suggest to use a convolutional neural network
 
 \newpage
 % basic principles of how humans understand rhythms
-\section{Basic Principles of Rhythm}
+% Old: Basic Principles of Rhythm
+\section{Rhythm}
 \label{sec:perception}
 
 Rhythmic organization is an inhernt part of all human activity. In this chapter, basic principles and definitions about rhythm in music are explained.  
@@ -229,7 +230,7 @@ Given a metrical structure, tempo is defined as the rate of beats at a given met
 \paragraph{Meter} 
 % Metrical level see Dixon 2001
 
-The term meter refers to the regularly recurring patterns and accents such as beats and bars and provides an underlying time frame. Unlike rhythm, meter is a perceptual concept which is inducted from the phenomenally accented points of musical surface \cite{London2004}. The metrical structure is hierarchical, i.e., it involves a ratio relationship between at least two time levels, namely the referent time level, the beat, and a higher order period based on a fixed number of beat periods, the measure \cite{Yeston1976}. Meter is regular and stable, and serves as a kind of enhanced temporal grid, which helps to shape expectations about the future and thus be able to anticipate and predict events in time \cite{Huron2006}. In order to establish a meter, some regularity has to be manifesed in the acoustic signal in the first place. Once meter has established, all other events are perceived with refernce to this regular pattern.  In Lerdahl and Jackendoff's \emph{A Generative Theory of Tonal Music} (GTTM) \cite{Lerdahl1985}, the rhythmic structure in the tonal music of the Western tradtition consits of two independent elements, grouping and meter. Grouping is the manner in which music is segmented at a whole variety of levels from groups of a few notes up to large-scale from of a piece of music. Whereas meter is described as the regular alteration of strong and waek elements in music. The metrical structure deals with durationless points in time, e.g. the beats, which obey some well-defined rules. In the GTTM, meter perception is described as the progress of finding periodicities in the phenomenal and structural accents in a piece of music. It also propose a set of metrical preference rules, based on musical intuitions, which are assumed to guide the listener to plausible interpretations of rhythms. Nevertheless, a major weakness of the GTTM is that it does not deal with the departures from strict metrical timing which are apparent in almost all styles of music. Thus, it is only suitable for representing the timing structures of musical scores, or as an abstract representation of a performance, where expressive timing is not represented.
+The term meter refers to the regularly recurring patterns and accents such as beats and bars and provides an underlying time frame. Unlike rhythm, meter is a perceptual concept which is inducted from the phenomenally accented points of musical surface \cite{London2004}. The metrical structure is hierarchical, i.e., it involves a ratio relationship between at least two time levels, namely the referent time level, the beat, and a higher order period based on a fixed number of beat periods, the measure \cite{Yeston1976}. Meter is regular and stable, and serves as a kind of enhanced temporal grid, which helps to shape expectations about the future and thus be able to anticipate and predict events in time \cite{Huron2006}. In order to establish a meter, some regularity has to be manifesed in the acoustic signal in the first place. Once meter has established, all other events are perceived with refernce to this regular pattern.  In Lerdahl and Jackendoff's \emph{A Generative Theory of Tonal Music} (GTTM) \cite{Lerdahl1985}, the rhythmic structure in the tonal music of the Western tradtition consits of two independent elements, grouping and meter. Grouping is the manner in which music is segmented at a whole variety of levels from groups of a few notes up to large-scale from of a piece of music. Whereas meter is described as the regular alteration of strong and waek elements in music. The metrical structure deals with durationless points in time, e.g. the beats, which obey some well-defined rules. In the GTTM, meter perception is described as the progress of finding periodicities in the phenomenal and structural accents in a piece of music. It also propose a set of metrical preference rules, based on musical intuitions, which are assumed to guide the listener to plausible interpretations of rhythms. Nonetheless, a major weakness of the GTTM is that it does not deal with the departures from strict metrical timing which are apparent in almost all styles of music. Thus, it is only suitable for representing the timing structures of musical scores, or as an abstract representation of a performance, where expressive timing is not represented.
 
 % Tatum, tactus, measure
 
@@ -289,10 +290,10 @@ A listener who cannot identify chord names can nevertheless percieve chord chang
 
 % Many works in musicpsychology attempt to group musical onsets together into a rhythmic context, i.e., to construct a model which subsumes multiple onsets separated in time into a rhythmic clock, hierachy, grouping, or oscillatory model.
 
-
-
 \newpage
-\section{Foundations of Machine Learning}
+
+% Old: Foundations of Machine Learning
+\section{Machine Learning}
 
 Machine learning is subset of artificial intelligence (AI) and deals with algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. It is essentially a form of applied statistics with increase emphasis on the use of computers to estimate comlicated functions and a devreased emphasis on providing confidence intercals around these functions \cite{Goodfellow2016}. On the other hand, pattern recognition is concerned with the automatic discovery of regularities in data, and to take actions such as classifying the data into different categories. Both fields, machine learning and pattern recognition are strongly connected with each other, and together they have undergone a substential development over the past twenty-five years \cite{Bishop2006}.
 
@@ -302,8 +303,9 @@ Machine learning tasks are usually described in terms of how the machine learnin
 
 In this thesis, the focus is on sequence modeling and classification which can be solved with supervised learning. In the following, basic concepts of machine learning are described. 
 
-
-\subsection{Sequence Modeling}
+% Old: Sequence Modeling
+\subsection{Sequence Labelling}
+In machine learning, the term sequence labelling encompasses all tasks where sequences of data are transcribed with sequences of discrete labels. Supervised sequence labelling refers specifically to those cases where a set of hand-transcribed sequences is provided for algorithm training. What distinguishes such problems from the traditional framework of supervised pattern classification is that the individual data points cannot be assumed to be independent. Instead, both the inputs and the labels form strongly correlated sequences \cite{Graves2012}.
 
 Given an input sequence $\mathbf x_{1:T} = \mathbf x_1, \dots, \mathbf x_T$ with sequence length $T$, a sequence model is any function $f: \mathcal X^T \rightarrow \mathcal Y^T$ such that
 \begin{align}
@@ -343,6 +345,13 @@ To evaluate the abilities of a machine learning algorithm, we must design a quan
 
 The choice of performance measure may seem straightforward and objective, but it is often difficult to choose a performance measure that corresponds well to the desired behaviour of the system. 
 
+\paragraph{Loss Function}
+Cross entropy is defined for two probability distributions $p$ and $q$ as
+\begin{align}
+H(p,q) = - \sum_{x \in \mathcal X} p(x) \log q(x).
+\end{align} 
+In machine learning cross entropy can be used as a loss funciton to measures the performance of a classification model. The probability $p_{i}$ is the true label (binary indicator 0 or 1), where as the distribution $q_{i}$ is the predicted value of the current model. 
+
 
 % Old: Architectures
 \subsection{Model Selection}
@@ -358,21 +367,38 @@ The performance on the training set is not a good indicator of predictive perfor
 \end{itemize}
 
 
-\subsection{Network Training}
+\subsection{Optimization}
 
-Most deep learning algorithms are based on an optimization algorithm called stochastic gradient decent. Optimization refers to the task of either minimzing some function $f(\mathbf x)$ by altering $\mathbf x$. The function is called the objective function, also called the loss function. The goal of optimization is to find an $\mathbf x^*$, such that
+Most machine learning algorithms involve optimization which refers to the task of minimzing an objective function $f(\mathbf x)$ by altering the arguments $\mathbf x$. The goal of optimization is to find an optimal $\mathbf x^*$, such that
 \begin{align}
 \mathbf x^* = \arg \min f(\mathbf x)
 \end{align} 
+Given the function $y=f(x)$, where both $x$ and $y$ are real numbers, the derivative $f'(x)$ is usefull for minimizing this function because it indicates how to change $x$ in order to make a small improvement in y. Thus, by moving $x$ in small steps with the opposite sign of the derivative, $f(x)$ is reduced. This technique is called gradient decent \cite{Cauchy1847}. When $f'(x)=0$, the derivative provides no more information about which direction to move and the function reaches a stationary point. Stationary points are classified into three kinds. A local minimum is a point where $f(x)$ is lower than at all neighboring points, and higher for a local maximum respectively. The third kind is known as saddle points where the derivative of the function has the same sign on both sides of the stadionary point.  
 
-
-
-\paragraph{Loss Function}
-Cross entropy is defined for two probability distributions $p$ and $q$ as
+In the context of machine learning, the objective function has many local minima that are not optimal and many saddle points surrounded by very flat regions. All of this makes optimization difficult, especially when the input to the function is multidimensional. Therefore, it is usually sufficient to find  a value of $f$ that is very low but not necessarily minimal in any formal sense. Thus, in gradient decent we decrease $f$ by moving in the direction of the negative gradient to propose a new point
 \begin{align}
-H(p,q) = - \sum_{x \in \mathcal X} p(x) \log q(x).
+\mathbf x' = \mathbf x - \mu \,\nabla_{\mathbf x}f(\mathbf x)
 \end{align} 
-In machine learning cross entropy can be used as a loss funciton to measures the performance of a classification model. The probability $p_{i}$ is the true label (binary indicator 0 or 1), where as the distribution $q_{i}$ is the predicted value of the current model. 
+where $\mu$ is the learning rate, a positive scalar determining the size of the step, and $\nabla_{\mathbf x}$ refers to the gradient with respect to the input $\mathbf x$.
+
+
+\paragraph{Stochastic Gradient Decent}
+Stochastic gradient descent (SGD) is an extension of the basic gradient descent algorithm. A recurring problem in machine learning is that large training sets are necessary for good generailzytion. At the same time, large learning sets are also more computationally expensive. Instead of using the whole learning set, a small set called minibatch is used to estimate the gradient
+\begin{align}
+\mathbf g = \frac{1}{N} \,\nabla_{\boldsymbol \theta} \sum_{i=1}^M L(\mathbf x^{(i)}, y^{(i)}, \boldsymbol \theta)
+\end{align}  
+where $L$ is the per-example loss depending on the input $\mathbf x$, the target $y$ and the model parameters $\boldsymbol \theta$. The minibatch size $M$ is typically chosen to be a relatively small number of examples, ranging from one to a few hundred \cite{Goodfellow2016}. Larger batches provide a more accurate estimate of the gradient, but with less than linear return. Multicore architectures are usually underutilized by extremely small batches. This motivatates using some absolute minimum batch size, below which there is no reduction in the time to precess a minibatch. Small batches can offer a regularization effect \cite{Wilson2003}, due to the noise they add to the learning process. Generalization error is often best for a batch size 1. Training with such a small batch size might require a small learning rate to maintain stability because of the high variance in the estimate of the gradient. The total runtime can ba very high as a result of the need to make more steps, both because of the reduced learning rate and because it takes more steps to observe the entire training set. 
+
+\paragraph{Back-Propagation}
+When a feedforward neural network takes an input $\mathbf x$ and produce an output $\hat{\mathbf y}$, information flows forward through the network, which is called forward propagation. During training, forward propagation can continue onward until it produces a scalar loss $L(\boldsymbol \theta)$. The back-propagation algorithm \cite{Rumelhart1988} allows the information from the loss to then flow backward through the network in order to compute the gradient. Computing an analytical expression for the gradient is straightforward, but numerically evaluationg such an expression can be computationally expensive. The back-propagation algorithm does so using a simpe and inexpensive procedure. To obtain an algebraic expression for the gradient of a scalar it recursively applies the chain rule with respect to any node in the comultational graph that produced that scalar. 
+
+
+\paragraph{Adam}
+
+Adam \cite{Kingma2014} is another adaptive learning rate optimization algorithm. The name Adam derives from the phrase adaptive moments. It can be seen as a combination of RMSProp and momentum with a few important distinctions. First, in Adam, momentum is incorporated directly as an estimate of the first-order moment (with exponential weighting) of the gradient  
+
+\paragraph{Batch normalization}
+
 
 % check out cyclical learning rates \cite{Smith2017}
 
@@ -423,7 +449,7 @@ Typically, one uses about 80 percent of thr training data for training and 20 pe
 
 Most machine learning algorithms have settings called hyperparameters, which control the behavior but are not adapted by the learning algorithm itself. Thus, hyperparameters must be determined outside the learning algorithm. One way to tune hyperparameters is a nested learning procedure in which one learning algorithm learns the best hyperparameters for another learning algorithm. 
 
-Sometimes a setting is chosen to be a hyperparameter that the learning algorithm does not learn because the setting is gradient-free and thus difficult to opptimize.  
+Sometimes a setting is chosen to be a hyperparameter that the learning algorithm does not learn because the setting is gradient-free and thus difficult to optimize.  
 
 
 \begin{itemize}
@@ -447,40 +473,82 @@ Sometimes a setting is chosen to be a hyperparameter that the learning algorithm
 \section{Deep Neural Networks}
 
 
+Deep neural networks are called networks because they are typically represented by composing together many different functions, 
+\begin{align}
+f(\mathbf x) = (f^{(L)} \circ f^{(L-1)} \circ \dots \circ f^{(2)} \circ f^{(1)})(\mathbf x)
+\end{align} 
+where $f^{(1)}$ is called the first layer, $f^{(2)}$ is called the second layer, and so on. The overal length $L$ of the chain gives the depth of the model. The name deep learning arose from this terminology. The final layer is called output layer. The dimensionality of the hidden layers determines the width of the model. 
+
 \subsection{Feedforward Neural Networks}
 
-\subsection{Recurrent Neural Networks}
+Feedforward neural networks, or multilayer perceptrons (MLPs), are the quintessential deep learning models. The MLP was the first and simplest type of artificial neural network devised \cite{Schmidhuber2015}. In this network, the information moves in only one direction, forward, from the input nodes, to the output nodes. Thus, there are no cycles or loops in the network \cite{Zell1994}.
 
-In deep learning, a recurrent neural network (RNN) is a class of artificial neural networks where connections between nodes form a directed graph along a temporal sequence.
+The goal of a feedforward network is to approximate some function $f^*$. A feedforward network defines a mapping $\mathbf y = f(\mathbf x; \boldsymbol \theta)$ and learns the value of the parameters $\boldsymbol \theta$ that result in the best funtion approximation. 
 
-\begin{itemize}
-\item Recurrent networks are dedicated sequence models that maintain a vector of hidden activations that are propagated throgh time \cite{Elman1990,Werbos1990,Graves2012}.
-\item This family of architectures has gained tremendois popilarity die to prominent applications to language modeling and machine translation.
-\item The intuitive appeal of recurrent modeling is that the hidden state can act as a representations of everything that has been seen so far in the sequence.
-\item Basic RNN architectures are notoriously difficult to train and more elaborate architectures are commonly used instead, such as the LSTM \cite{Hochreiter1997} and the GRU \cite{Cho2014}.
-\end{itemize}
+The model is associated with a directed acyclic graph describing how the functions are composed together.
 
-% \begin{figure}[htbp]
-% \centering
-% \includegraphics[scale=1.0]{figures/neural_network_boeck.eps}
-% \caption{Model architecture in \cite{Boeck2011}.}
-% \label{fig:architecture}
-% \end{figure}    
+Feedforward networks are of extreme importance to machine learning practicioners, because they form the bases of many important commercial applications. 
 
 
 \subsection{Convolutional Neural Networks}
 
-A convolutional neural network (CNN) is a class of deep neural networks, most commonly applied to analyzing visual imagery.
+A convolutional neural network (CNN) \cite{LeCun1989} is a class of deep neural networks specialized for processing data that has a grid-like topology, such as one-dimensional time series or two-dimensional data like raster graphics. CNNs are regularized versions of feedforward neural networks that simply use convolution in place of general matrix multiplication in at least one of their layers \cite{Goodfellow2016}. Usually, the operation used in a convolutional neural network does not correspond precisely to the mathematical definition of convolution. Instead, many neural network libraries implement a cross-correlation, which is the same as convolution but flipping the second argument. In the following we follow this convention and define the convolution as
+\begin{align}
+s(t) = (x * w)(t) = \sum_{\tau=-\infty}^{\infty} x(a)\,w(t+\tau)
+\end{align} 
+where $x$ is referred to as the input, $w$ as the filter or kernel and the output $s$ is referred to as the feature map. Discrete convolution can be viewed as multiplication by a matrix, but the matrix has several entries constrained to be equalt to other entries. In addition, convolution usually corresponds to a very sparse matrix. This is because the filter is usually much smaller than the input. 
 
-\begin{itemize}
-\item Convolutional neural networks (CNNs) \cite{LeCun1989} have been applied to sequences for decades. They were used prominently for speech recognition in the 80s and 90s.
-\end{itemize}
+A typical layer of a convolutional neural network consists of three stages, as shown in Fig. \ref{fig:typical_cnn}. In the first stage, the layer performs several convolutions in parallel to produce a set of linear activations. In the second stage wich is sometimes called detector stage, each linear activation is run through a nonlinear activation function. In the third stage, a pooling function is used to modify the output of the layer further. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1]{figures/cnn.eps}
+\caption{Typical convolutional neural network. }
+\label{fig:typical_cnn}
+\end{figure}
+
+A pooling function replaces the output of the net a a certain location with a summary statistic of the nearby outputs. For example, the max pooling \cite{Zhou1988} operation reports the maximum output within a rectangular neighborhood. In this way, pooling helps to make the representation approximately invariant to small translations of the input. Invariance to translation means that when a input is translated by a small amount, the values of most of the pooled outputs do not change.
+
+% In the context of machine learning, the learning algorithm will learn the appropriate values of the filter. 
+
+% Convolutional neural networks (CNNs) \cite{LeCun1989} have been applied to sequences for decades. They were used prominently for speech recognition in the 80s and 90s.
+
+
+\subsection{Recurrent Neural Networks}
+
+In deep learning, a recurrent neural network (RNN) \cite{Rumelhart1988} is a class of artificial neural networks where connections between nodes form a directed graph along a temporal sequence. Unlike feedforward neural networks, RNNs contain cycles and use an internal state memory $\mathbf h$ to process sequences of inputs \cite{Elman1990}. A universal recurrent neural network is decribed by the propagation equations,
+\begin{align}
+\mathbf h_t &= \text{Activation}(\mathbf U \,\mathbf x_t + \mathbf W \, \mathbf h_{t-1} + \mathbf b) \\
+\mathbf o_t &= \mathbf V \, \mathbf h_t + \mathbf c 
+\end{align} 
+where the parameters are the bias vectors $\mathbf b$ and $\mathbf c$ along with the weight matrices $\mathbf U$, $\mathbf V$ and $\mathbf W$, respectively, for input-to-hidden, hidden-to-output and hidden-to-hidden connections. The recurrent network maps an input sequence $\mathbf x_{1:T}$ of length $T$ to an output sequence $\mathbf o_{1:T}$ of the same length. The computational graph and its unfolded version is shown in Fig. \ref{fig:rnn}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1]{figures/rnn.eps}
+\caption{The computational graph on an recurrent neural network and its unfolded version.}
+\label{fig:rnn}
+\end{figure}    
+
+Computing the gradinets involves performing a forward propagation pass through the unrolled graph followed by a backward propagation pass. The runtime is $O(T)$ and cannot be reduced by parallelization because the forward propagation graph is inherently sequential, i.e., each time step may be computed only after the previous one. Therefore, back-propagation for recurrent model is called back-propagartion through time (BPTT). Recurrent models construct very deep computational graphs by repeatedly applying the same operation at each time step of a long temporal sequence. This gives rise to the vanishing and exloding gradient problem and makes it notoriously difficult to train RNNs. To prevend these difficulties more elaborate recurrent architectures were developed, such as the LSTM \cite{Hochreiter1997} and the GRU \cite{Cho2014}. These families of architectures have gained tremendois popularity due to prominent applications to language modeling and machine translation. 
+
+\paragraph{LSTM}
+The long short-term memory (LSTM) \cite{Hochreiter1997} is an recurrent neural network (RNN) architecture used in the field of deep learning. It comprises leaky units to allow the network to accumulate information over a long duration. However, once that information has been used it might be useful for the network to forget the old state. Instead of manually deciding when to clear the state, the neural network learns to decide when to do it. The time scale of integration can be changed dynamically by making the weights gated, i.e., controllable by another hidden unit.
+
+\paragraph{GRU}
+The gated recurrent unit (GRU) \cite{Cho2014} is a gating mechanism in recurrent neural networks. The GRU is similar to an LSTM with forget gate but has fewer parameters than an LSTM, as it lacks an output gate. GRUs have been shown to exhibit even better performance on certain smaller datasets \cite{Chung2014}. However, the LSTM is strictly stronger than the GRU as it can easily perform unbounded counting, while the GRU cannot \cite{Weiss2018}.
+
+% The intuitive appeal of recurrent modeling is that the hidden state can act as a representations of everything that has been seen so far in the sequence.
+
+% Recurrent networks are dedicated sequence models that maintain a vector of hidden activations that are propagated throgh time \cite{Elman1990,Werbos1990,Graves2012}.
+
+
+
 
 
 
 \subsection{Temporal Convolutional Networks}
 
-A temporal convolutional network (TCN)  represents a special kind of convolutional neural network and is informed by recent convolutional architectures for sequential data \cite{Bai2018}. It is designed from first principles and combines simplicity, autoregressive prediction, and very long memory. In comparison to WaveNet \cite{Oord2016}, the TCN does not employ skip connections across layers (no conditioning, context stacking, or gated activations).
+A temporal convolutional network (TCN) \cite{Bai2018} represents a special kind of convolutional neural network and is informed by recent convolutional architectures for sequential data. It is designed from first principles and combines simplicity, autoregressive prediction, and very long memory. In comparison to WaveNet \cite{Oord2016}, the TCN does not employ skip connections across layers (no conditioning, context stacking, or gated activations).
 
 The TCN is based upon two principles: 1) the convolutions are casual, i.e, no information leakage from future to past; 2) the architecture can take a sequence of any length and map it to an output sequence of the same length just as with an RNN. To achieve the first point, the TCN uses a 1D fully-convolutional network architecture \cite{Long2015}, where each hidden layer is the same length as the input layer. To accomplish the second point, the TCN uses causal convolutions, i.e., convolutions where an output at time $t$ is convolved only with elements from time $t$ and earlier in the previous layer.
 
@@ -489,11 +557,12 @@ Simple causal convolutions have the disadvantage to only look back at history wi
 F(s) = (\mathbf x *_d f)(s) = \sum_{i=0}^{k-1} f(i) \, \mathbf x_{s-d\cdot i}
 \end{align}
 where $d = 2^\nu$ is the dilation factor, with $\nu$ the level of the network, and $k$ is the filter size. The term $s-d\cdot i$ accounts for the direction of the past. Dilation is equivalent to introducing a fixed  step between every two adjacent filter taps, as it can be seen in Fig. \ref{fig:dilated_convolutions}. Using larger dilation enables an output at the top level to represent a wider range of inputs, thus effectivly expanding the receptive field of a CNN. There are two ways to increase the receptive field of a TCN: choosing lager filter sizes $k$ and increasing the dilation factor $d$, since the effective history of one layer is $(k-1) \, d$. 
+
 \begin{figure}[htbp]
-    \centering
-    \includegraphics[]{figures/tcn_dilated_casual_convolution.pdf}
-    \caption{A dilated casual convolution with dilation factors $d = 1,2,4$ and filter size $k=3$ \cite{Bai2018}.}
-    \label{fig:dilated_convolutions} 
+\centering
+\includegraphics[scale=1]{figures/dilated_conv.eps}
+\caption{A dilated casual convolution with dilation factors $d = 1,2,4$ and filter size $k=3$.}
+\label{fig:dilated_convolutions} 
 \end{figure}
 
 Another architectual element of a TCN are residual connections. In place of a concolutional layer, TCNs employ a generic residual module. Each residual block contains a branch leading out to a series of transformations $\mathcal F$, whose outputs are added to the input $\mathbf x$ of the block, 
@@ -521,6 +590,13 @@ A residual block has two layers of dilated causal convolutions and recfied linea
 \item The TCN architecture appers not inly more accurate than canonical recurrent networks such as LSTMs and GRUs, but also simpler and clearer.
 \end{itemize}
 
+\paragraph{LogSoftmax}
+
+A LogSoftmax normalization is added the last layer of the neural network to obtain the log-probabilities for the differnent classes.
+\begin{align}
+\log \text{softmax}(x_i) = \log\left(\frac{\exp{(x_i)}}{\sum_j \exp(x_j)}\right)
+\end{align} 
+
 
 % \paragraph{Trellis Networks}
 % \begin{figure}[htbp]
@@ -529,8 +605,6 @@ A residual block has two layers of dilated causal convolutions and recfied linea
 % \caption{TrellisNet at an atomic level.}
 % \label{fig:TrellisNetAtomic}
 % \end{figure}    
-
-
 % Input:  $x_{1:T} = x_1, \dots, x_T, \quad x_t \in \mathbb R^p, \quad x_{1:T} \in \mathbb R^{T \times p}$ \vspace{0.5em}\\ 
 % with sequence length  $T$  input dimensionality  $p$
 % Output: $y_{1:T} = y_1, \dots, y_T = G(x_1, \dots, x_T)$ \vspace{0.5em} \\
@@ -538,12 +612,13 @@ A residual block has two layers of dilated causal convolutions and recfied linea
 % Hidden: $z_t^{(i)} \in \mathbb R^q$
 
 
-\paragraph{LogSoftmax}
+\subsection{General-Purpose Computing on GPUs} 
 
-A LogSoftmax normalization is added the last layer of the neural network to obtain the log-probabilities for the differnent classes.
-\begin{align}
-\text{LogSoftmax}(x_i) = \log\left(\frac{\exp{(x_i)}}{\sum_j \exp(x_j)}\right)
-\end{align} 
+In 2004, it was shown by K. S. Oh and K. Jung that standard neural networks can be greatly accelerated on GPUs. Their implementation was 20 times faster than an equivalent implementation on CPU \cite{Oh2004}. In 2005, another paper also emphasised the value of GPGPU for machine learning.[42]
+
+
+While GPUs operate at lower frequencies, they typically have many times the number of cores. Thus, GPUs can process far more pictures and graphical data per second than a traditional CPU. Migrating data into graphical form and then using the GPU to scan and analyze it can create a large speedup.
+
 
 \newpage
 
@@ -551,13 +626,13 @@ A LogSoftmax normalization is added the last layer of the neural network to obta
 % Old: Beat Tracking System
 \section{Method}
 
-From an overall perspective, the proposed automatic beat tracking system comprises three major phrases: data preprocessing, feature learning and temporal decoding. 
+From an overall perspective, the proposed automatic beat tracking system comprises three major stages, as it is shown in Fig. \ref{fig:system}. 
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=1.0]{figures/beat_tracking_system.eps}
 \caption{Beat tracking system signal flow}
-\label{fig:}
+\label{fig:system}
 \end{figure}  
 
 
@@ -576,30 +651,37 @@ Binary classification problem:
 
 \subsection{Dataset}
 For training and evaluation we use the datasets listed in Table \ref{tab:datasets}.
-
-\paragraph{Hainsworth} The Hainsworth dataset \cite{Hainsworth2004} contains 222 musical audio files, with the following genre breakdown: Rock/Pop (68), Dance (40), Jazz (40); Classical (30), Folk (22), and Choral (22). Each file is between $30$ and $60\,\text{s}$ in length, mono and sampled at $44.1\,\text{kHz}$ with $16\text{-bit}$ resolution.
 \begin{table}[htbp]
 \caption{Datasets used for training.}
 \label{tab:datasets}
 \centering
-
 \begin{tabular}{lrr}
 \hline
-
 \hline
 \textbf{Dataset} & \textbf{files} & \textbf{length} \\
 \hline
-    Ballroom \cite{Gouyon2006b, Krebs2013} & $685$ & $5\,\text{h} \;57\,\text{m}$\\
-    GTZAN \cite{Tzanetakis2002b, marchand2015swing} & $1000$ & $8\,\text{h}\;20\,\text{m}$\\
-    Hainsworth \cite{Hainsworth2004} & $222$ & $3\,\text{h}\;19\,\text{m}$\\
-    SMC \cite{Holzapfel2012} & $217$ & $2\,\text{h}\;25\,\text{m}$\\    
+Ballroom \cite{Gouyon2006b, Krebs2013} & $685$ & $5\,\text{h} \;57\,\text{m}$\\
+GTZAN \cite{Tzanetakis2002b, marchand2015swing} & $1000$ & $8\,\text{h}\;20\,\text{m}$\\
+Hainsworth \cite{Hainsworth2004} & $222$ & $3\,\text{h}\;19\,\text{m}$\\
+SMC \cite{Holzapfel2012} & $217$ & $2\,\text{h}\;25\,\text{m}$\\    
 \hline
-    Total & $ $ & $ \,\text{h}\; \,\text{m}$\\  
+Total & $ $ & $ \,\text{h}\; \,\text{m}$\\  
 \hline
-
 \hline
 \end{tabular}
 \end{table}  
+
+\paragraph{Ballroom} 
+The Ballroom dataset \cite{Gouyon2006b, Krebs2013} contains 685 audio files\footnote{After removing the 13 duplicates which are pointed out by Bob Sturm \cite{Sturm2014}.} of ballroom dancing music. As genres the files cover Cha Cha, Jive, Quickstep, Rumba, Samba, Tango, Viennese Waltz, and Slow Waltz. Each file is $30\,\text{s}$ long, mono and sampled at $44.1\,\text{kHz}$ with $16\text{-bit}$ resolution.
+
+\paragraph{GTZAN} 
+The GTZAN \cite{Tzanetakis2002b} dataset was originally proposed for music genre classification problem and later extended with beat annotations \cite{marchand2015swing}. The dataset comprises 1000 excerpts of 10 different genres. The genres are blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae and rock. Each file is $30\,\text{s}$ long, mono and sampled at $22050\,\text{Hz}$ with $16\text{-bit}$ resolution. The audio content of the GTZAN dataset is representative of the real commercial music of various music genre. The dataset has a good balancing between tracks with swing (Blues and Jazz music) and without swing.
+
+\paragraph{Hainsworth} The Hainsworth dataset \cite{Hainsworth2004} contains 222 musical audio files, with the following genre breakdown: Rock/Pop (68), Dance (40), Jazz (40); Classical (30), Folk (22), and Choral (22). Each file is between $30$ and $60\,\text{s}$ in length, mono and sampled at $44.1\,\text{kHz}$ with $16\text{-bit}$ resolution.
+
+\paragraph{SMC}
+
+
 
 
 \begin{itemize}
@@ -684,86 +766,83 @@ X(n,k) = |X(n,k)| \, e^{\, j \phi(n,k)}
 \subsection{Temporal Decoding}
 \label{sec:temporal_decoding}
 
-We use a probabilistic dynamic model to exploit the seqential structure of music, generally resulting in a more robust estimation.
+The metrical structure of music builds upon a hierarchy of appriximatey regular pulses, as elaborated in Section \ref{sec:perception}. To explot this seqential structure, a probabilistic dynamic model is used to result in a more robust estimation of the beat instants and to correctly operate under rhythmic fluctuations, such as ritardando and accelarando or metric modulations.
 
-As a postprocessing step we make use of a dynamic Bayesian network (DBN) which jointly infers tempo an phase of the beat.
+As a postprocessing stage following the feature learning, a dynamic Bayesian network (DBN) is employed which jointly infers tempo and the phase of the beat. Dynamic Bayesian networks are popular frameworks for meter tracking in music becuase they are able to incorporate prior knowledge about the dynamics of rhythmic parameters. 
+In this DBN, which is a hidden Markov model (HMM) precisely, a sequence of hidden variables that represent the meter of an audio piece is inferred from a sequence of observed variables. The probabilistic state space consist of two hidden variables, the position within a bar and the tempo. 
 
-\vspace{1em}
-Hidden variables: 
-\begin{itemize}
-\item $\omega$ - the tempo
-\item $\phi$ - the position inside the beat period
-\end{itemize}
+The probabilistic model is based upon the bar pointer model of Whiteley et al. \cite{Whiteley2006} which enables joint inference of rhythmic parameters from a piece of music. Mutual dependencies between these parameters are exploited, which increases the computational complexity of the models. A bar pointer is defined as being a hypothetical hidden object located in state space consiting of the period of a latent rhythmical pattern. The velocitiy of the bar pointer is defined to be proportional to tempo. The advantage of this approach is that the bar pointer continues to move whether or not a beat activation is observed. This explicitly models the concept that meter is a latent process and provides robustness against rest in the music which might otherwise be wrongly interpreted as local variations in tempo. In order to make inference computationally tractable, the state-space is usually divided into discrete cells \cite{Krebs2015}. 
 
-\vspace{1em}
-In order to infer the hidden variables from an audio signal, we specify three entities:
-
-\begin{itemize}
-\item \textbf{transition model}: describes the transitions between the hidden variables 
-\item \textbf{observation model}: takes the beat activations from the neural network
-\item \textbf{initial distribution}: encodes prior knowledge about the hidden variables
-\begin{itemize}
-\item test probability model for given tempo estimation 
-\end{itemize}
-\end{itemize}
-
-\paragraph{Transition Model}
-\begin{itemize}
-\item The number of observations $M$ per beat at tempo $T$ in BPM is defined as 
+Given a sequence of observed data $a_{1:T}$, we wish to identify the most probable hidden state trajectory $\mathbf s_{1:T}$. At each time frame $t$, the bar pointer of the hidden state space is referred to as $\mathbf s_t = [\phi_t, \nu_t]$, with $\phi_t \in \{1, 2, \dots, K\}$ denoting the position within a bar, and $\nu_t \in \{ K_{\text{min}}, K_{\text{min}}+1, \dots, K_{\text{max}}\}$ referring to as the tempo. The number of discrete bar positions $K$ is dependent on the tempo by using exactly one bar position state per audio frame and thus per observation feature value. The number of observations per bar (four beats) at a tempo $\Theta$ in beats per minute (BPM) is
 \begin{align}
-M(T) = \dfrac{60}{T} \,f_r \quad \left[ \dfrac{\text{frames}}{\text{beat}}\right]
+K(\Theta) = \left\lfloor \frac{4 \times 60}{\Theta \, \Delta} \right\rfloor 
+\label{eq:number_of_obstervations_per_bar}
 \end{align} 
-\item The beat position state is dependent on the tempo by using exactly one  state per audio frame.
+where $\Delta$ is reffered to as the audio frame length. With Equation. \ref{eq:number_of_obstervations_per_bar}, one can compute the number of bar positions of the tempo limits $K_\text{min} = K(\Theta_\text{max})$ and $K_\text{max} =K(\Theta_\text{min})$. Using a tempo range of  $\Theta = [55, 215]$ the postion whithin a bar has at most $82$ tempo states.
 
-
-% \item The beat period is discretized into $\Phi = 640$ equidistant cells
-\item $\Phi \in \{1,2,\dots, M(T)\}$ denotes the position inside the beat period (pib)
-\item The tempo space corresponds to integer valued beat positions in the interval $[M(T_{\text{max}}), M(T_{\text{min}})]$, with 
+With this state space discretisation, the most likely hidden state sequence $\mathbf s_{1:T}^* = \mathbf s_1^*, \dots, \mathbf s_T^*$ given a sequence of observations $a_{1:T} = a_1, \dots, a_T$ is computed by
 \begin{align}
-N_{\text{max}} = M(T_{\text{min}}) - M(T_{\text{max}}) + 1
+\mathbf s_{1:T}^* = \arg \max_{\mathbf s_{1:T}} P(\mathbf s_{1:T}\,|\, a_{1:T})
+\label{eq:most_likely_states}
 \end{align} 
-different tempo states.
-
-% \item For the position inside the beat period we have the following recurrence relation
-% \begin{align}
-% \phi_k = (\phi_{k-1} + \omega_{k-1} -1) \mod \Phi + 1
-% \end{align}  
-% \item The tempo space is also discretized tempos between 56 and 216 BPM 
-% \begin{align}
-% \text{BPM} = \omega \times 60 \times f_r \,/ \, \Phi
-% \end{align} 
-\item The tempo in beat positions per time frame $\dot \Phi \in \{M(T_{\text{max}}), M(T_{\text{max}}) + 1,  \dots, M(T_{\text{min}})\}$ 
-\item For example: 
-\begin{align*}
-T_{\text{min}} = 56 \,\text{BPM} & \;\rightarrow \; M(T_{\text{min}}) = 107 \\
-T_{\text{max}} = 215 \,\text{BPM} &\;\rightarrow \; M(T_{\text{max}}) = 28 
-\end{align*} 
-\vspace{-1.5em}
-\begin{align*}
-&\Phi \in \{1, 2, \dots ,107\} \\
-&\dot \Phi \in \{28, 29, \dots ,107\}
-\end{align*} 
-
-
-\item Transitions to each tempo is allowed but only at beat times
+with 
 \begin{align}
-\omega_k = 
-\begin{cases}
-\omega_{k-1}, & P(\omega_k|\omega_{k-1}) = 1 - p_\omega \\
-\omega_{k-1}+1, & P(\omega_k|\omega_{k-1}) = \frac{p_\omega}{2} \\
-\omega_{k-1}-1, & P(\omega_k|\omega_{k-1}) = \frac{p_\omega}{2} \\
+ P(\mathbf s_{1:T}\,|\, a_{1:T}) \propto P(\mathbf s_1) \prod_{t=2}^T P(\mathbf s_t\,|\,\mathbf s_{t-1})\, P( a_t\,|\,\mathbf s_{t})
+\end{align} 
+where $P(\mathbf s_1)$ is the initial state distribution, $P(\mathbf s_t\,|\,\mathbf s_{t-1})$ is the transition model, and $P(\mathbf a_t\,|\,\mathbf s_{t})$ is the observation model. The most likely hidden state sequence can be solved using the well-known Viterbi algorithm \cite{Viterbi1967}. Finally, the set of beat instant $\mathcal B$ can be extracted from the sequence of bar positions as
+\begin{align}
+\mathcal B = \{ t: \phi_t^*=1\}
+\end{align} 
+In order to infer the hidden variables from an audio signal, the three entities are specified. The rransition model describes the transitions between the hidden variables. The observation model takes the beat activations from the neural network
+and initial distribution encodes prior knowledge about the hidden variables.
+
+\paragraph{Initial Distribution} 
+Any prior knowledge about tempo distributions can be incorporated into the model. For example, if the music to be tracked from one genre, a specific tempo distribution can be used. To make it genre independend, a uniform distribution is used in this theses. 
+
+
+\paragraph{Transition Model} The transition model $P(\mathbf s_t\,|\,\mathbf s_{t-1})$ can be further decomposed into a distribution for each of the two hidden variables $\phi_t$ and $\nu_t$, this is
+\begin{align}
+P(\mathbf s_t\,|\,\mathbf s_{t-1}) = P(\mathbf \phi_t\,|\,\mathbf \phi_{t-1}, \nu_{t-1}) \, P(\nu_t \, |\, \nu_{t-1}) 
+\end{align} 
+where the first factor is
+\begin{align}
+P(\mathbf \phi_t\,|\,\mathbf \phi_{t-1}, \nu_{t-1}) = \mathbf 1_A
+\end{align} 
+with the indicator fuction $\mathbf 1_A$ that equals one if $\phi_t = (\phi_{t-1}+\nu_{t-1}-1)\mod M+1$. The modulo operator makes the bar postion cyclic. If $\phi_t \in \mathcal B$, the second factor is defined by
+\begin{align}
+P(\nu_t \, |\, \nu_{t-1}) = \exp \left( -\lambda \left| \frac{\nu_{t}}{\nu_{t-1}} -1 \right| \right)
+\end{align} 
+otherwise it is
+\begin{align}
+P(\nu_t \, |\, \nu_{t-1}) = \begin{cases}
+    1, &\nu_t = \nu_{t-1}\\
+    0, &\text{else.} 
 \end{cases}
 \end{align} 
-\item The probability of tempo change is heuristically set to $p_\omega = 0.002$
-\item Higher-level or domain specific knowledge could be used to set this parameter. For example in rock or pop music, the beat is usually quite steady, so a samll value for $p_\omega$ would be quite appropriatre, while for classical music, particularly styles including many tempo changes, a higher value would be more optimal.
-\end{itemize}
+The parameter $\lambda \in \mathbb Z_{\geq0}$ determines the steepness of the distribution and models the probability for a tempo change. A value of $\lambda = 0$ means that transitions to all tempi are equally probable. In practice, for music with roughly constant tempo, we set $\lambda \in [1, 300]$. The probability of tempo change is heuristically set to $p_\omega = 0.002$. Higher-level or domain specific knowledge could be used to set this parameter. For example in rock or pop music, the beat is usually quite steady, so a samll value for $p_\omega$ would be quite appropriatre, while for classical music, particularly styles including many tempo changes, a higher value would be more optimal.
 
 
+\paragraph{Observation Model}
+The beat activation function produced by the neural network is limited to the range $[0, 1]$ and shows high values at beat positions and low values at non-beat positions. Thus, the activation function is used directly as state-conditional observation distributions \cite{Degara2012}. The observation likelihood is defined as 
+\begin{align}
+P(a_t\,|\,\phi_t) = \begin{cases}
+    a_t, &1 \leq \phi_t\leq \frac{\lambda}{\Lambda}\\
+    \frac{1-a_t}{\lambda-1}, &\text{else}.    
+\end{cases}
+\end{align} 
 
 
-\paragraph{Observation model}
-
-
+ % \item The tempo in beat positions per time frame $\dot \Phi \in \{M(T_{\text{max}}), M(T_{\text{max}}) + 1,  \dots, M(T_{\text{min}})\}$ 
+% \item For example: 
+% \begin{align*}
+% T_{\text{min}} = 56 \,\text{BPM} & \;\rightarrow \; M(T_{\text{min}}) = 107 \\
+% T_{\text{max}} = 215 \,\text{BPM} &\;\rightarrow \; M(T_{\text{max}}) = 28 
+% \end{align*} 
+% \vspace{-1.5em}
+% \begin{align*}
+% &\Phi \in \{1, 2, \dots ,107\} \\
+% &\dot \Phi \in \{28, 29, \dots ,107\}
+% \end{align*} 
 
 
 % \subsection{Time-Frequency Reassignment}
@@ -840,6 +919,7 @@ $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(
 \subsection{Saliency Maps}
 
 \begin{itemize}
+\item How do the filters of the ConvNet look like?
 \item Artificial neural networks often give good results, but it is difficult to understand what they learned, or on which basis they generate their output.
 \item compute saliency maps using guided back-propagation [25]
 \end{itemize}
@@ -862,6 +942,8 @@ $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(
 \end{itemize}
 
 
+\newpage 
+
 \section{Conclusion}
 
 \begin{itemize}
@@ -871,6 +953,7 @@ $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(
 \item Dataset size: ``\emph{[...] a rough rule of thumb is that a supervised deep learning algorithm will gernerally achieve acceptable performance with around 5000 labeled examples per category and will match or exceed human performance when trained with a dataset containing at least 10 million labeled examples.}'' \cite[Goodfellow2016]{Goodfellow2016}
 \item The most mentionable aspect is that the neural networks were trained solely on ballroom dance and other kinds of western pop music. The networks accuracy depends on the trainings set. Selective bias. 
 \item Leave higher level analysis to the neural network
+\item System operates causaly, thus an real-time implementation is possible.
 \end{itemize}
 
 \newpage
