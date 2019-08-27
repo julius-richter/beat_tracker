@@ -4,7 +4,7 @@
 \BOOKMARK [2][-]{subsection.3.1}{Terminology}{section.3}% 4
 \BOOKMARK [2][-]{subsection.3.2}{Rhythm Perception}{section.3}% 5
 \BOOKMARK [1][-]{section.4}{Machine Learning}{}% 6
-\BOOKMARK [2][-]{subsection.4.1}{Sequence Labelling}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.1}{Sequence Modeling}{section.4}% 7
 \BOOKMARK [2][-]{subsection.4.2}{Feature Extraction}{section.4}% 8
 \BOOKMARK [2][-]{subsection.4.3}{Performance Measure}{section.4}% 9
 \BOOKMARK [2][-]{subsection.4.4}{Model Selection}{section.4}% 10
@@ -24,7 +24,7 @@
 \BOOKMARK [2][-]{subsection.6.3}{Feature Learning}{section.6}% 24
 \BOOKMARK [2][-]{subsection.6.4}{Temporal Decoding}{section.6}% 25
 \BOOKMARK [1][-]{section.7}{Evaluation}{}% 26
-\BOOKMARK [2][-]{subsection.7.1}{Performance Measure}{section.7}% 27
+\BOOKMARK [2][-]{subsection.7.1}{Evaluation Measure}{section.7}% 27
 \BOOKMARK [2][-]{subsection.7.2}{Saliency Maps}{section.7}% 28
 \BOOKMARK [2][-]{subsection.7.3}{Network Training}{section.7}% 29
 \BOOKMARK [2][-]{subsection.7.4}{Labeling}{section.7}% 30

@@ -11,14 +11,14 @@
 \contentsline {paragraph}{\nonumberline Meter}{11}{section*.8}
 \contentsline {subsection}{\numberline {3.2}Rhythm Perception}{11}{subsection.3.2}
 \contentsline {section}{\numberline {4}Machine Learning}{14}{section.4}
-\contentsline {subsection}{\numberline {4.1}Sequence Labelling}{14}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.1}Sequence Modeling}{14}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Feature Extraction}{15}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Performance Measure}{15}{subsection.4.3}
-\contentsline {paragraph}{\nonumberline Loss Function}{16}{section*.9}
+\contentsline {paragraph}{\nonumberline Loss Function}{15}{section*.9}
 \contentsline {subsection}{\numberline {4.4}Model Selection}{16}{subsection.4.4}
 \contentsline {subsection}{\numberline {4.5}Optimization}{16}{subsection.4.5}
 \contentsline {paragraph}{\nonumberline Stochastic Gradient Decent}{17}{section*.10}
-\contentsline {paragraph}{\nonumberline Back-Propagation}{18}{section*.11}
+\contentsline {paragraph}{\nonumberline Back-Propagation}{17}{section*.11}
 \contentsline {paragraph}{\nonumberline Adam}{18}{section*.12}
 \contentsline {paragraph}{\nonumberline Batch normalization}{18}{section*.13}
 \contentsline {subsection}{\numberline {4.6}Regularization}{18}{subsection.4.6}
@@ -36,28 +36,30 @@
 \contentsline {paragraph}{\nonumberline LSTM}{22}{section*.19}
 \contentsline {paragraph}{\nonumberline GRU}{22}{section*.20}
 \contentsline {subsection}{\numberline {5.4}Temporal Convolutional Networks}{22}{subsection.5.4}
-\contentsline {paragraph}{\nonumberline LogSoftmax}{25}{section*.21}
 \contentsline {subsection}{\numberline {5.5}General-Purpose Computing on GPUs}{25}{subsection.5.5}
 \contentsline {section}{\numberline {6}Method}{26}{section.6}
 \contentsline {subsection}{\numberline {6.1}Dataset}{26}{subsection.6.1}
-\contentsline {paragraph}{\nonumberline Ballroom}{26}{section*.22}
-\contentsline {paragraph}{\nonumberline GTZAN}{27}{section*.23}
-\contentsline {paragraph}{\nonumberline Hainsworth}{27}{section*.24}
-\contentsline {paragraph}{\nonumberline SMC}{27}{section*.25}
+\contentsline {paragraph}{\nonumberline Ballroom}{26}{section*.21}
+\contentsline {paragraph}{\nonumberline GTZAN}{26}{section*.22}
+\contentsline {paragraph}{\nonumberline Hainsworth}{27}{section*.23}
+\contentsline {paragraph}{\nonumberline SMC}{27}{section*.24}
 \contentsline {subsection}{\numberline {6.2}Data Preprocessing}{27}{subsection.6.2}
-\contentsline {paragraph}{\nonumberline Chroma Representation}{29}{section*.26}
-\contentsline {subsection}{\numberline {6.3}Feature Learning}{29}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Temporal Decoding}{29}{subsection.6.4}
-\contentsline {paragraph}{\nonumberline Initial Distribution}{31}{section*.27}
-\contentsline {paragraph}{\nonumberline Transition Model}{31}{section*.28}
-\contentsline {paragraph}{\nonumberline Observation Model}{31}{section*.29}
-\contentsline {section}{\numberline {7}Evaluation}{32}{section.7}
-\contentsline {subsection}{\numberline {7.1}Performance Measure}{32}{subsection.7.1}
-\contentsline {paragraph}{\nonumberline Precision and recall:}{32}{section*.30}
-\contentsline {paragraph}{\nonumberline F-measure:}{32}{section*.31}
-\contentsline {paragraph}{\nonumberline P-score:}{32}{section*.32}
-\contentsline {subsection}{\numberline {7.2}Saliency Maps}{33}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Network Training}{33}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Labeling}{33}{subsection.7.4}
-\contentsline {section}{\numberline {8}Conclusion}{34}{section.8}
-\contentsline {paragraph}{\nonumberline Hyperparameter}{35}{section*.35}
+\contentsline {paragraph}{\nonumberline Input}{27}{section*.25}
+\contentsline {paragraph}{\nonumberline Labels}{28}{section*.26}
+\contentsline {paragraph}{\nonumberline Training Set}{28}{section*.27}
+\contentsline {paragraph}{\nonumberline Chroma Representation}{28}{section*.28}
+\contentsline {subsection}{\numberline {6.3}Feature Learning}{28}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Temporal Decoding}{30}{subsection.6.4}
+\contentsline {paragraph}{\nonumberline Initial Distribution}{31}{section*.29}
+\contentsline {paragraph}{\nonumberline Transition Model}{31}{section*.30}
+\contentsline {paragraph}{\nonumberline Observation Model}{32}{section*.31}
+\contentsline {section}{\numberline {7}Evaluation}{33}{section.7}
+\contentsline {subsection}{\numberline {7.1}Evaluation Measure}{33}{subsection.7.1}
+\contentsline {paragraph}{\nonumberline Precision and recall:}{33}{section*.32}
+\contentsline {paragraph}{\nonumberline F-measure:}{33}{section*.33}
+\contentsline {paragraph}{\nonumberline P-score:}{33}{section*.34}
+\contentsline {subsection}{\numberline {7.2}Saliency Maps}{34}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Network Training}{34}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Labeling}{34}{subsection.7.4}
+\contentsline {section}{\numberline {8}Conclusion}{35}{section.8}
+\contentsline {paragraph}{\nonumberline Hyperparameter}{37}{section*.37}
