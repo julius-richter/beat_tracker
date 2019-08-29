@@ -1,65 +1,64 @@
-\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
-\contentsline {paragraph}{\nonumberline Difficulties of Beat Tracking}{3}{section*.2}
-\contentsline {paragraph}{\nonumberline Applications of Beat Tracking}{4}{section*.3}
-\contentsline {section}{\numberline {2}Related Work}{6}{section.2}
-\contentsline {section}{\numberline {3}Rhythm}{10}{section.3}
-\contentsline {subsection}{\numberline {3.1}Terminology}{10}{subsection.3.1}
-\contentsline {paragraph}{\nonumberline Rhythm}{10}{section*.4}
-\contentsline {paragraph}{\nonumberline Onset}{10}{section*.5}
-\contentsline {paragraph}{\nonumberline Beat}{10}{section*.6}
-\contentsline {paragraph}{\nonumberline Tempo}{10}{section*.7}
-\contentsline {paragraph}{\nonumberline Meter}{11}{section*.8}
-\contentsline {subsection}{\numberline {3.2}Rhythm Perception}{11}{subsection.3.2}
-\contentsline {section}{\numberline {4}Machine Learning}{14}{section.4}
-\contentsline {subsection}{\numberline {4.1}Sequence Modeling}{14}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Feature Extraction}{15}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Performance Measure}{15}{subsection.4.3}
-\contentsline {paragraph}{\nonumberline Loss Function}{15}{section*.9}
-\contentsline {subsection}{\numberline {4.4}Model Selection}{16}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Optimization}{16}{subsection.4.5}
-\contentsline {paragraph}{\nonumberline Stochastic Gradient Decent}{17}{section*.10}
-\contentsline {paragraph}{\nonumberline Back-Propagation}{17}{section*.11}
-\contentsline {paragraph}{\nonumberline Adam}{18}{section*.12}
-\contentsline {paragraph}{\nonumberline Batch normalization}{18}{section*.13}
-\contentsline {subsection}{\numberline {4.6}Regularization}{18}{subsection.4.6}
-\contentsline {paragraph}{\nonumberline Weight Decay}{18}{section*.14}
-\contentsline {paragraph}{\nonumberline Early Stopping}{18}{section*.15}
-\contentsline {paragraph}{\nonumberline Dropout}{18}{section*.16}
-\contentsline {subsection}{\numberline {4.7}Validation}{18}{subsection.4.7}
-\contentsline {paragraph}{\nonumberline Cross-validation}{19}{section*.17}
-\contentsline {paragraph}{\nonumberline Test set method}{19}{section*.18}
-\contentsline {subsection}{\numberline {4.8}Hyperparameters}{19}{subsection.4.8}
-\contentsline {section}{\numberline {5}Deep Neural Networks}{20}{section.5}
-\contentsline {subsection}{\numberline {5.1}Feedforward Neural Networks}{20}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Convolutional Neural Networks}{20}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Recurrent Neural Networks}{21}{subsection.5.3}
-\contentsline {paragraph}{\nonumberline LSTM}{22}{section*.19}
-\contentsline {paragraph}{\nonumberline GRU}{22}{section*.20}
-\contentsline {subsection}{\numberline {5.4}Temporal Convolutional Networks}{22}{subsection.5.4}
-\contentsline {subsection}{\numberline {5.5}General-Purpose Computing on GPUs}{25}{subsection.5.5}
-\contentsline {section}{\numberline {6}Method}{26}{section.6}
-\contentsline {subsection}{\numberline {6.1}Dataset}{26}{subsection.6.1}
-\contentsline {paragraph}{\nonumberline Ballroom}{26}{section*.21}
-\contentsline {paragraph}{\nonumberline GTZAN}{26}{section*.22}
-\contentsline {paragraph}{\nonumberline Hainsworth}{27}{section*.23}
-\contentsline {paragraph}{\nonumberline SMC}{27}{section*.24}
-\contentsline {subsection}{\numberline {6.2}Data Preprocessing}{27}{subsection.6.2}
-\contentsline {paragraph}{\nonumberline Input}{27}{section*.25}
-\contentsline {paragraph}{\nonumberline Labels}{28}{section*.26}
-\contentsline {paragraph}{\nonumberline Training Set}{28}{section*.27}
-\contentsline {paragraph}{\nonumberline Chroma Representation}{28}{section*.28}
-\contentsline {subsection}{\numberline {6.3}Feature Learning}{28}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Temporal Decoding}{30}{subsection.6.4}
-\contentsline {paragraph}{\nonumberline Initial Distribution}{31}{section*.29}
-\contentsline {paragraph}{\nonumberline Transition Model}{31}{section*.30}
-\contentsline {paragraph}{\nonumberline Observation Model}{32}{section*.31}
-\contentsline {section}{\numberline {7}Evaluation}{33}{section.7}
-\contentsline {subsection}{\numberline {7.1}Evaluation Measure}{33}{subsection.7.1}
-\contentsline {paragraph}{\nonumberline Precision and recall:}{33}{section*.32}
-\contentsline {paragraph}{\nonumberline F-measure:}{33}{section*.33}
-\contentsline {paragraph}{\nonumberline P-score:}{33}{section*.34}
-\contentsline {subsection}{\numberline {7.2}Saliency Maps}{34}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Network Training}{34}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Labeling}{34}{subsection.7.4}
-\contentsline {section}{\numberline {8}Conclusion}{35}{section.8}
-\contentsline {paragraph}{\nonumberline Hyperparameter}{37}{section*.37}
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {paragraph}{\nonumberline Difficulties of Beat Tracking}{4}{section*.2}
+\contentsline {paragraph}{\nonumberline Applications of Beat Tracking}{5}{section*.3}
+\contentsline {section}{\numberline {2}Related Work}{7}{section.2}
+\contentsline {section}{\numberline {3}Rhythm}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Terminology}{11}{subsection.3.1}
+\contentsline {paragraph}{\nonumberline Rhythm}{11}{section*.4}
+\contentsline {paragraph}{\nonumberline Onset}{11}{section*.5}
+\contentsline {paragraph}{\nonumberline Beat}{11}{section*.6}
+\contentsline {paragraph}{\nonumberline Tempo}{12}{section*.7}
+\contentsline {paragraph}{\nonumberline Meter}{12}{section*.8}
+\contentsline {subsection}{\numberline {3.2}Rhythm Perception}{12}{subsection.3.2}
+\contentsline {section}{\numberline {4}Machine Learning}{15}{section.4}
+\contentsline {subsection}{\numberline {4.1}Sequence Modeling}{15}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Feature Extraction}{16}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Performance Measure}{16}{subsection.4.3}
+\contentsline {paragraph}{\nonumberline Loss Function}{16}{section*.9}
+\contentsline {subsection}{\numberline {4.4}Model Selection}{17}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Optimization}{17}{subsection.4.5}
+\contentsline {paragraph}{\nonumberline Stochastic Gradient Decent}{18}{section*.10}
+\contentsline {paragraph}{\nonumberline Back-Propagation}{18}{section*.11}
+\contentsline {paragraph}{\nonumberline Adam}{19}{section*.12}
+\contentsline {paragraph}{\nonumberline Batch normalization}{19}{section*.13}
+\contentsline {subsection}{\numberline {4.6}Regularization}{19}{subsection.4.6}
+\contentsline {paragraph}{\nonumberline Weight Decay}{19}{section*.14}
+\contentsline {paragraph}{\nonumberline Early Stopping}{19}{section*.15}
+\contentsline {paragraph}{\nonumberline Dropout}{19}{section*.16}
+\contentsline {subsection}{\numberline {4.7}Validation}{19}{subsection.4.7}
+\contentsline {paragraph}{\nonumberline Cross-validation}{20}{section*.17}
+\contentsline {paragraph}{\nonumberline Test set method}{20}{section*.18}
+\contentsline {subsection}{\numberline {4.8}Hyperparameters}{20}{subsection.4.8}
+\contentsline {section}{\numberline {5}Deep Neural Networks}{21}{section.5}
+\contentsline {subsection}{\numberline {5.1}Feedforward Neural Networks}{21}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Convolutional Neural Networks}{21}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Recurrent Neural Networks}{22}{subsection.5.3}
+\contentsline {paragraph}{\nonumberline LSTM}{23}{section*.19}
+\contentsline {paragraph}{\nonumberline GRU}{23}{section*.20}
+\contentsline {subsection}{\numberline {5.4}Temporal Convolutional Networks}{23}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.5}General-Purpose Computing on GPUs}{26}{subsection.5.5}
+\contentsline {section}{\numberline {6}Method}{27}{section.6}
+\contentsline {subsection}{\numberline {6.1}Dataset}{27}{subsection.6.1}
+\contentsline {paragraph}{\nonumberline Ballroom}{27}{section*.21}
+\contentsline {paragraph}{\nonumberline GTZAN}{27}{section*.22}
+\contentsline {paragraph}{\nonumberline Hainsworth}{28}{section*.23}
+\contentsline {paragraph}{\nonumberline SMC}{28}{section*.24}
+\contentsline {subsection}{\numberline {6.2}Data Preprocessing}{28}{subsection.6.2}
+\contentsline {paragraph}{\nonumberline Input}{28}{section*.25}
+\contentsline {paragraph}{\nonumberline Labels}{29}{section*.26}
+\contentsline {paragraph}{\nonumberline Chroma Representation}{29}{section*.27}
+\contentsline {subsection}{\numberline {6.3}Feature Learning}{29}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Temporal Decoding}{31}{subsection.6.4}
+\contentsline {paragraph}{\nonumberline Initial Distribution}{32}{section*.28}
+\contentsline {paragraph}{\nonumberline Transition Model}{32}{section*.29}
+\contentsline {paragraph}{\nonumberline Observation Model}{33}{section*.30}
+\contentsline {section}{\numberline {7}Evaluation}{34}{section.7}
+\contentsline {subsection}{\numberline {7.1}Evaluation Methods}{34}{subsection.7.1}
+\contentsline {paragraph}{\nonumberline F-measure}{34}{section*.31}
+\contentsline {paragraph}{\nonumberline Continuity measures}{35}{section*.32}
+\contentsline {paragraph}{\nonumberline Information Gain}{35}{section*.33}
+\contentsline {subsection}{\numberline {7.2}Results}{36}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Saliency Maps}{36}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Network Training}{36}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.5}Labeling}{37}{subsection.7.5}
+\contentsline {section}{\numberline {8}Conclusion}{38}{section.8}

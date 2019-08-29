@@ -24,8 +24,9 @@
 \BOOKMARK [2][-]{subsection.6.3}{Feature Learning}{section.6}% 24
 \BOOKMARK [2][-]{subsection.6.4}{Temporal Decoding}{section.6}% 25
 \BOOKMARK [1][-]{section.7}{Evaluation}{}% 26
-\BOOKMARK [2][-]{subsection.7.1}{Evaluation Measure}{section.7}% 27
-\BOOKMARK [2][-]{subsection.7.2}{Saliency Maps}{section.7}% 28
-\BOOKMARK [2][-]{subsection.7.3}{Network Training}{section.7}% 29
-\BOOKMARK [2][-]{subsection.7.4}{Labeling}{section.7}% 30
-\BOOKMARK [1][-]{section.8}{Conclusion}{}% 31
+\BOOKMARK [2][-]{subsection.7.1}{Evaluation Methods}{section.7}% 27
+\BOOKMARK [2][-]{subsection.7.2}{Results}{section.7}% 28
+\BOOKMARK [2][-]{subsection.7.3}{Saliency Maps}{section.7}% 29
+\BOOKMARK [2][-]{subsection.7.4}{Network Training}{section.7}% 30
+\BOOKMARK [2][-]{subsection.7.5}{Labeling}{section.7}% 31
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 32

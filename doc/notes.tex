@@ -6,18 +6,42 @@
     
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{chronology}
+\usepackage{csvsimple}
+
 
 \usepackage{hyperref}
-\hypersetup{
-    colorlinks,
-    linkcolor=black,
-    citecolor=black,
-    urlcolor=black,
-    linktoc=all,
-    }
+\hypersetup{colorlinks,linkcolor=black,citecolor=black,urlcolor=black,linktoc=all,}
 
 \begin{document}
 \pagestyle{plain}
+
+\begin{titlepage}
+\begin{center}
+\vspace*{1cm}
+\huge
+\textbf{Style-Specific Beat Tracking with\\ Deep Neural Networks}
+\vspace{2.0cm}
+
+\Large
+\textbf{Julius Richter}
+\vspace{0.8cm}
+
+\includegraphics[width=0.3\textwidth]{figures/tu_logo.pdf}
+
+\vspace{0.4cm}
+Audio Communication Group\\
+Technische Universität Berlin\\
+\vspace{2.5cm}
+This thesis is submitted for the degree of\\
+\emph{Master of Science}
+
+\vspace{2.5cm}
+First Supervisor: Prof. Dr. Stefan Weinzierl \\
+Second Supervisor: Prof. Dr. Klaus-Robert Müller\\
+\vspace{1.5cm}
+\today
+\end{center}
+\end{titlepage}
 
 
 \tableofcontents
@@ -27,17 +51,19 @@
 \section{Introduction}
 
 \begin{itemize}
+\item Rhythm is indispensable for music.
+\item Rhythm is music’s central organizing structure. It orders the movement of musical patterns in time. 
 \item A fundamental research topic in music information retrieval is the automatic extraction of beat locations from music signals. 
-\item The aim of a beat tracker is to recover a sequence of time instants from a musical input that are consitent with the times when a human might tap their foot. \cite{Ellis2007}
-\item Beat tracking is an important initioal step in computer emulation of human musc understanding, since beats are fundamental to the perception of (Western) music.
-\item The goal of beat tracking is to construct a computational algorithm capable of extracting a symbolic representation which correspond to the phenomenal experience of beat or pulse in a human listener.
-\item The primary information required for beat tracking is the onset times of musical events, i.e., musical notes and percussive sounds, and this is sufficient for music of low complexity and litle variation in tempo.
-\item The interpretation of beat is on of the most fundamental aspects of musical intelligence.
-\item A naive approach to describe the rhythm of musical data is to specify an exhaustive and accurate list of onset times, maybe together with some other musical features characterising those event, e.g., durations, pitches and intensitues. However, such a representations lacks abstraction. Diverse media used for rhyth transmission suffer a trade-off between the level of abstraction and the comprehensiveness of the representation. Standard (Western) music notation provites an accepted method for communication a composition to a performer, but it has little vale in representing the interpretation of a work as played in a caonter. On the other hand, an acoustic signal implicitly contains all rhythmic aspects but provides no abstraction whatsoever \cite{Gouyon2005}.
-\item The main goal in automatic rhythm desciption is the parsing of acoustic events that occur in time into the more abstract notions of metrical structure, tempo and timing. A major difficulty is the inherent ambiguity of rhythm, as discussed in section \ref{sec:difficulties}.
-\item How well does the proposed model gneralise to different musical styles?
+\item The aim of a beat tracker is to recover a sequence of time instants from a musical input that are consistent with the times when a human might tap their foot \cite{Ellis2007}. 
+\item Beat tracking is an important initial step in computer emulation of human music understanding, since beats are fundamental to the perception of (Western) music.
+\item The goal of beat tracking is to construct a computational algorithm capable of extracting a symbolic representation which correspond to the phenomenal experience of beat or pulse of a human listener.
+\item The primary information required for beat tracking is the onset times of musical events, i.e., musical notes and percussive sounds, and this is sufficient for music of low complexity and little variation in tempo.
+\item The interpretation of beat is one of the most fundamental aspects of musical intelligence.
+\item A naive approach to describe the rhythm of musical data is to specify an exhaustive and accurate list of onset times, maybe together with some other musical features characterizing those event, e.g., durations, pitches and intensities. However, such a representations lacks abstraction. Diverse media used for rhythm transmission suffer a trade-off between the level of abstraction and the comprehensiveness of the representation. Standard (Western) music notation provides an accepted method for communication a composition to a performer, but it has little value in representing the interpretation of a work as played in a concert. On the other hand, an acoustic signal implicitly contains all rhythmic aspects but provides no abstraction whatsoever \cite{Gouyon2005}.
+\item The main goal in automatic rhythm description is the parsing of acoustic events that occur in time into the more abstract notions of metrical structure, tempo and timing. A major difficulty is the inherent ambiguity of rhythm.
+\item How well does the proposed model generalize to different musical styles?
 \item The pattern recognition task is a nontrivial problem due to the wide variability of rhythm in music. 
-\item It could be tackled using handcrafted rules or heristics for distinguishing on with time instant a beat is base on the properties of the audio signal. In practice such an approach leads to a profileration of rules and of exeptions to the rules and so on, and ivariably gives poor results. Far better results can be obtained by adopting a machine learning approach in which a large set of $N$ tracks $\{\mathbf x_1, \dots, \mathbf x_N\}$ called a training set is used to tune the parameters of an adaptive model. The beat instants of the tracks are known in advance, typically by inspecting them indiviualy and hand-labelling them. So for every track $\mathbf x$ there is a target vector $\mathbf t$. The result of the machine learning algorithm can be expressed as a function $\mathbf y(\mathbf x)$ which takes a new track $\mathbf x$ as input and that generates an output vector $\mathbf y$, encoded in the same way as the target vectors. The precice form of the function $\mathbf y(\mathbf x)$ is determind during the training phase, on the basis of the training data. Once the model is trained it can then determine the identity of new tracks, which are said to comprise a test set. The ability to categorize correctly new examples thet differ from those used for training is known as generalization. In practical applications, the variability of the input vectors will be such that the trainig dta can comprise only a tiny fraction of all possible input vectors, and so generalization is a central goul in pattern recognition. 
+\item Beat tracking can be tackled using handcrafted rules or heuristics for distinguishing on which time instant a beat is based on the properties of the audio signal. In practice such an approach leads to a proliferation of rules and of exceptions to the rules and so on, and invariably gives poor results. Far better results can be obtained by adopting a machine learning approach in which a large set of $N$ tracks $\{\mathbf x^{(1)}, \dots, \mathbf x^{(N)}\}$ called a training set is used to tune the parameters of an adaptive model. The beat instants of the tracks are known in advance, typically by inspecting them individually and hand-labeling them. So for every track $\mathbf x$ there is a target vector $\mathbf y$. The result of the machine learning algorithm can be expressed as a function $\hat{\mathbf y} = \phi (\mathbf x)$ which takes a new track $\mathbf x$ as input and that generates an output vector $\hat{\mathbf y}$, encoded in the same way as the target vectors. The precise form of the function $\phi (\mathbf x)$ is determined during the training phase, on the basis of the training data. Once the model is trained it can then determine the identity of new tracks, which are said to comprise a test set. The ability to categorize correctly new examples that differ from those used for training is known as generalization. In practical applications, the variability of the input vectors will be such that the training data can comprise only a tiny fraction of all possible input vectors, and so generalization is a central goal in pattern recognition. 
 \item Applications in which the training data comprises examples of the input vectors along with their corresponding target vectors are known as supervised learning problems. 
 \end{itemize}
 
@@ -46,26 +72,26 @@
 
 \paragraph{Difficulties of Beat Tracking}
 \label{sec:difficulties}
-It is difficult to reliably extract high-level rhythm related features from musical excerpt having properties such as [Quinton2016]
 \begin{itemize}
-\item The principal reason that beat tracjing is intrinsically difficult is that is is the problem of inferring an original beat strucutre that is not expressed explicitly. The degree of beat tracking difficulty is therefore not determided simply by the number of musical instruents performing a musical piexe it depends on how explicitly the beat structure is expressed in the piece. However, it is very difficult to measure its explicitness because it is influenced from various aspects of the songs.
-\item The larger the number of syncopation, the greater the difficulty of beat tracking (quantitative measure: power-difference measure \cite{Goto1999})
-\item The main reason that different tendencies with regard to the explicitness with which their beat structure is indicated.
-\item There is not necessarily a specific sound that directly indicates tho position of beats. In fact, a musical beat may not directly correspond to a real sound, there may even be no signal on a beat. 
+\item It is difficult to reliably extract high-level rhythm related features from musical excerpt having properties such as soft onsets, heavy syncopation or making use of expressive timing (e.g. rubato playing) \cite{Quinton2016}.
+\item The principal reason that beat tracking is intrinsically difficult is that it is the problem of inferring an original beat structure that is not expressed explicitly. The degree of beat tracking difficulty is therefore not determined simply by the number of musical instruments performing a musical piece, it depends on how explicitly the beat structure is expressed in the piece. However, it is very difficult to measure its explicitness because it is influenced from various aspects of the songs.
+\item The larger the number of syncopation, the greater the difficulty of beat tracking (quantitative measure: power-difference measure \cite{Goto1999}).
+\item The main reason that different tendencies with regard to the explicitness with which the beat structure is indicated.
+\item There is not necessarily a specific sound that directly indicates the position of beats. In fact, a musical beat may not directly correspond to a real sound, there may even be no signal on a beat. 
 \item absence of a clear rhythmic structure (Classical music)
 \item soft onsets
-\item blurred note transitions (e.g. classigal music dominated by string instruments)
+\item blurred note transitions (e.g. classical music dominated by string instruments)
 \item heavy syncopation
 \item expressive timing (e.g. rubato playing)
 \item the problem of 'octave errors' (detecting double or half time the rate of the ground truth)
-\item acoustiv signals consit of sound of various kinds of instruments
-\item the onsets of notes are difficult to obtain, unlike the case of MIDI signals, where there is no such problem.
-\item a beat may not directly correnspond to a real sound. It is a perceptal concept that human feels in music. 
-\item Multiple interpretations of beats are possible at any given time
-\item There is no simple relationship beteen polyphonic complexity - the number and timbres of notes played at a single time - in apiece of music, and its rhythmic complexity or pulse complexity \cite{Scheirer1998}. There are pieces and sryles of music which are texturally and timbrally complex, but have straighforward, perceptual simple rhythms; and ther also exist music which deal in less complex textures but are more difficult to rhythmically understand an describe.
-\item The complexity of grouping harmonic partials together to form notes, and determining the onst times of those.
+\item Acoustic signals consist of sound of various kinds of instruments.
+\item The onsets of notes are difficult to obtain, unlike the case of MIDI signals, where there is no such problem.
+\item A beat may not directly correspond to a real sound. It is a perceptual concept that human feels in music. 
+\item Multiple interpretations of beats are possible at any given time.
+\item There is no simple relationship between polyphonic complexity -- the number and timbres of notes played at a single time -- in apiece of music, and its rhythmic complexity or pulse complexity \cite{Scheirer1998}. There are pieces and styles of music which are texturally and timbrally complex, but have straightforward, perceptual simple rhythms; and there also exist music which deal in less complex textures but are more difficult to rhythmically understand an describe.
+\item The complexity of grouping harmonic partials together to form notes, and determining the onset times of those.
 \item For this reason Cemgil et al. \cite{Cemgil2001} define music transcription as the extraction of an \emph{acceptable} music notation.
-\item Ther is no canonical form for representing rhythm, and lacking this ground truth, it is difficult, if not impossible, to provide a meaningful quantitative comparison of the variuos computer systems. Therefore we need a common database of test music labelled with the ground truth on which the systems are tested. 
+\item There is no canonical form for representing rhythm, and lacking this ground truth, it is difficult, if not impossible, to provide a meaningful quantitative comparison of the various computer systems. Therefore we need a common database of test music labeled with the ground truth on which the systems are tested. 
 \end{itemize}
 
 
@@ -79,28 +105,26 @@ It is difficult to reliably extract high-level rhythm related features from musi
 
 
 \paragraph{Applications of Beat Tracking}
-
-Estimating the beats of an musical audio opens new possibilities for a wide range of applications. 
-
 \begin{itemize}
-\item Beat tracking can be used to automate the time-consuming tasks that must be completed in order to synchronize events with music. 
-\item Video and audio editing (visual track can be automatically synchronized with an audio track using beat tracking)
+\item Estimating the beats of an musical audio opens new possibilities for a wide range of applications. 
+\item Beat tracking can be used to automate time-consuming tasks that must be completed in order to synchronize events with music. 
+\item Video and audio editing, e.g., the visual track can be automatically synchronized with an audio track using beat tracking.
 \item Stage light control. In live performances, beat tracking is useful in the control of stage lighting by a computer. For instance, various properties of lighting such as color, brightness, direction, and effect can be changed in time to the music.
-\item Visualization for example time-grid in audio sequencers.
+\item Visualization, e.g., time-grid representation in audio sequencers.
 \item Musical interaction systems \cite{Robertson2007}
 \item Content-based audio effects, for multimedia or interactive performances or studio post-production
-\item Beat-driven reat-time computer graphics.
-\item Temoral segmentation to higher level MIR tasks such as chord estimation for harmonic description \cite{Bello2005b}.
-\item Long-term structural segmentaion of audio \cite{Bartsch2005}
+\item Beat-driven real-time computer graphics.
+\item Temporal segmentation to higher level MIR tasks such as chord estimation for harmonic description \cite{Bello2005b}.
+\item Long-term structural segmentation of audio \cite{Bartsch2005}
 \item performance analysis investigates the interpretation of musical works, e.g., the performer's choice of tempo and expressive timing. 
-\item In audio content analysis beat tracking is important for automatic indexing and content-based retrieval of audio data, such as in multimedia databases and libraries.
+\item In audio content analysis, beat tracking is important for automatic indexing and content-based retrieval of audio data, such as in multimedia databases and libraries.
 \item Automatic transcription and score extraction from performance data 
 \item Music similarity
-\item Time-streching of audio loops
+\item Time-stretching of audio loops
 \item Beat tracking can provide computers the ability to participate intelligently in live performances in real time and join the ensemble.
-\item synchronisation of a musical performance with computers or other devices
-\item Commercial devices already exist that attept to extract a MIDI clock from an audio signal, indication both the tempo and the actual location of the beat. Such MIDI clocks can the be used to synchronize other devices such as drum machines or audio effects, enabling a new range of beat-synchronized audio processing.
-\item Automatic playlist generation, where a computer is given the task to choose a series of audio tracks from a track database in a way similar to what a human deejay would do. The track tempo is a very important selection criterion in this context, as deejays will tend to string tracks with similar tempi back to back. Furthermore, deejays also tend to perform beat-synchronous crossfading between successive track manualy, slowing down or speeding up one of the tracks so that the beat in the two tracks line up exactly during the crossfade. This can easily be done automatically once the beats are located in the two tracks.
+\item synchronization of a musical performance with computers or other devices
+\item Commercial devices already exist that attempt to extract a MIDI clock from an audio signal, indication both the tempo and the actual location of the beat. Such MIDI clocks can the be used to synchronize other devices such as drum machines or audio effects, enabling a new range of beat-synchronized audio processing.
+\item Automatic playlist generation, where a computer is given the task to choose a series of audio tracks from a track database in a way similar to what a human deejay would do. The track tempo is a very important selection criterion in this context, as deejays will tend to string tracks with similar tempi back to back. Furthermore, deejays also tend to perform beat-synchronous cross-fading between successive track manually, slowing down or speeding up one of the tracks so that the beat in the two tracks line up exactly during the cross-fade. This can easily be done automatically once the beats are located in the two tracks.
 \end{itemize}
 
 
@@ -133,7 +157,7 @@ This chapter is an overview of related work that fostered the development of bea
 \label{fig:history}
 \end{figure}
 
-The traditional approach of beat tracking consists of extracting features from the audio signal to obtain a feature list. These features range from note onsets, as time, duration and pitch, to frequency-based signal features and they convey predominant information relevant to rhythmic analysis. The feature extraction is usually followed by a periodicity detection stage and the estimated periodicities subsequently determine the beat times using a temporal decoding strategy. Nevertheless, the recent trend in beat tracking is a shift away from purely signal processing approaches to data-driven approaches incorporating machine learning. In the following, the approaches of worth mentioning works are represented chronologically. 
+The traditional approach of beat tracking consists of extracting features from an audio signal to obtain a feature list. These features range from note onsets, as time, duration and pitch, to frequency-based signal features and they convey predominant information relevant to rhythmic analysis. The feature extraction is usually followed by a periodicity detection stage and the estimated periodicities subsequently determine the beat times using a temporal decoding strategy. Nevertheless, the recent trend in beat tracking is a shift away from purely signal processing approaches towards data-driven approaches incorporating machine learning. In the following, most influential approaches are represented chronologically. 
 
 % \begin{itemize}
 % \item 
@@ -149,13 +173,13 @@ The traditional approach of beat tracking consists of extracting features from t
 
 % Should I add Chowning et al. 1984?
 
-Schloss \cite{Schloss1985} presented one of the earliest work on automatic extraction of rhythmic content from audio in his percussion transcription system. Onsets are detected as peaks in the slope of the amplitude envelope, where the envelope is defined to be equal to the maximum amplitude in each period of the high-pass filtered signal, and the period defined as the inverse of the lowest frequency expected to be present in the signal. The main limitation of the system is that it requires parameters to be set interactively. 
+Schloss \cite{Schloss1985} proposed one of the earliest work on automatic extraction of rhythmic content from audio in his percussion transcription system. Onsets are detected as peaks in the slope of the amplitude envelope, where the envelope is defined to be equal to the maximum amplitude in each period of the high-pass filtered signal. The period is defined as the inverse of the lowest frequency expected to be present in the signal. The main limitation of the system is that it requires parameters to be set interactively. 
 
-Allen and Dannenberg \cite{Allen1990} extended the musical concept of beat to include two aspects, namely period and phase. Based on that concept, they built a method that uses real-time beam search to allow the beat tracker to consider several possible stages at once. They use a credibility measure so that at any given time there is a set of active states that represent the most credible interpretations for the performance encountered so far. However, the system's reliance on MIDI limited the input source to electronic instruments, and moreover limited its application.
+Allen and Dannenberg \cite{Allen1990} extended the musical concept of beat by including two aspects, namely period and phase. Based on that concept, they built a method that uses real-time beam search to allow the beat tracker to consider several possible stages at once. They use a credibility measure so that at any given time there is a set of active states that represent the most credible interpretations for the performance encountered so far. However, the system's reliance on MIDI limited the input source to electronic instruments, and moreover limited its application.
 
-Goto and Muraoka \cite{Goto1994} introduce the first worth mentioning beat tracking system which could process music played on ensembles of a variety of instruments. However, they restricted their system to rock and pop music in which drums maintain the beats. The system leverages the fact that for a large class of popular music, a bass drum and a snare drum usually occur on the strong and weak beats, respectively. It manages multiple agents that track beats according to different strategies in order to examine multiple hypothesis in parallel. All hypotheses are gathered and the most reliable one is selected as the output. This enables the system to follow beats without losing track if them, even if some hypothesis became wrong. Assumptions were made; between 65 and 185 BPM, time-signature is 4/4, tempo stays almost constant. In following developments, Goto present a beat tracking system for both music with and without drum-sounds \cite{Goto2001}. It uses frequency-domain analysis to detect chord changes, which are assumed to occur in metrically strong positions. This is the fist system to demonstrate the use of high level information in directing the lower-level beat tracking process. The high level information is specific to the musical style, which is a major limitation of the system.  
+Goto and Muraoka \cite{Goto1994} introduce the first worth mentioning beat tracking system which could process music played on ensembles of a variety of instruments. However, they restricted their system to rock and pop music in which drums maintain the beats. The system leverages the fact that for a large class of popular music, a bass drum and a snare drum usually occur on the strong and weak beats, respectively. In their algorithm, multiple agents estimate beat times according to different strategies in order to examine multiple hypothesis in parallel. All hypotheses are gathered and the most reliable one is selected as the output. This enables the system to follow beats without losing track of them, even if some hypothesis become wrong. Assumptions were made; tempo between 65 and 185 BPM, time-signature is 4/4, tempo stays almost constant. In following developments, Goto \cite{Goto2001} presents a beat tracking system for both music with and without drum-sounds. It uses frequency-domain analysis to detect chord changes, which are assumed to occur in metrically strong positions. This is the fist system to demonstrate the use of high level information in directing the lower-level beat tracking process. The high level information is specific to the musical style, which is a major limitation of the system.  
 
-Scheirer \cite{Scheirer1998} figured out from psychoacoustic demonstration on beat perception, that amplitude envelopes from a small number of broad frequency channels are sufficient information to rhythmically analyze musical content. He concludes that a rhythmic processing algorithm should treat frequency bands separately, combining results at the end, rather than attempting to perform beat tracking on the sum of filter-bank outputs. This leads him to the use of a small number of bandpass filters and banks of parallel comb filters, which function as tuned resonators, to perform periodicity analysis. In the next processing step, the phase of the musical signal is extracted by examining the internal state of the delays of the comb filters. Finally, the phase and the period is used to estimate the beat times as far into the future as desired. One problem with the system is that in order to track tempo changes, the system must repeatedly change its choice of filter, which implies the filters must be closely spaced to be able to smoothly track tempo variations. However, the system applies no continuity constraint when switching between filters.  
+Scheirer \cite{Scheirer1998} concludes from psychoacoustic studies on beat perception, that amplitude envelopes from a small number of broad frequency channels are sufficient information to rhythmically analyze musical content. He infers that a rhythmic processing algorithm should treat frequency bands separately, combining results at the end, rather than attempting to perform beat tracking on the sum of filter-bank outputs. This leads him to the use of a small number of bandpass filters and banks of parallel comb filters, which function as tuned resonators, to perform periodicity analysis. In the next processing step, the phase of the musical signal is extracted by examining the internal state of the delays of the comb filters. Finally, the phase and the period is used to estimate the beat times as far into the future as desired. One problem with the system is that in order to track tempo changes, the system must repeatedly change its choice of filter, which implies the filters must be closely spaced to be able to smoothly track tempo variations. However, the system applies no continuity constraint when switching between filters.  
 
 Dixon \cite{Dixon2001} processes a sequence of note onset times either extracted from an audio signal or from a symbolic representation within a multi-agent system. Likely tempo hypotheses are derived from clustering inter-onset intervals (IOI), thus encoding aspects of the metrical hierarchy. The hypothesis are used to form multiple beat agents using a paradigm, where each agent has a state consisting of the period and the phase of the beat. The sequence of beat times with the best score to date is selected by the agent. The observations are only processed if they occur around the predicted beat locations, i.e., within a window whose width depends on the pulse period. The algorithm is designed to track beats in expressively performed music.
 % add Dixon 2003
@@ -172,29 +196,29 @@ Dixon \cite{Dixon2001} processes a sequence of note onset times either extracted
 % \item Dixon et al. \cite{Dixon2003} employ tolerance intervals proportional to the IOIs, so longer IOIs allow for greater variations.
 % \end{itemize} 
 
-Cemgil et al. \cite{Cemgil2001} formulate beat tracking in a Bayesian framework where tempo and beat is modeled as a stochastic dynamical system. The system is defined with two hidden state variables, namely the period and the phase of beat. To this deterministic model, they add a Gaussian random vector whose covariance matrix models the likely tempo variations. State transitions are defined by a simple set of equations that describe how state variables evolve with time. 
-Because all noises are assumed to be Gaussian and all relationships between variables are linear, the covariance matrix can be efficiently estimated by a Kalman filter. They also define the tempogram representation which includes a probability distribution over the period and phase given a list of onset. This probability distribution is proportional to the likelihood of the observed onsets under given period and phase hypotheses, weighted by prior distribution, which is equally distributed, as they consider all tempi to be initially equiprobable. For given periods and phases, the likelihood is computed as the integral over all onsets of the product of a constant pulse track and a continuous representation of the onsets. This implements the assuption that a good pulse track is one which matches all onsets well. The tempogram marginal probability distribution $p(\omega | t)$ provides a 1-D representation of periodicities resembling those aforementioned. 
+Cemgil et al. \cite{Cemgil2001} formulate beat tracking in a probabilistic Bayesian framework where tempo and beat is modeled as a stochastic dynamical system. The system is defined with two hidden state variables, the period and the phase of beat. To this deterministic model, they add a Gaussian random vector whose covariance matrix models the likely tempo variations. State transitions are defined by a simple set of equations that describe how state variables evolve with time. 
+Because all noises are assumed to be Gaussian and all relationships between variables are linear, the covariance matrix can be efficiently estimated by a Kalman filter. They also develop the tempogram representation which includes a probability distribution over the period and phase given a list of onset. This probability distribution is proportional to the likelihood of the observed onsets under given period and phase hypotheses, weighted by prior distribution, which is equally distributed, as they consider all tempi to be initially equiprobable. For given periods and phases, the likelihood is computed as the integral over all onsets of the product of a constant pulse track and a continuous representation of the onsets. This implements the assuption that a good pulse track is one which matches all onsets well. The tempogram's marginal probability distribution provides a 1-D representation of periodicities resembling those aforementioned. 
 %  will be estimated through a training phase.
 
 % Temperley and Sleater \cite{Temperley1999} use dynamic programming to search the solution space of possible mappings of events to a metrical grid, where the search is guided by a set of preference rules based of GTTM.
 
-Laroche \cite{Laroche2003} initially finds salient features like note onsets, note changes, and percussion hists by calculating the Fourier transform of an audio signal. A nonlinear monotonic compression function is applied to the amplitude spectrum, so high-frequency components are not masked by higher amplitude low-frequency components. To locate fast variations in the frequency domain contents, a first-order difference is calculated. All bins are summed together, and the result is half-wave rectified to obtain a positive energy flux signal. A least-squares approach is used to determine the best candidates for the tempo and beat locations. The final step consist of going through the successive tempo analysis frames and finding in each frame the best candidates. To that effect a dynamic programming technique is used. This entails continuity and non-syncopation constraints. 
+Laroche \cite{Laroche2003} initially finds salient features like note onsets, note changes, and percussion hists by calculating the Fourier transform of an audio signal. A nonlinear monotonic compression function is applied to the amplitude spectrum, so high-frequency component is not masked by higher amplitude low-frequency components. To locate fast variations in the frequency domain content, a first-order difference is calculated. All bins are summed together, and the result is half-wave rectified to obtain a positive energy flux signal. A least-squares approach is used to determine the best candidates for the tempo and beat locations. The final step consist of going through the successive tempo analysis frames and finding in each frame the best candidates. To that effect a dynamic programming technique is used. This entails continuity and non-syncopation constraints. 
 
-Klapuri et al. \cite{Klapuri2005} expand upon Scheirer's amplitude envelope and comb filter model. They adopt a more robust registral accent signal across four parallel analysis bands as the input to their system and use comb filterbanks within a probabilistic framework to simultaniously track three metrical levels. These correspond to the tatum, tactus and measure, which are explained in section \ref{sec:perception}. Analysis can be performed causally an noncausally, and is not restricted to any particular genre, tempo or time-signature. The robustness of the analysis model is due to the probabilistic modelling of the temporal evolution and interaction between each og the three metrical levels analysed. In a study of audio temoo induction algorhithms \cite{Gouyon2006b}, this approach was shown to be most accurate.
+Klapuri et al. \cite{Klapuri2005} expand upon Scheirer's amplitude envelope and comb filter model. They adopt a more robust registral accent signal across four parallel analysis bands as the input to their system and use comb filter-banks within a probabilistic framework to simultaneously track three metrical levels. These correspond to the tatum, tactus and measure. Analysis can be performed causally an non-causally, and is not restricted to any particular genre, tempo or time-signature. The robustness of the analysis model is due to the probabilistic modeling of the temporal evolution and interaction between each og the three metrical levels analyzed. In a study of audio tempo induction algorithms \cite{Gouyon2006b}, this approach was shown to be most accurate.
 
-Davies and Plumbley \cite{Davies2007} adopt a simpler and more efficient, heuristic approach than the system of Klapuri by embedding context-dependent information directly into the beat period and alignment estimation processes. They use two state model; the first state performs tempo induction and tracks tempo changes, while the second maintains contextual continuity within a single tempo hypotheseis. The first state, also called general state, operates in a memoryless fashion, extracting the beat period and beat alignment through a process of repeated induction. In this manner, the two-state model can explicitly model tempo discontinuities while smoothing out odd beat errors during each consistent beat period hypothesis. 
+Davies and Plumbley \cite{Davies2007} adopt a simpler and more efficient, heuristic approach than the system of Klapuri by embedding context-dependent information directly into the beat period and alignment estimation processes. They use two state model; the first state performs tempo induction and tracks tempo changes, while the second maintains contextual continuity within a single tempo hypotheses. The first state, also called general state, operates in a memoryless fashion, extracting the beat period and beat alignment through a process of repeated induction. In this manner, the two-state model can explicitly model tempo discontinuities while smoothing out odd beat errors during each consistent beat period hypothesis. 
 
-Peeters \cite{Peeters2009} approach is based on a probabilistic framework, in which the beat tracking problem is formulated in a hidden Markov model, that can be efficiantly solved with the Viterbi algorithm \cite{Viterbi1967}. An onset-energy-function, time-variable tempo, and meter serves as an input to the system. Beat times are decoded over beat-numbers according to observation and transition probabilities. A beat-template is used to derive the observation probabilities from the signal. For this purpose, a linear discriminant analysis finds the most discriminative beat-template. 
+Peeters \cite{Peeters2009} approach is based on a probabilistic framework, in which the beat tracking problem is formulated in a hidden Markov model, that can be efficiently solved with the Viterbi algorithm \cite{Viterbi1967}. An onset-energy-function, time-variable tempo, and meter serves as an input to the system. Beat times are decoded over beat-numbers according to observation and transition probabilities. A beat-template is used to derive the observation probabilities from the signal. For this purpose, a linear discriminant analysis finds the most discriminative beat-template. 
 % A significant change was introduced by Eyben who transit from signal processing to data-driven method which utilise the power of machine learning. 
 
-Böck and Schedl \cite{Boeck2011} present the first beat tracking system which is based on artificial neural networks. The network transforms the signal directly into a beat activation function, which represents the probability of a beat at each frame.  As network architecture they use a bidirectional recurrent neural network (RNN) with long short term memory (LSMT) units. The approach is inspired by the good results for musical onset detection \cite{Eyben2010} and extended to suit the needs for audio beat tracking by modifying the input representation and adding a peak detection stage. As input to the network, three filtered magnitude spectra with different window lengths and their first order differences are used. In a peak detection stage, first the periodicity within the activation function is detected with the autocorrelation function to deternine the most dominant tempo. The beats are then aligned according to the previously computed beat interval. In this way, erroneously detected beats are eliminated or missing beats are complemented.
+Böck and Schedl \cite{Boeck2011} present the first beat tracking system which is based on artificial neural networks. The network transforms the signal directly into a beat activation function, which represents the probability of a beat at each frame.  As network architecture they use a bidirectional recurrent neural network (RNN) with long short term memory (LSMT) units. The approach is inspired by the good results for musical onset detection \cite{Eyben2010} and extended to suit the needs for audio beat tracking by modifying the input representation and adding a peak detection stage. As input to the network, three filtered magnitude spectra with different window lengths and their first order differences are used. In a peak detection stage, first the periodicity within the activation function is detected with the autocorrelation function to determine the most dominant tempo. The beats are then aligned according to the previously computed beat interval. In this way, erroneously detected beats are eliminated or missing beats are complemented.
 
-Böck et al. \cite{Boeck2014} extend the previous beat tracking system of Böck and Schedl with a multi-model approach to represent different music styles. For this purpose, they use multiple recurrent neural networks, which are trained on certain heterogeneous music styles. The system chooses the model with the most appropriate beat activation function for the input signal and jointly models tempo and phase of the beats with a dynamic Bayesian network. Compared to a reference model, which was trained on the whole trainig set, the specialised models produce better predictions on input data which is similar to that used for training, but worse predictions on signals dissimilar to the training data.
+Böck et al. \cite{Boeck2014} extend the previous beat tracking system of Böck and Schedl with a multi-model approach to represent different music styles. For this purpose, they use multiple recurrent neural networks, which are trained on certain heterogeneous music styles. The system chooses the model with the most appropriate beat activation function for the input signal and jointly models tempo and phase of the beats with a dynamic Bayesian network. Compared to a reference model, which was trained on the whole training set, the specialized models produce better predictions on input data which is similar to that used for training, but worse predictions on signals dissimilar to the training data.
 
-Krebs et al. \cite{Krebs2015} propose a modified state-space discretisation and tempo transition model for the temporal decoding stage with dynamic Bayesian networks. The modification increases beat tracking accuracy and also reduces time and memory complexity. To be consistent with human tempo sensitivity, they propose to make the number of discrete bar positions dependent on the tempo and distribute the tempo states logarithmically across the range of beat intervals. 
+Krebs et al. \cite{Krebs2015} propose a modified state-space discretization and tempo transition model for the temporal decoding stage with dynamic Bayesian networks. The modification increases beat tracking accuracy and also reduces time and memory complexity. To be consistent with human tempo sensitivity, they propose to make the number of discrete bar positions dependent on the tempo and distribute the tempo states logarithmically across the range of beat intervals. 
 % See Section \ref{sec:temporal_decoding} for details.
 
-Davies and Böck \cite{Davies2019} suggest to use a convolutional neural network in form of a temporal convolutional network (TCN) \cite{Bai2018}. In comparison to the recurrent model of Böck et al. \cite{Boeck2014}, the TCN can be trained more efficiently on very large datasets due to parallelisation. It requires a smaller number of trainable parameters while achieving state-of-the-art performance. 
+Davies and Böck \cite{Davies2019} suggest to use a convolutional neural network in form of a temporal convolutional network (TCN) \cite{Bai2018}. In comparison to the recurrent model of Böck et al. \cite{Boeck2014}, the TCN can be trained more efficiently on very large datasets due to parallelization. It requires a smaller number of trainable parameters while achieving state-of-the-art performance. 
 
 
 
@@ -204,7 +228,7 @@ Davies and Böck \cite{Davies2019} suggest to use a convolutional neural network
 \section{Rhythm}
 \label{sec:perception}
 
-Rhythmic organization is an inhernt part of all human activity. In this chapter, basic principles and definitions about rhythm in music are explained.  
+Rhythmic organization is an inherent part of all human activity. As the time structure of music, rhythm is composed of distinct temporal components such as pattern, meter, and tempo. In this chapter, basic principles and definitions of those components of music are explained.  
 
 
 \subsection{Terminology}
@@ -214,7 +238,7 @@ In music and music theory, there are many different definitions of rhythm. Gener
 
 
 \paragraph{Onset} 
-An onset refers to the beginning of a musical note or other sound. Any rhythmic event is basically characterised by an onset time and a salience. They represent the most basic unit of rhythmic information, from which all beat and tempo information is derived. The concept of onsets is related to the concept of transients, but differs in the way that all musical notes have an onset, but do not necessarily include an initial transient. The more salient events are the more likely to correnspond to beat times than the less salient ones. This tendency for events with greater perceptual salience to occur in stronger metrical positions has been noted by various authors \cite{Lerdahl1985,Povel1985,Parncutt1994}. Lerdahl and Jackenhoff \cite{Lerdahl1985} classify musical accents into three types: phenomenal accents, which come from physical attributes of the signal such as amplitude and frequency; structural accents, which arise from perceived points of arrival and departure such as cadences; and metrical accents, points in time which are perceived as accented due to their metrical position.
+An onset refers to the beginning of a musical note or other sound. Any rhythmic event is basically characterised by an onset time and a salience. They represent the most basic unit of rhythmic information, from which all beat and tempo information is derived. The concept of onsets is related to the concept of transients, but differs in the way that all musical notes have an onset, but do not necessarily include an initial transient. The more salient events are, the more likely to correnspond to beat times than the less salient ones. This tendency for events with greater perceptual salience to occur in stronger metrical positions has been noted by various authors \cite{Lerdahl1985,Povel1985,Parncutt1994}. Lerdahl and Jackenhoff \cite{Lerdahl1985} classify musical accents into three types: phenomenal accents, which come from physical attributes of the signal such as amplitude and frequency; structural accents, which arise from perceived points of arrival and departure such as cadences; and metrical accents, points in time which are perceived as accented due to their metrical position.
 
 
 \paragraph{Beat} 
@@ -224,7 +248,7 @@ The term beat, or more technically the \emph{tactus}, refers to the perceived pu
 
 
 \paragraph{Tempo}
-Given a metrical structure, tempo is defined as the rate of beats at a given metrical level. Thus, it corresponds to the frequency of the primary pulse in a rhythmic musical signal. The tempo is commonly expressed as a number of beats per minute (BPM). In order to represent changing tempi, various approaches can be used. If tempo is considered as an instantaneous value, it can be calculated as the inter-beat interval (IOI) measured between each pair of successive beat. A more preceptual plausible approach is to take an average tempo measured over a longer period of time. A measure of central tendency of tempo over a complete musical excerpt is called the basic tempo, which is the implied tempo around which the expressive tempo varies \cite{Repp1994}. The value of tempo as a function of time is called a tempo curve, and can be visualized in a tempogram \cite{Cemgil2001}.
+Given a metrical structure, tempo is defined as the rate of beats at a given metrical level. Thus, it corresponds to the frequency of the primary pulse in a rhythmic musical signal. The tempo is commonly expressed as a number of beats per minute (BPM). In order to represent changing tempi, various approaches can be used. If tempo is considered as an instantaneous value, it can be calculated as the inter-beat interval (IOI) measured between each pair of successive beats. A more perceptual plausible approach is to take an average tempo measured over a longer period of time. A measure of central tendency of tempo over a complete musical excerpt is called the basic tempo, which is the implied tempo around which the expressive tempo varies \cite{Repp1994}. The value of tempo as a function of time is called a tempo curve, and can be visualized in a tempogram \cite{Cemgil2001}.
 
 
 \paragraph{Meter} 
@@ -250,43 +274,26 @@ The term meter refers to the regularly recurring patterns and accents such as be
 % old: Psychoacoustics and Human Perception
 \subsection{Rhythm Perception}
 
-More psychologically or cognitively motivated definitions associate rhythm to the perceived patterns generated by recurring events and how they interact and categorized by listeners. 
+The perception of music requires the ability to build a temporally ordered architecture of sound sequences in rapid succession. The complex processes underlying this ability have attracted accelerating research in ethology, developmental cognitive sciences, experimental psychology, musicology, and behavioural neurology.
 
-Perception of beat is a prerequisite to rhythm perception, which in turn is a fundamental part of music perception.
+The perception of beat is a prerequisite to rhythm perception, which in turn is a fundamental part of music perception. More psychologically or cognitively motivated definitions associate rhythm to the perceived patterns generated by recurring events and how they interact and categorized by listeners. Nevertheless, there is no ground truth for rhythm to be found in simple measurement of an acoustic signal. The only ground truth is what human listeners agree to be the rhythmic aspects of the musical content of the signal.
+
+Studies of Povel and Essnes \cite{Povel1985} have demonstrated that beat perception may be explained with a model in which a perceptual clock is aligned with the accent structure of the input. The model relies heavily on structural qualities of the input, such as a sophisticated model of temporal accent, to function. They propose a model of perception of temporal patterns, based on the idea that a listener tries to induce an internal clock which matches the distribution of accents in the stimulus and allows the pattern to be expressed in the simplest possible terms. They use patterns of identical tone bursts at precise multiples of $200\, \text{ms}$ apart to test their theory. 
+
+Jones et al. \cite{Jones1989} propose that perceived rhythm is the result of different attending modes, future-oriented and analytic attending. Future-oriented attending involves anticipatory behaviors to coherent temporal events and their durational patterns. They list the following types of phenomenal accent, which they consider incomplete: note onsets, sforzando, sudden dynamic or timbral changes, long notes, melodic leaps and harmonic changes. However, they give no indication as to how these factors might be compared or combined, either quantitatively (absolute values) or qualitatively (relative strengths). Each pair of events in a rhythmic sequence initially contributes to the salience of a single pulse sensation, an emphasis occurs, and later that pulse sensations can enhance the salience of other consonant pulse sensations \cite{Parncutt1994}. One may understand the ``initially'' above as an indication not to implement influential schemes between metrical levels in the induction process, but imdeed to do it in the tracking process. This is also in agreement with the Dynamic Attending Theory \cite{Jones1989}, which proposes that humans spontaneously focus on a reference level of periodicity, and they can later switch to other levels to track events occurring at different time spans, e.g., longer span harmony changes, or a particular shorter-span fast motive. Drake and Bertrand \cite{Drake2001} advocate a universal predisposition toward simple duration ratio, and claim that humans tend to hear a time interval as twice as long or short as previous intervals. 
+
+From psychoacoustic demonstration on beat perception it can be shown that certain kinds of signal manipulations and simplifications can be performed without affecting the perceived pulse content of a musical signal. An amplitude-modulated noise constructed by vocoding a white noise signal with the sub-band envelopes of a musical signal is sufficient to extract pulse and meter. The simplified signal is created by performing a frequency analysis of the original signal by processing it through a filter-bank of bandpass filters, or grouping FFT bins together. Thus it seems that separating the signal into sub-bands and maintaining the sub-band envelopes separately is necessary to do accurate rhythmic processing. This fact leads to the hypotheses that some sort of cross-band rhythmic integration, not simply summation across frequency bands, is performed by the auditory system to perceive rhythm \cite{Scheirer1998}.
 
 
-There is no ground thuth for rhythm to be found in simple measurement of an acoustic signal. The only ground truth is what human listeners agree to be the rhythmic aspects of the musical contetent of that signal
+The perception of tempo exhibits a degree of variability. It is not always correct to assume that the denominator of the time signature corresponds to the ``foot-tapping'' rate, nor to the actual ``physical tempo'' that would be an inherent property of audio flows \cite{Drake1999}. Differences in human perception of tempo depend on age, musical training, musical preferences and general listening context, e.g., tempo of a previously heard sequence, listener's activity, instant of the day \cite{Drake1993,Drake2000,Drake2000b}. Nevertheless, these differences are  far from random. They most often correspond to a focus on a different metrical level, e.g., differences of half or twice the inter-beat interval or one-third or three times the inter-beat interval. Perception research has shown that with up to $40\,\text{ms}$ difference in onset times, two tones are heard as synchronous, and for more than two tnoes, the threshold is up to $70\,\text{ms}$ \cite{Handel1989}. Rhythmic information is provided by IOIs in the range of approcimately $50\,\text{ms}$ to $2\,\text{s}$ \cite{Handel1989}. Experiments on the tempo sensitivity on humans have shown that the ability to notice tempo changes is proportional to the tempo, with the JND (just noticable difference) beeing around 2-5\% \cite{Drake1993}.
 
-The perception of tempo exhibits a degree of variability. It is not always correct to assume that the denominator of the time signature corresponds to the ``foot-tapping'' rate, nor to the actual ``physical tempo'' that would be an inherent property of audio flows \cite{Drake1999}.
-
-Studies of Povel and Essnes \cite{Povel1985} have demonstrated that beat perception may be explianed with a model in which a perceptual clock is aligned with the accent structure of the input. The model relies heavily on structural qualities of the input, such as a sophisticated model of temporal accent, to function. They propose a model of perception of temporal patterns, based on the idea that a listener tries to induce an internal clock which matches the distribution of accents in the stimulis and allows the pattern to be expressed in the simplest possible terms. They use patterns of identical tone bursts at precise multiples of $200\, \text{ms}$ apart to test their theory. 
+Rhythmic response is crucially a phased phenomenon, in contrast to human pitch recognition, which is only sensitive to signal phase under certain unusual conditions. Tapping on the beat is not at all the same as tapping against the beat or slightly ahead of or behind the beat, even if the frequency of tapping is accurate \cite{Scheirer1998}. Although in the brains of performers music is temporally organized according to its hierarchical beat structure, this structure is not explicitly expressed in music; it is implied in the relations among various musical elements which are not fixed and which are dependent on musical genres or pieces. Expressive timing is generated from performers' understanding of the musical structure and general knowledge of music theory and musical style \cite{Clarke1999}. However, there is no precise mathematical model of expressive timing, and the complexity of musical structure from which timing is derived, coupled with the individuality of each performer and performance, makes it impossible to capture musical nuance in the form of rules \cite{Dixon2001}. Nevertheless, expressive reductions in tempo are more common and more extreme than tempo increases \cite{Repp1994}. 
 
 
-Each pair of events in a rhythmic sequence initially contributes to the salience of a single pulse sensation (emphasis occurs), and later that pulse sensations can enhance the salience of other consonant pulse sensations \cite{Parncutt1994}. One may understand the initially above as an indication not to implement influential schemes beteen metrical levels in the induction process, but imdeed to do it in the tracjing process, which is also in agreement with the Dynamic Attending Theory \cite{Jones1989}. 
+% change transition prob in HMM
 
-Drake and Bertrand \cite{Drake2001} advocate a universal predisposition toward simple duration ratio, and claim that humans thend to hear a time interval as twice as long or short as previous intervals. The Dynamic Attending Theory \cite{Jones1989} proposes that humans spontaneously focus on a reference level of periodicity, and they can later switch to other levels to track events occuring at differnt time spans, e.g., longer span harmony changes, or a particular shorter-span fast motive.
 
-Jones et al. \cite{Jones1989} propose that perceived rhythm is the result of differnet attending modes (future-orianted and analytic) which involve anticipatory behaciors to coherent temporal events and their durational patterns. They list the following types of phenomenal accent, which they consider incomplete: note onsets, sforzandi, sudden dynamic or timbral changes, long notes, melodic leaps and harmonic changes. However, they give no indication as to how these factors might be compared or combined, either quantitatively (absolute values) or quanlitatively (relative strengths). Longer notes tend to be perceived as accented.
-
-Human pitch recognition is only sensitive to signal phase under certain unusual conditions. Rhthmic response is crucially a phased phenomenon - tapping on the beat is not at all the same as tapping against the beat. or slightly ahead of or behind the beat, even ig the frequency of tapping is accurate \cite{Scheirer1998}
-
-From psychoacoustic demonstration on beat perception it can be shown that certain kinds of signal manipulations and simplifications can be performed without affecting the perceived pulse content of a musical signal. An amplitude-modulated noise constructed by vocoding a white noise signal with the subband envelopes of a musical signal is sufficient to extract pulse and meter. The simplified signal is created by performing a frequency analysis of the original signal by processing it through a filterbank of bandpass filters, or grouping FFT bins together. Thus it seems that separating the signal into subbands and maintaining the subband envelopes separately is necessary to do accurate rhythmic processing. This fact leads to the hypotheses that some sort of cross-band ryhtmic integration, not simply summation across frequency bands, is performed by the auditory system to perceive rhythm \cite{Scheirer1998}.
-
-Although in the brains of performers music is temporally organized according to its hieaechical beat structure, this structure is not explicitly expressed in music; it is implied in the relations among variuos musical elements which are not fixed and which are dependent on musical genres or poeces.
-
-Expressive timing is generated from perforers' understanding of the musical structure an general knowledge of music theory and musical style \cite{Clarke1999}. However, there is no precise mathematical model of expressive timing, and the complexity of musical structure fro which timing is derived, coupled with the individuality of each performer and performance, makes it impossible to capture musical nuance in the form of rules \cite{Dixon2001}. 
-
-Expressive reductions in tempo are more common and more extreme than tempo increases \cite{Repp1994}. % change transition prob in HMM
-
-Differences in human perception of tempo depend on age, musical training, musical preferences and general listening context, e.g., tempo of a previously heard sequence, listener's activity, instant of the day \cite{Drake1993,Drake2000,Drake2000b}
-
-Differences in tempo perception are nevertheless far from random. They most often correspond to a focus on a different metrical level, e.g., differences of half or twice the inter-beat interval or one-third or three times the inter-beat interval. 
-
-Perception research has shown that with up to $40\,\text{ms}$ difference in onset times, two tones are heard as synchronous, and for more than two tnoes, the threshold is up to $70\,\text{ms}$ \cite{Handel1989}. Rhythmic information is provided by IOIs in the range of approcimately $50\,\text{ms}$ to $2\,\text{s}$ \cite{Handel1989}.
-
-Experiments on the tempo sensitivity on humans have shown that the ability to notice tempo changes is proportional to the tempo, with the JND (just noticable difference) beeing around 2-5\% \cite{Drake1993}.
-
-A listener who cannot identify chord names can nevertheless percieve chord changes.
+% A listener who cannot identify chord names can nevertheless percieve chord changes.
 
 % Many works in musicpsychology attempt to group musical onsets together into a rhythmic context, i.e., to construct a model which subsumes multiple onsets separated in time into a rhythmic clock, hierachy, grouping, or oscillatory model.
 
@@ -299,7 +306,7 @@ Machine learning is subset of artificial intelligence (AI) and deals with algori
 
 Most machine learning algorithms can be divided into the categories of \emph{supervised learning} and \emph{unsupervised learning}. Supervised learning algorithms build a mathematical model of a set of data that contains both the inputs and the desired outputs. Supervised learning algorithms include classification and regression. Unsupervised learning algorithms take a set of data that contains only inputs, and find structure in the data, like grouping or clustering of data points. 
 
-Machine learning tasks are usually described in terms of how the machine learning system should process an example $\mathbf x \in \mathbb R^n$, where an example is a collection of $n$ features $x_i$ that have been quantitatively measured from some object or event. Many kinds of tasks can be solved with machine learning, e.g. classification, regression, transcription, machine translation, synthesis, and sampling just to name a few.
+Machine learning tasks are usually described in terms of how the machine learning system should process an example $\mathbf x \in \mathbb R^n$, where an example is a collection of $n$ features $x_i$ that have been quantitatively measured from some object or event. Many kinds of tasks can be solved with machine learning, e.g. classification, regression, transcription, machine translation, synthesis, and sampling, just to name a few.
 
 In this thesis, the focus is on supervised sequence modeling and classification. In the following, basic concepts of machine learning are described. 
 
@@ -329,7 +336,7 @@ For most deep learning practitioners, sequence modeling is synonymous with recur
 
 \subsection{Feature Extraction}
 
-For most practical applications, the original input variables are typically preprocessed to transform them into a new space of variables, where it is hoped the pattern recognition problem will be easier to solve. This preprocessing stage is sometimes also called feature extraction. New test data must be preprocessed using the same steps as the training data. Preprocessing might also be performed in order to speed up the computation, for example if the goal is a real-time application the algorithm should be computationally feasible. Yet, the aim of feature selection is to find features in the input which preserve useful discriminatory information. Usually, the number of features is smaller than the number of input variables, thus a preprocessing is a form of dimensionality reduction. 
+For most practical applications, the original input variables are typically preprocessed to transform them into a new space of variables, where it is hoped the pattern recognition problem will be easier to solve. This preprocessing stage is sometimes also called feature extraction. New test data must be preprocessed using the same steps as the training data. Preprocessing might also be performed in order to speed up the computation, for example, if the goal is a real-time application the algorithm should be computationally feasible. Yet, the aim of feature selection is to find features in the input which preserve useful discriminatory information. Usually, the number of features is smaller than the number of input variables, thus a preprocessing is a form of dimensionality reduction. 
 
 % Dimension reduction
 
@@ -338,24 +345,25 @@ For most practical applications, the original input variables are typically prep
 
 \subsection{Performance Measure}
 
-To evaluate the abilities of a machine learning algorithm, we must design a quantitative measure of its performance. Usually the performance measure is specific to the task being carried out by the system. For the task of classification, the accuracy of the model is often measured. Accuracy is the proportion of examples for which the model produces the correct output. 
-
-The choice of performance measure may seem straightforward and objective, but it is often difficult to choose a performance measure that corresponds well to the desired behavior of the system. 
+To evaluate the abilities of a machine learning algorithm, we must design a quantitative measure of its performance. Usually the performance measure is specific to the task being carried out by the system. For the task of classification, the accuracy of the model is often measured. Accuracy is the proportion of examples for which the model produces the correct output. The choice of performance measure may seem straightforward and objective, but it is often difficult to choose a performance measure that corresponds well to the desired behavior of the system. 
 
 \paragraph{Loss Function}
-Cross entropy is defined for two probability distributions $p$ and $q$ as
+\begin{itemize}
+\item Cross entropy is defined for two probability distributions $p$ and $q$ as
 \begin{align}
 H(p,q) = - \sum_{x \in \mathcal X} p(x) \log q(x).
 \end{align} 
-In machine learning cross entropy can be used as a loss funciton to measures the performance of a classification model. The probability $p_{i}$ is the true label (binary indicator 0 or 1), where as the distribution $q_{i}$ is the predicted value of the current model. 
+\item In machine learning cross entropy can be used as a loss function to measures the performance of a classification model. The probability $p_{i}$ is the true label (binary indicator 0 or 1), where as the distribution $q_{i}$ is the predicted value of the current model. 
+\end{itemize}
+
 
 
 % Old: Architectures
 \subsection{Model Selection}
 
-In pracial applications, we determine the values of the model's parameters, and the principle objective in doing so is usually to achieve the best predictive performance on new data. Furthermore, as well as finding the appropriate values for complexity parameters within the model, we wish to consider a range of different types of model in order to finde the best one for our particular application. 
+In practical applications, the values of the model's parameters are determined by learning, and the principle objective in doing so is usually to achieve the best predictive performance on new data. Furthermore, as well as finding the appropriate values for complexity parameters within the model, one wish to consider a range of different types of model in order to find the best one for a particular application. 
 
-The performance on the training set is not a good indicator of predictive performance on unseen data due to the problem of over-fitting. If data is plentiful, then one approach is simply to use some of the availible data to train a range of models, or a given model with a range of values for its complexity parameters, and then to compare them on independet data, also called the validation set, and select the one having the best predictive performance. If the model design is iterated many times using a limited dataset, then some over-fitting to the validation data an occur and so it may be necessary to keep aside a third test set on which the performance of the selceted model is finally evaluated. 
+The performance on the training set is not a good indicator of predictive performance on unseen data due to the problem of over-fitting. If data is plentiful, then one approach is simply to use some of the available data to train a range of models, or a given model with a range of values for its complexity parameters, and then to compare them on independent data, also called the validation set, and select the one having the best predictive performance. If the model design is iterated many times using a limited dataset, then some over-fitting to the validation data an occur and so it may be necessary to keep aside a third test set on which the performance of the selected model is finally evaluated. 
 
 
 \begin{itemize}
@@ -366,11 +374,11 @@ The performance on the training set is not a good indicator of predictive perfor
 
 \subsection{Optimization}
 
-Most machine learning algorithms involve optimization which refers to the task of minimzing an objective function $f(\mathbf x)$ by altering the arguments $\mathbf x$. The goal of optimization is to find an optimal $\mathbf x^*$, such that
+Most machine learning algorithms involve optimization which refers to the task of minimizing an objective function $f(\mathbf x)$ by altering the arguments $\mathbf x$. The goal of optimization is to find an optimal $\mathbf x^*$, such that
 \begin{align}
 \mathbf x^* = \arg \min f(\mathbf x)
 \end{align} 
-Given the function $y=f(x)$, where both $x$ and $y$ are real numbers, the derivative $f'(x)$ is usefull for minimizing this function because it indicates how to change $x$ in order to make a small improvement in y. Thus, by moving $x$ in small steps with the opposite sign of the derivative, $f(x)$ is reduced. This technique is called gradient decent \cite{Cauchy1847}. When $f'(x)=0$, the derivative provides no more information about which direction to move and the function reaches a stationary point. Stationary points are classified into three kinds. A local minimum is a point where $f(x)$ is lower than at all neighboring points, and higher for a local maximum respectively. The third kind is known as saddle points where the derivative of the function has the same sign on both sides of the stadionary point.  
+Given the function $y=f(x)$, where both $x$ and $y$ are real numbers, the derivative $f'(x)$ is useful for minimizing this function because it indicates how to change $x$ in order to make a small improvement in y. Thus, by moving $x$ in small steps with the opposite sign of the derivative, $f(x)$ is reduced. This technique is called gradient decent \cite{Cauchy1847}. When $f'(x)=0$, the derivative provides no more information about which direction to move and the function reaches a stationary point. Stationary points are classified into three kinds. A local minimum is a point where $f(x)$ is lower than at all neighboring points, and higher for a local maximum respectively. The third kind is known as saddle points where the derivative of the function has the same sign on both sides of the stationary point.  
 
 In the context of machine learning, the objective function has many local minima that are not optimal and many saddle points surrounded by very flat regions. All of this makes optimization difficult, especially when the input to the function is multidimensional. Therefore, it is usually sufficient to find  a value of $f$ that is very low but not necessarily minimal in any formal sense. Thus, in gradient decent we decrease $f$ by moving in the direction of the negative gradient to propose a new point
 \begin{align}
@@ -380,11 +388,11 @@ where $\mu$ is the learning rate, a positive scalar determining the size of the 
 
 
 \paragraph{Stochastic Gradient Decent}
-Stochastic gradient descent (SGD) is an extension of the basic gradient descent algorithm. A recurring problem in machine learning is that large training sets are necessary for good generailzytion. At the same time, large learning sets are also more computationally expensive. Instead of using the whole learning set, a small set called minibatch is used to estimate the gradient
+Stochastic gradient descent (SGD) is an extension of the basic gradient descent algorithm. A recurring problem in machine learning is that large training sets are necessary for good generalization. At the same time, large learning sets are also more computationally expensive. Instead of using the whole learning set, a small set called minibatch is used to estimate the gradient
 \begin{align}
 \mathbf g = \frac{1}{N} \,\nabla_{\boldsymbol \theta} \sum_{i=1}^M L(\mathbf x^{(i)}, y^{(i)}, \boldsymbol \theta)
 \end{align}  
-where $L$ is the per-example loss depending on the input $\mathbf x$, the target $y$ and the model parameters $\boldsymbol \theta$. The minibatch size $M$ is typically chosen to be a relatively small number of examples, ranging from one to a few hundred \cite{Goodfellow2016}. Larger batches provide a more accurate estimate of the gradient, but with less than linear return. Multicore architectures are usually underutilized by extremely small batches. This motivatates using some absolute minimum batch size, below which there is no reduction in the time to precess a minibatch. Small batches can offer a regularization effect \cite{Wilson2003}, due to the noise they add to the learning process. Generalization error is often best for a batch size 1. Training with such a small batch size might require a small learning rate to maintain stability because of the high variance in the estimate of the gradient. The total runtime can ba very high as a result of the need to make more steps, both because of the reduced learning rate and because it takes more steps to observe the entire training set. 
+where $L$ is the per-example loss depending on the input $\mathbf x$, the target $y$, and the model parameters $\boldsymbol \theta$. The minibatch size $M$ is typically chosen to be a relatively small number of examples, ranging from one to a few hundred \cite{Goodfellow2016}. Larger batches provide a more accurate estimate of the gradient, but with less than linear return. Multicore architectures are usually underutilized by extremely small batches. This motivates using some absolute minimum batch size, below which there is no reduction in the time to precess a minibatch. Small batches can offer a regularization effect \cite{Wilson2003}, due to the noise they add to the learning process. Generalization error is often best for a batch size 1. Training with such a small batch size might require a small learning rate to maintain stability because of the high variance in the estimate of the gradient. The total runtime can ba very high as a result of the need to make more steps, both because of the reduced learning rate and because it takes more steps to observe the entire training set. 
 
 \paragraph{Back-Propagation}
 When a feedforward neural network takes an input $\mathbf x$ and produce an output $\hat{\mathbf y}$, information flows forward through the network, which is called forward propagation. During training, forward propagation can continue onward until it produces a scalar loss $L(\boldsymbol \theta)$. The back-propagation algorithm \cite{Rumelhart1988} allows the information from the loss to then flow backward through the network in order to compute the gradient. Computing an analytical expression for the gradient is straightforward, but numerically evaluationg such an expression can be computationally expensive. The back-propagation algorithm does so using a simpe and inexpensive procedure. To obtain an algebraic expression for the gradient of a scalar it recursively applies the chain rule with respect to any node in the comultational graph that produced that scalar. 
@@ -408,28 +416,40 @@ Regularization is one of the central concerns of the field of machine learning, 
 
 
 \paragraph{Weight Decay}
+\begin{itemize}
+\item 
+\end{itemize}
 
 
 \paragraph{Early Stopping} 
-Estimate generalization error with a validation set during training. Stop training when the error on the validation set rises (early stopping).
+\begin{itemize}
+\item Estimate generalization error with a validation set during training. Stop training when the error on the validation set rises (early stopping).
+\end{itemize}
+
 
 \paragraph{Dropout}
-
+\begin{itemize}
+\item 
+\end{itemize}
 
 
 \subsection{Validation}
 
-Usually the interest of a machine learning algorithm is in how well it performs on data that has not seen before, since this determines how well it will work when deployed in the real world. The ability to perform well on previously unobserved inputs is called generalization. The performance measure of the model is thus evaluated using a test set of data that is separated from the data used for training. What separates machine learning from optimization is that the generalization error, also called the test error, should be low as well. Formally, the generalization error is defined as the expected value of the error on a new input, where the expectation is taken across different possible inputs, drawn from the distribution of inputs we expect the system to encounter in practice.
+Usually, the interest of a machine learning algorithm is in how well it performs on data that has not seen before, since this determines how well it will work when deployed in the real world. The ability to perform well on previously unobserved inputs is called generalization. The performance measure of the model is thus evaluated using a test set of data that is separated from the data used for training. What separates machine learning from optimization is that the generalization error, also called the test error, should be low as well. Formally, the generalization error is defined as the expected value of the error on a new input, where the expectation is taken across different possible inputs, drawn from the distribution of inputs we expect the system to encounter in practice.
 
 There are two central challenges in machine learning, namely underfitting and overfitting. Underfitting occurs when the model is not able to obtain a sufficiently low error value on the training set. Overfitting occurs when the gap between the training error and test error is too large.
 
-If the supply of data for training and testing will be limited, and in order to build good models, we wish to use as much of the acailable data as possible for training. However, if the calidation set is small, it will give a relatively noisy estimate of predictive performance. One solution to this delemma is to use cross-validation.
+If the supply of data for training and testing will be limited, and in order to build good models, we wish to use as much of the available data as possible for training. However, if the validation set is small, it will give a relatively noisy estimate of predictive performance. One solution to this dilemma is to use cross-validation.
 
-\paragraph{Cross-validation}  The k-fold cross-validation alows a proportion $(k-1)/k$ of the availible date to be used for training while making use of all the data to assess performance. When data is particularly scarce, it may be appropiate to consider the case $k=N$, where $N $is the total number of data points, which gives the leave-one-out technique. One major drawback of cross-validation is that the number of training runs that must be performed is incresed by a factor of $k$, and this can prove problematic for models in which the training is itself computationally expensive.
+\paragraph{Cross-validation}  The k-fold cross-validation allows a proportion $(k-1)/k$ of the available data to be used for training while making use of all the data to assess performance. When data is particularly scarce, it may be appropriate to consider the case $k=N$, where $N$ is the total number of data points, which gives the leave-one-out technique. One major drawback of cross-validation is that the number of training runs that must be performed is increased by a factor of $k$, and this can prove problematic for models in which the training is itself computationally expensive.
 
-\paragraph{Test set method} Split the observarions into to disjunct subsets 
+\paragraph{Test set method} 
+\begin{itemize}
+\item Split the observations into to disjunct subsets.
+\item Typically, one uses about 80 percent of thr training data for training and 20 percent for validation \cite{Goodfellow2016}. 
+\end{itemize}
 
-Typically, one uses about 80 percent of thr training data for training and 20 percent for validation \cite{Goodfellow2016}. 
+
 
 % \begin{align*}
 % \text{observations}
@@ -450,8 +470,8 @@ Sometimes a setting is chosen to be a hyperparameter that the learning algorithm
 
 
 \begin{itemize}
-\item optimzie hyperparameters with nevergrad \cite{nevergrad}.
-\item instrumentation: turn a piece of code with parameters into a function defined on an n-dimensional continous data space
+\item hyperparameters are optimized with Nevergrad \cite{nevergrad}.
+\item instrumentation: turn a piece of code with parameters into a function defined on an n-dimensional continuous data space
 \end{itemize}
 
 
@@ -470,32 +490,28 @@ Sometimes a setting is chosen to be a hyperparameter that the learning algorithm
 \section{Deep Neural Networks}
 
 
-Deep neural networks are called networks because they are typically represented by composing together many different functions, 
+Deep neural networks are called ``deep'' because they are typically represented by composing together many different functions
 \begin{align}
 f(\mathbf x) = (f^{(L)} \circ f^{(L-1)} \circ \dots \circ f^{(2)} \circ f^{(1)})(\mathbf x)
 \end{align} 
-where $f^{(1)}$ is called the first layer, $f^{(2)}$ is called the second layer, and so on. The overal length $L$ of the chain gives the depth of the model. The name deep learning arose from this terminology. The final layer is called output layer. The dimensionality of the hidden layers determines the width of the model. 
+where $f^{(1)}$ is called the first layer, $f^{(2)}$ is called the second layer, and so on. The overal length $L$ of the chain gives the depth of the model. The final layer is called output layer. The dimensionality of the hidden layers determines the width of the model. 
 
 \subsection{Feedforward Neural Networks}
 
 Feedforward neural networks, or multilayer perceptrons (MLPs), are the quintessential deep learning models. The MLP was the first and simplest type of artificial neural network devised \cite{Schmidhuber2015}. In this network, the information moves in only one direction, forward, from the input nodes, to the output nodes. Thus, there are no cycles or loops in the network \cite{Zell1994}.
 
-The goal of a feedforward network is to approximate some function $f^*$. A feedforward network defines a mapping $\mathbf y = f(\mathbf x; \boldsymbol \theta)$ and learns the value of the parameters $\boldsymbol \theta$ that result in the best funtion approximation. 
-
-The model is associated with a directed acyclic graph describing how the functions are composed together.
-
-Feedforward networks are of extreme importance to machine learning practicioners, because they form the bases of many important commercial applications. 
+The goal of a feedforward network is to approximate some function $f^*$. A feedforward network defines a mapping $\mathbf y = f(\mathbf x; \boldsymbol \theta)$ and learns the value of the parameters $\boldsymbol \theta$ that result in the best function approximation. The model is associated with a directed acyclic graph describing how the functions are composed together. Feedforward networks are of extreme importance to machine learning practitioners, because they form the bases of many important commercial applications. 
 
 
 \subsection{Convolutional Neural Networks}
 
-A convolutional neural network (CNN) \cite{LeCun1989} is a class of deep neural networks specialized for processing data that has a grid-like topology, such as one-dimensional time series or two-dimensional data like raster graphics. CNNs are regularized versions of feedforward neural networks that simply use convolution in place of general matrix multiplication in at least one of their layers \cite{Goodfellow2016}. Usually, the operation used in a convolutional neural network does not correspond precisely to the mathematical definition of convolution. Instead, many neural network libraries implement a cross-correlation, which is the same as convolution but flipping the second argument. In the following this convention is obeyed and the convolution is defined as
+A convolutional neural network (CNN) \cite{LeCun1989} is a class of deep neural networks specialized for processing data that has a grid-like topology, such as one-dimensional time series or two-dimensional data like raster graphics. CNNs are regularized versions of feedforward neural networks that simply use convolution in place of general matrix multiplication in at least one of their layers \cite{Goodfellow2016}. Usually, the operation used in a convolutional neural network does not correspond precisely to the mathematical definition of convolution. Instead, many neural network libraries implement a cross-correlation, which is the same as convolution but flipping the second argument. In the following, this convention is obeyed and the convolution is defined as
 \begin{align}
 s(t) = (x * w)(t) = \sum_{\tau=-\infty}^{\infty} x(a)\,w(t+\tau)
 \end{align} 
-where $x$ is referred to as the input, $w$ as the filter or kernel and the output $s$ is referred to as the feature map. Discrete convolution can be viewed as multiplication by a matrix, but the matrix has several entries constrained to be equalt to other entries. In addition, convolution usually corresponds to a very sparse matrix. This is because the filter is usually much smaller than the input. 
+where $x$ is referred to as the input, $w$ as the filter or kernel, and the output $s$ is referred to as the feature map. Discrete convolution can be viewed as multiplication by a matrix, but the matrix has several entries constrained to be equal to other entries. In addition, convolution usually corresponds to a very sparse matrix. This is because the filter is usually much smaller than the input. 
 
-A typical layer of a convolutional neural network consists of three stages, as shown in Fig. \ref{fig:typical_cnn}. In the first stage, the layer performs several convolutions in parallel to produce a set of linear activations. In the second stage wich is sometimes called detector stage, each linear activation is run through a nonlinear activation function. In the third stage, a pooling function is used to modify the output of the layer further. 
+A typical layer of a convolutional neural network consists of three stages, as shown in Fig. \ref{fig:typical_cnn}. In the first stage, the layer performs several convolutions in parallel to produce a set of linear activations. In the second stage which is sometimes called detector stage, each linear activation is run through a nonlinear activation function. In the third stage, a pooling function is used to modify the output of the layer further. 
 
 \begin{figure}[htbp]
 \centering
@@ -504,7 +520,7 @@ A typical layer of a convolutional neural network consists of three stages, as s
 \label{fig:typical_cnn}
 \end{figure}
 
-A pooling function replaces the output of the net a a certain location with a summary statistic of the nearby outputs. For example, the max pooling \cite{Zhou1988} operation reports the maximum output within a rectangular neighborhood. In this way, pooling helps to make the representation approximately invariant to small translations of the input. Invariance to translation means that when a input is translated by a small amount, the values of most of the pooled outputs do not change.
+A pooling function replaces the output of the network at a certain location with a summary statistic of the nearby outputs. For example, the max pooling \cite{Zhou1988} operation reports the maximum output within a rectangular neighborhood. In this way, pooling helps to make the representation approximately invariant to small translations of the input. Invariance to translation means that when a input is translated by a small amount, the values of most of the pooled outputs do not change.
 
 % In the context of machine learning, the learning algorithm will learn the appropriate values of the filter. 
 
@@ -513,7 +529,7 @@ A pooling function replaces the output of the net a a certain location with a su
 
 \subsection{Recurrent Neural Networks}
 
-In deep learning, a recurrent neural network (RNN) \cite{Rumelhart1988} is a class of artificial neural networks where connections between nodes form a directed graph along a temporal sequence. Unlike feedforward neural networks, RNNs contain cycles and use an internal state memory $\mathbf h$ to process sequences of inputs \cite{Elman1990}. A universal recurrent neural network is decribed by the propagation equations,
+In deep learning, a recurrent neural network (RNN) \cite{Rumelhart1988} is a class of artificial neural networks where connections between nodes form a directed graph along a temporal sequence. Unlike feedforward neural networks, RNNs contain cycles and use an internal state memory $\mathbf h$ to process sequences of inputs \cite{Elman1990}. A universal recurrent neural network is described by the propagation equations,
 \begin{align}
 \mathbf h_t &= \text{Activation}(\mathbf U \,\mathbf x_t + \mathbf W \, \mathbf h_{t-1} + \mathbf b) \\
 \mathbf o_t &= \mathbf V \, \mathbf h_t + \mathbf c 
@@ -526,7 +542,7 @@ where the parameters are the bias vectors $\mathbf b$ and $\mathbf c$ along with
 \label{fig:rnn}
 \end{figure}    
 
-Computing the gradinets involves performing a forward propagation pass through the unrolled graph followed by a backward propagation pass. The runtime is $O(T)$ and cannot be reduced by parallelization because the forward propagation graph is inherently sequential, i.e., each time step may be computed only after the previous one. Therefore, back-propagation for recurrent model is called back-propagartion through time (BPTT). Recurrent models construct very deep computational graphs by repeatedly applying the same operation at each time step of a long temporal sequence. This gives rise to the vanishing and exloding gradient problem and makes it notoriously difficult to train RNNs. To prevend these difficulties more elaborate recurrent architectures were developed, such as the LSTM \cite{Hochreiter1997} and the GRU \cite{Cho2014}. These families of architectures have gained tremendois popularity due to prominent applications to language modeling and machine translation. 
+Computing the gradients involves performing a forward propagation pass through the unrolled graph followed by a backward propagation pass. The runtime is $O(T)$ and cannot be reduced by parallelization because the forward propagation graph is inherently sequential, i.e., each time step may be computed only after the previous one. Therefore, back-propagation for recurrent model is called back-propagation through time (BPTT). Recurrent models construct very deep computational graphs by repeatedly applying the same operation at each time step of a long temporal sequence. This gives rise to the vanishing and exploding gradient problem and makes it notoriously difficult to train RNNs. To prevent these difficulties more elaborate recurrent architectures were developed, such as the LSTM \cite{Hochreiter1997} and the GRU \cite{Cho2014}. These families of architectures have gained tremendous popularity due to prominent applications to language modeling and machine translation. 
 
 \paragraph{LSTM}
 The long short-term memory (LSTM) \cite{Hochreiter1997} is an recurrent neural network (RNN) architecture used in the field of deep learning. It comprises leaky units to allow the network to accumulate information over a long duration. However, once that information has been used it might be useful for the network to forget the old state. Instead of manually deciding when to clear the state, the neural network learns to decide when to do it. The time scale of integration can be changed dynamically by making the weights gated, i.e., controllable by another hidden unit.
@@ -545,15 +561,15 @@ The gated recurrent unit (GRU) \cite{Cho2014} is a gating mechanism in recurrent
 
 \subsection{Temporal Convolutional Networks}
 
-A temporal convolutional network (TCN) \cite{Bai2018} represents a special kind of convolutional neural network and is informed by recent convolutional architectures for sequential data. It is designed from first principles and combines simplicity, autoregressive prediction, and very long memory. In comparison to WaveNet \cite{Oord2016}, the TCN does not employ skip connections across layers (no conditioning, context stacking, or gated activations).
+A temporal convolutional network (TCN) \cite{Bai2018} represents a special architecture of convolutional neural network and is informed by recent convolutional architectures for sequential data. It is designed from first principles and combines simplicity, autoregressive prediction, and very long memory. In comparison to WaveNet \cite{Oord2016}, the TCN does not employ skip connections across layers (no conditioning, context stacking, or gated activations).
 
 The TCN is based upon two principles: 1) the convolutions are casual, i.e, no information leakage from future to past; 2) the architecture can take a sequence of any length and map it to an output sequence of the same length just as with an RNN. To achieve the first point, the TCN uses a 1D fully-convolutional network architecture \cite{Long2015}, where each hidden layer is the same length as the input layer. To accomplish the second point, the TCN uses causal convolutions, i.e., convolutions where an output at time $t$ is convolved only with elements from time $t$ and earlier in the previous layer.
 
-Simple causal convolutions have the disadvantage to only look back at history with size linear in the depth of the network. To circumvent this fact, the architecture employs dilated convolutions that enable an exponentially large receptive field. More formally, for a 1-D sequence input $\mathbf x \in \mathbb R^T$ and a filter $f:\{ 0, \dots, k-1\} \rightarrow \mathbb R$, the delated convolution operation $F$ on element $s$ of the sequence is defined as
+Simple causal convolutions have the disadvantage to only look back at history with size linear in the depth of the network. To circumvent this fact, the architecture employs dilated convolutions that enable an exponentially large receptive field. More formally, for a input sequence $\mathbf x \in \mathbb R^T$ and a filter $f:\{ 0, \dots, k-1\} \rightarrow \mathbb R$, the dilated convolution operation $F$ on element $s$ of the sequence is defined as
 \begin{align}
 F(s) = (\mathbf x *_d f)(s) = \sum_{i=0}^{k-1} f(i) \, \mathbf x_{s-d\cdot i}
 \end{align}
-where $d = 2^\nu$ is the dilation factor, with $\nu$ the level of the network, and $k$ is the filter size. The term $s-d\cdot i$ accounts for the direction of the past. Dilation is equivalent to introducing a fixed  step between every two adjacent filter taps, as it can be seen in Fig. \ref{fig:dilated_convolutions}. Using larger dilation enables an output at the top level to represent a wider range of inputs, thus effectivly expanding the receptive field of a CNN. There are two ways to increase the receptive field of a TCN: choosing lager filter sizes $k$ and increasing the dilation factor $d$, since the effective history of one layer is $(k-1) \, d$. 
+where $d = 2^\nu$ is the dilation factor, with $\nu$ the level of the network, and $k$ is the filter size. The term $s-d\cdot i$ accounts for the direction of the past. Dilation is equivalent to introducing a fixed  step between every two adjacent filter taps, as it can be seen in Fig. \ref{fig:dilated_convolutions}. Using larger dilation enables an output at the top level to represent a wider range of inputs, thus effectively expanding the receptive field of a CNN. There are two ways to increase the receptive field of a TCN: choosing lager filter sizes $k$ and increasing the dilation factor $d$, since the effective history of one layer is $(k-1) \, d$. 
 
 \begin{figure}[htbp]
 \centering
@@ -562,13 +578,13 @@ where $d = 2^\nu$ is the dilation factor, with $\nu$ the level of the network, a
 \label{fig:dilated_convolutions} 
 \end{figure}
 
-Another architectural element of a TCN are residual connections. In place of a convolutional layer, TCNs employ a generic residual module. Each residual block contains a branch leading out to a series of transformations $\mathcal F$, whose outputs are added to the input $\mathbf x$ of the block, 
+Another architectural element of a TCN are residual connections. In place of a convolutional layer, TCNs employ a generic residual module. Each residual block contains a branch leading out to a series of transformations $\mathcal F$, whose outputs are added to the input $\mathbf x$ of the block 
 \begin{align}
-o = \text{Activation} \big(\mathbf x + \mathcal F(\mathbf x)\big).
+o = \text{Activation} \big(\mathbf x + \mathcal F(\mathbf x)\big)
 \end{align}
 This effectively allows layers to learn modifications to the identity mapping rather than the entire transformation, which has been shown to benefit deep neural networks \cite{He2016}. Especially for very deep networks stabilization becomes important, for example, in the case where the prediction depends on a large history size ($> 2^{12}$) with a high-dimensional input sequence. 
 
-A residual block has two layers of dilated causal convolutions and recfied linear units (ReLU) as non-linearity, shown in Fig. \ref{fig:residual_block}. For normalization, weight normalization \cite{Salimans2016} is applied to the convolutional filters. In addition, a spatial dropout \cite{Srivastava2014} is added after each dilated convolution for regularization, i.e., at each training step, a whole channel is zeroed out.
+A residual block has two layers of dilated causal convolutions and rectified linear units (ReLU) as non-linearity, shown in Fig. \ref{fig:residual_block}. For normalization, weight normalization \cite{Salimans2016} is applied to the convolutional filters. In addition, a spatial dropout \cite{Srivastava2014} is added after each dilated convolution for regularization, i.e., at each training step, a whole channel is zeroed out.
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=1]{figures/residual_block.eps}
@@ -581,34 +597,20 @@ A residual block has two layers of dilated causal convolutions and recfied linea
 \item the convolutions are casual, that means no information leakage from future to past (compare to bidirectional RNN).
 \item long effective history sizes, i.e., the ability for networks to look very far into the past to make a prediction (receptive field?), by using a combination of very deep networks (augmented with residual layers) and dilated convolutions 
 \item this allows layers to learn modifications to the identity mapping rather than the entire transformation, which has been shown to benefit deep neural networks (where?)
-\item within a residual block there exist two layers of dilated causal convolution and a rectified linear unit (ReLU) \cite[Nair2010]{Nair2010} as a non-linearity
-\item for normalization a weight normalization \cite[Salimans2016]{Salimans2016} is applied to the convolutional filters 
-\item additionaly spatioal dropout \cite[Srivastava2014]{Srivastava2014} is added after each dilated convolution for regularization (at each training step, a whole channel is zeroed out)
-\item The TCN architecture appers not inly more accurate than canonical recurrent networks such as LSTMs and GRUs, but also simpler and clearer.
+\item within a residual block there exist two layers of dilated causal convolution and a rectified linear unit (ReLU) \cite{Nair2010} as a non-linearity
+\item for normalization a weight normalization \cite{Salimans2016} is applied to the convolutional filters 
+\item additionally spatial dropout \cite{Srivastava2014} is added after each dilated convolution for regularization (at each training step, a whole channel is zeroed out)
+\item The TCN architecture appears not inly more accurate than canonical recurrent networks such as LSTMs and GRUs, but also simpler and clearer.
 \end{itemize}
 
 
 
 
 
-% \paragraph{Trellis Networks}
-% \begin{figure}[htbp]
-% \centering
-% \includegraphics[scale=1.0]{figures/trellis_net_atomic_level.pdf}
-% \caption{TrellisNet at an atomic level.}
-% \label{fig:TrellisNetAtomic}
-% \end{figure}    
-% Input:  $x_{1:T} = x_1, \dots, x_T, \quad x_t \in \mathbb R^p, \quad x_{1:T} \in \mathbb R^{T \times p}$ \vspace{0.5em}\\ 
-% with sequence length  $T$  input dimensionality  $p$
-% Output: $y_{1:T} = y_1, \dots, y_T = G(x_1, \dots, x_T)$ \vspace{0.5em} \\
-% with function $G: \mathcal X^T \rightarrow \mathcal Y^T$ 
-% Hidden: $z_t^{(i)} \in \mathbb R^q$
-
 
 \subsection{General-Purpose Computing on GPUs} 
 
-In 2004, it was shown by K. S. Oh and K. Jung that standard neural networks can be greatly accelerated on GPUs. Their implementation was 20 times faster than an equivalent implementation on CPU \cite{Oh2004}. In 2005, another paper also emphasised the value of GPGPU for machine learning.[42]
-
+In 2004, it was shown by K. S. Oh and K. Jung that standard neural networks can be greatly accelerated on GPUs. Their implementation was 20 times faster than an equivalent implementation on CPU \cite{Oh2004}. In 2005, another paper also emphasized the value of GPGPU for machine learning \cite{Steinkraus2005}.
 
 While GPUs operate at lower frequencies, they typically have many times the number of cores. Thus, GPUs can process far more pictures and graphical data per second than a traditional CPU. Migrating data into graphical form and then using the GPU to scan and analyze it can create a large speedup.
 
@@ -619,7 +621,7 @@ While GPUs operate at lower frequencies, they typically have many times the numb
 % Old: Beat Tracking System
 \section{Method}
 
-From an overall perspective, the proposed automatic beat tracking system comprises three major stages, as shown in Fig. \ref{fig:system}. In the first stage the original audio is preprocessed. Data preprocessing refers to all transformations on the raw data before it is feed to the machine learning algorithm. It includes different methods such as normalization, transformation and feature extraction. 
+From an overall perspective, the proposed automatic beat tracking system comprises three major stages, as shown in Fig. \ref{fig:system}. In the first stage, the original audio is preprocessed. Data preprocessing refers to all transformations on the raw data before it is feed to the machine learning algorithm. It includes different methods such as normalization, transformation and feature extraction. 
 
 \begin{figure}[htbp]
 \centering
@@ -630,7 +632,7 @@ From an overall perspective, the proposed automatic beat tracking system compris
 
 
 \subsection{Dataset}
-For training and evaluation we use the datasets listed in Table \ref{tab:datasets}.
+For training and evaluation we use the available datasets listed in Table \ref{tab:datasets}.
 \begin{table}[htbp]
 \caption{Datasets used for training.}
 \label{tab:datasets}
@@ -666,7 +668,7 @@ The SMC dataset \cite{Holzapfel2012} contains 217 musical audio files. Each file
 
 \subsection{Data Preprocessing}
 
-The training dataset contains raw pulse code modulated (PCM) audio signals stored as WAV files. For the sake of consistency and also to reduce computational complexity every audio signal is resampled at a sampling rate $f_s = 44.1 \,\text{kHz}$ with $16\text{-bit}$ resolution and converted to a monaural signal by averaging both stereo channels. 
+The training dataset contains raw pulse code modulated (PCM) audio signals stored as WAV files. For the sake of consistency and also to reduce computational complexity, every audio signal is resampled at a sampling rate $f_s = 44.1 \,\text{kHz}$ with $16\text{-bit}$ resolution and converted to a monaural signal by averaging both stereo channels. 
 
 In complex polyphonic mixtures of music, simultaneously occurring events of high intensities lead to masking effects that prevent any observation of an energy increase of a low intensity onset \cite{Grosche2010}. To circumvent these masking effects, the signal is analyzed in a band-wise fashion to extract transients occurring in certain frequency regions of the signal. Therefore, a filtered frequency spectrum is chosen to serve as the input for the neural network.
 
@@ -677,7 +679,7 @@ The discrete audio signal $x(n)$ is segmented into overlapping frames of $N = 20
 \begin{align}
 X(t,\omega) = \sum_{n = 1}^{N} w(n) \, x(n + t\,h) \, e^{-2 \pi j \omega /N}
 \end{align} 
-where $t$ refers to as the frame index, $\omega$ the frequency bin index, and $h=441$ the hop size, i.e., the time shift in samples between adjacent frames. The complex spectrogram $X(t,\omega)$ is converted to the power spectrogram $|X(t,\omega)|^2$ by omitting the phase portion of the spectrogram. The power spectrogram is filtered with a bank of overlapping triangular filters $F(t,\omega)$ with 12 bands per octave covering a frequency range of $30$ to $17,000 \, \text{Hz}$. To better match the human perception of loudness, a logarithmic representation is chosen, 
+where $t$ refers to as the frame index, $\omega$ the frequency bin index, and the hop size $h=441$, i.e., the time shift in samples between adjacent frames. The complex spectrogram $X(t,\omega)$ is converted to the power spectrogram $|X(t,\omega)|^2$ by omitting the phase portion of the spectrogram. The power spectrogram is filtered with a bank of overlapping triangular filters $F(t,\omega)$ with 12 bands per octave covering a frequency range of $30$ to $17,000 \, \text{Hz}$. To better match the human perception of loudness, a logarithmic representation is chosen, 
 \begin{align}
 S(t,\omega) = \log \left( |X(t,\omega)|^2 \cdot F(t,\omega)^T + 1 \right)
 \end{align} 
@@ -692,32 +694,23 @@ and has dimensionality $n=88$.
 % https://musicinformationretrieval.wordpress.com/2017/04/25/audio-beat-tracking-human-annotation-strategies/
 
 
-
-
 \paragraph{Labels}
 The beat tracking task requires annotations in the form of time instants of beats from a musical excerpt. To this end, the beat tracking problem is considered as a binary classification problem, where annotated beat instants are first quantized to the temporal resolution of the input representation, and then represented as training targets $y_{1:T}$. Following the strategy of onset detection \cite{Schluter2014} the temporal activation region around the annotations is widen by means of including two adjacent temporal frames on either side of each quantized beat location and weight them with a value of $0.5$ during training. 
 
-% Separation of magnitude and phase:
-% \begin{align} 
-% X(n,k) = |X(n,k)| \, e^{\, j \phi(n,k)}
-% \end{align} 
 
-
-\paragraph{Training Set} 
-After preprocessing the audio data, we obtain the training set $ O = \left\{ \mathbf x^{(\alpha)}, \, y^{(\alpha)} \right \}_{\alpha = 1}^p$, with $p$ samples in total. 
-
-
+% \paragraph{Training Set} 
+% After preprocessing the audio data, we obtain the training set $ O = \left\{ \mathbf x^{(\alpha)}, \, y^{(\alpha)} \right \}_{\alpha = 1}^p$, with $p$ samples in total. 
 
 
 \paragraph{Chroma Representation}
 
 \begin{itemize}
 \item Chords are more likely to change in beat times than on other positions. Chords are more likely to change at the beginnings of measures than at other positions of the beat.
-\item A chromagram comprises a time-series of chroma vectors. which represent harmonic content at a specific time in the audio.
+\item A chromagram comprises a time-series of chroma vectors, which represent harmonic content at a specific time in the audio.
 \item Chromagrams are concise descriptors of harmony because they encode tone quality and neglect tone height.
-\item CRP (chroma DCT-reduced log-pitch) features have significant amount of robustness to changes in timbre an instrumentation \cite[Mueller2010]{Mueller2010}
-\item Employ data-driven approach to extract chromagrams that specifically encode content relevant to harmony 
-\item Chroma features are noisy in their basic formulation be- cause they are affected by various interferences: musical instruments produce overtones in addition to the funda- mental frequency; percussive instruments pollute the spec- trogram with broadband frequency activations (e.g. snare drums) and/or pitch-like sounds (tom-toms, bass drums); different combinations of instruments (and different, pos- sibly genre-dependent mixing techniques) create different timbres and thus increase variance [7,20] \cite{Korzeniowski2016}
+\item CRP (chroma DCT-reduced log-pitch) features have significant amount of robustness to changes in timbre an instrumentation \cite{Mueller2010}.
+\item Employ data-driven approach to extract chromagrams that specifically encode content relevant to harmony.
+\item Chroma features are noisy in their basic formulation be- cause they are affected by various interferences: musical instruments produce overtones in addition to the fundamental frequency; percussive instruments pollute the spectrogram with broadband frequency activations (e.g. snare drums) and/or pitch-like sounds (tom-toms, bass drums); different combinations of instruments (and different, possibly genre-dependent mixing techniques) create different timbres and thus increase variance \cite{Korzeniowski2016}.
 \end{itemize}
 
 
@@ -738,7 +731,7 @@ The convolutional block is a set of convolution and max pooling layers and reduc
 \label{fig:conv_block}
 \end{figure}    
 
-The output of the convolutional block $\mathbf z_t$ is a 16-dimensional feature vector and serves as the input to the TCN. The TCN is constructed as stacked residual blocks, as shown in Fig. \ref{fig:residual_block}, and contains $11$ layers with 16 filters of size $5$ and geometrically spaced dilations ranging from $2^0$ up to $2^{10}$ time frames. Thus, the resulting receptive field is approximately $81.5\,\text{s}$. A spatial dropout with rate $0.1$ and the ELU activation function is used. The output layer of the TCN has two units, representing the two classes ``beat'' and ``no beat''. Thus, the network can be trained as a binary classifier with the cross entropy error function. The outputs use the log softmax activation function, 
+The output of the convolutional block $\mathbf z_t$ is a 16-dimensional feature vector and serves as the input to the TCN. The TCN is constructed as stacked residual blocks, as shown in Fig. \ref{fig:residual_block}, and contains $11$ layers with 16 filters of size $5$ and geometrically spaced di\-lations ranging from $2^0$ up to $2^{10}$ time frames. Thus, the resulting receptive field is approximately $81.5\,\text{s}$. A spatial dropout with rate $0.1$ and the ELU activation function is used. The output layer of the TCN has two units, representing the two classes ``beat'' and ``no beat''. Thus, the network can be trained as a binary classifier with the cross entropy error function. The outputs use the log softmax activation function, 
 \begin{align}
 \log \text{softmax}(x_i) = \log\left(\frac{\exp{(x_i)}}{\sum_j \exp(x_j)}\right)
 \end{align} 
@@ -754,26 +747,24 @@ The final model is trained with the ADAM optimizer \cite{Kingma2014} with a batc
 % Binary classification problem: beat (class 1); no beat (class 0)
 
 
-
-
 \subsection{Temporal Decoding}
 \label{sec:temporal_decoding}
 
-The metrical structure of music builds upon a hierarchy of appriximatey regular pulses, as elaborated in Section \ref{sec:perception}. To explot this seqential structure, a probabilistic dynamic model is used to result in a more robust estimation of the beat instants and to correctly operate under rhythmic fluctuations, such as ritardando and accelarando or metric modulations.
+The metrical structure of music builds upon a hierarchy of approximate regular pulses, as elaborated in Section \ref{sec:perception}. To exploit this sequential structure, a probabilistic dynamic model is used to result in a more robust estimation of the beat instants and to correctly operate under rhythmic fluctuations, such as ritardando and accelarando or metric modulations.
 
-As a postprocessing stage following the feature learning, a dynamic Bayesian network (DBN) is employed which jointly infers tempo and the phase of the beat. Dynamic Bayesian networks are popular frameworks for meter tracking in music becuase they are able to incorporate prior knowledge about the dynamics of rhythmic parameters. 
+As a post-processing stage following the feature learning, a dynamic Bayesian network (DBN) is employed which jointly infers tempo and the phase of the beat. Dynamic Bayesian networks are popular frameworks for meter tracking in music because they are able to incorporate prior knowledge about the dynamics of rhythmic parameters. 
 In this DBN, which is a hidden Markov model (HMM) precisely, a sequence of hidden variables that represent the meter of an audio piece is inferred from a sequence of observed variables. The probabilistic state space consist of two hidden variables, the position within a bar and the tempo. 
 
-The probabilistic model is based upon the bar pointer model of Whiteley et al. \cite{Whiteley2006} which enables joint inference of rhythmic parameters from a piece of music. Mutual dependencies between these parameters are exploited, which increases the computational complexity of the models. A bar pointer is defined as being a hypothetical hidden object located in state space consiting of the period of a latent rhythmical pattern. The velocitiy of the bar pointer is defined to be proportional to tempo. The advantage of this approach is that the bar pointer continues to move whether or not a beat activation is observed. This explicitly models the concept that meter is a latent process and provides robustness against rest in the music which might otherwise be wrongly interpreted as local variations in tempo. In order to make inference computationally tractable, the state-space is usually divided into discrete cells \cite{Krebs2015}. 
+The probabilistic model is based upon the bar pointer model of Whiteley et al. \cite{Whiteley2006} which enables joint inference of rhythmic parameters from a piece of music. Mutual dependencies between these parameters are exploited, which increases the computational complexity of the models. A bar pointer is defined as being a hypothetical hidden object located in state space consisting of the period of a latent rhythmical pattern. The velocity of the bar pointer is defined to be proportional to tempo. The advantage of this approach is that the bar pointer continues to move whether or not a beat activation is observed. This explicitly models the concept that meter is a latent process and provides robustness against rest in the music which might otherwise be wrongly interpreted as local variations in tempo. In order to make inference computationally tractable, the state-space is usually divided into discrete cells \cite{Krebs2015}. 
 
 Given a sequence of observed data $a_{1:T}$, we wish to identify the most probable hidden state trajectory $\mathbf s_{1:T}$. At each time frame $t$, the bar pointer of the hidden state space is referred to as $\mathbf s_t = [\phi_t, \nu_t]$, with $\phi_t \in \{1, 2, \dots, K\}$ denoting the position within a bar, and $\nu_t \in \{ K_{\text{min}}, K_{\text{min}}+1, \dots, K_{\text{max}}\}$ referring to as the tempo. The number of discrete bar positions $K$ is dependent on the tempo by using exactly one bar position state per audio frame and thus per observation feature value. The number of observations per bar (four beats) at a tempo $\Theta$ in beats per minute (BPM) is
 \begin{align}
 K(\Theta) = \left\lfloor \frac{4 \times 60}{\Theta \, \Delta} \right\rfloor 
 \label{eq:number_of_obstervations_per_bar}
 \end{align} 
-where $\Delta$ is reffered to as the audio frame length. With Equation. \ref{eq:number_of_obstervations_per_bar}, one can compute the number of bar positions of the tempo limits $K_\text{min} = K(\Theta_\text{max})$ and $K_\text{max} =K(\Theta_\text{min})$. Using a tempo range of  $\Theta = [55, 215]$ the postion whithin a bar has at most $82$ tempo states.
+where $\Delta$ is referred to as the audio frame length. With Equation. \ref{eq:number_of_obstervations_per_bar}, one can compute the number of bar positions of the tempo limits $K_\text{min} = K(\Theta_\text{max})$ and $K_\text{max} =K(\Theta_\text{min})$. Using a tempo range of  $\Theta = [55, 215]$ the position within a bar has at most $82$ tempo states.
 
-With this state space discretisation, the most likely hidden state sequence $\mathbf s_{1:T}^* = \mathbf s_1^*, \dots, \mathbf s_T^*$ given a sequence of observations $a_{1:T} = a_1, \dots, a_T$ is computed by
+With this state space discretization, the most likely hidden state sequence $\mathbf s_{1:T}^* = \mathbf s_1^*, \dots, \mathbf s_T^*$ given a sequence of observations $a_{1:T} = a_1, \dots, a_T$ is computed by
 \begin{align}
 \mathbf s_{1:T}^* = \arg \max_{\mathbf s_{1:T}} P(\mathbf s_{1:T}\,|\, a_{1:T})
 \label{eq:most_likely_states}
@@ -786,11 +777,11 @@ where $P(\mathbf s_1)$ is the initial state distribution, $P(\mathbf s_t\,|\,\ma
 \begin{align}
 \mathcal B = \{ t: \phi_t^*=1\}
 \end{align} 
-In order to infer the hidden variables from an audio signal, the three entities are specified. The rransition model describes the transitions between the hidden variables. The observation model takes the beat activations from the neural network
+In order to infer the hidden variables from an audio signal, the three entities are specified. The transition model describes the transitions between the hidden variables. The observation model takes the beat activations from the neural network
 and initial distribution encodes prior knowledge about the hidden variables.
 
 \paragraph{Initial Distribution} 
-Any prior knowledge about tempo distributions can be incorporated into the model. For example, if the music to be tracked from one genre, a specific tempo distribution can be used. To make it genre independend, a uniform distribution is used in this theses. 
+Any prior knowledge about tempo distributions can be incorporated into the model. For example, if the music to be tracked from one genre, a specific tempo distribution can be used. To make it genre independent, a uniform distribution is used in this theses. 
 
 
 \paragraph{Transition Model} The transition model $P(\mathbf s_t\,|\,\mathbf s_{t-1})$ can be further decomposed into a distribution for each of the two hidden variables $\phi_t$ and $\nu_t$, this is
@@ -801,7 +792,7 @@ where the first factor is
 \begin{align}
 P(\mathbf \phi_t\,|\,\mathbf \phi_{t-1}, \nu_{t-1}) = \mathbf 1_A
 \end{align} 
-with the indicator fuction $\mathbf 1_A$ that equals one if $\phi_t = (\phi_{t-1}+\nu_{t-1}-1)\mod M+1$. The modulo operator makes the bar postion cyclic. If $\phi_t \in \mathcal B$, the second factor is defined by
+with the indicator function $\mathbf 1_A$ that equals one if $\phi_t = (\phi_{t-1}+\nu_{t-1}-1)\mod M+1$. The modulo operator makes the bar position cyclic. If $\phi_t \in \mathcal B$, the second factor is defined by
 \begin{align}
 P(\nu_t \, |\, \nu_{t-1}) = \exp \left( -\lambda \left| \frac{\nu_{t}}{\nu_{t-1}} -1 \right| \right)
 \end{align} 
@@ -812,7 +803,7 @@ P(\nu_t \, |\, \nu_{t-1}) = \begin{cases}
     0, &\text{else.} 
 \end{cases}
 \end{align} 
-The parameter $\lambda \in \mathbb Z_{\geq0}$ determines the steepness of the distribution and models the probability for a tempo change. A value of $\lambda = 0$ means that transitions to all tempi are equally probable. In practice, for music with roughly constant tempo, we set $\lambda \in [1, 300]$. The probability of tempo change is heuristically set to $p_\omega = 0.002$. Higher-level or domain specific knowledge could be used to set this parameter. For example in rock or pop music, the beat is usually quite steady, so a samll value for $p_\omega$ would be quite appropriatre, while for classical music, particularly styles including many tempo changes, a higher value would be more optimal.
+The parameter $\lambda \in \mathbb Z_{\geq0}$ determines the steepness of the distribution and models the probability for a tempo change. A value of $\lambda = 0$ means that transitions to all tempi are equally probable. In practice, for music with roughly constant tempo, we set $\lambda \in [1, 300]$. The probability of tempo change is heuristically set to $p_\omega = 0.002$. Higher-level or domain specific knowledge could be used to set this parameter. For example in rock or pop music, the beat is usually quite steady, so a small value for $p_\omega$ would be quite appropriate, while for classical music, particularly styles including many tempo changes, a higher value would be more optimal.
 
 
 \paragraph{Observation Model}
@@ -841,56 +832,112 @@ P(a_t\,|\,\phi_t) = \begin{cases}
 \newpage
 \section{Evaluation}
 
+Robust evaluation is inevitable, not only to determine the individual successes and failures of the algorithm, but also to measure its relative performance among different algorithms. With the development of the Music Information Retrieval Evaluation eXchange (MIREX) \cite{Downie2008}, evaluation has become a fundamental aspect of research in music information retrieval. MIREX represents a community-based formal evaluation framework for the evaluation of algorithms and techniques related to music information retrieval.  
+
+In this section, existing objective evaluation methods are reviewed, and applied to the proposed beat tracking system. The result is compared against the current state-of-the-art algorithm in beat tracking, which is freely available within the Madmom Python library \cite{Boeck2016}.
+
+
 % Discontinuity in the pulse see Gouyon2005 page 3
 
-\begin{itemize}
-\item annotations tapped at different metrical levels in beat tracking
-\item a evaluation method should adequately contend with the inherent uncertainty and/or ambiguity while providing a measurement of performance which is both meaningful and easy to interpret. \cite{Davies2009b}
-\item objective methods for beat tracking evaluation compare the output beat times from a beat tracking algorithm against one or more sequences of ground truth annotated beat times. \cite{Davies2009b}
-\item We must question the imprtance of strict continuity when evaluating a beat tracking system. A single misplaced beat, in the context of a sequence of otherwise accurate beats, is a far less disturbing error than the accuracy calculated with the ontinuity requiremet would suggest. 
-\end{itemize}
+%  annotations tapped at different metrical levels in beat tracking
+
+% objective methods for beat tracking evaluation compare the output beat times from a beat tracking algorithm against one or more sequences of ground truth annotated beat times. \cite{Davies2009b}
+% We must question the importance of strict continuity when evaluating a beat tracking system. A single misplaced beat, in the context of a sequence of otherwise accurate beats, is a far less disturbing error than the accuracy calculated with the continuity requirement would suggest. 
 
 
-\subsection{Evaluation Measure}
+\subsection{Evaluation Methods}
 
-Set of annotated beat times $\mathcal A = \{a_1, \dots, a_A\}$ \\
-Set of predicted beat times $\mathcal B = \{b_1, \dots, b_B\}$ \\
+The choice of evaluation method can have a significant impact on the relative performance of different beat tracking algorithms. An evaluation method should adequately contend with the inherent uncertainty or ambiguity while providing a measurement of performance which is both meaningful and easy to interpret \cite{Davies2009b}. 
 
-True positive if beat is in $\pm 70\,\text{ms}$ rage of annotated beat
-
-$tp =$ number of true positives \\
-$fp =$ number of false positives (extra detections) \\
-$fn =$ number of false negatives (missed detections) 
-
-\paragraph{Precision and recall:} $ $
-
-$\text{precision} = \dfrac{tp}{tp + fp}\;, \qquad \text{recall} = \dfrac{tp}{tp + fn}$
+Each evaluation method takes a set of annotated beat times $\mathcal A = \{a_1, \dots, a_A\}$ and a corresponding set of predicted beat times $\mathcal B = \{b_1, \dots, b_B\}$, where $A$ refers to the number of annotations, and $B$ to the number of annotations, respectively.
 
 
-\paragraph{F-measure:} $ $
+\paragraph{F-measure} 
+In statistical analysis of binary classification, the F-measure, also called the $F_1$ score, is a generic measure to test accuracy. It considers both the precision $p$ and the recall $r$ of the test to compute the score. The precision $p$ is the number of true positives $tp$ divided by the number of all positive results returned by the classifier, i.e, the number of true positives $tp$ plus the number of false positives $fp$
+\begin{align}
+p = \frac{tp}{tp + fp}
+\end{align} 
+The recall $r$ is referred to as the number of true positives $tp$ divided by the number of all relevant samples, i.e, all samples that should have been identified as positive
+\begin{align}
+r = \frac{tp}{tp + fn}
+\end{align} 
+The F-measure is the harmonic mean of the precision and recall
+\begin{align}
+F_1=  \frac{2\,p\, r}{p +r} = \dfrac{2\, tp}{2\, tp + fp + fn}
+\end{align} 
+where an F-measure reaches its best value at 1 (perfect precision and recall) and worst at 0. In beat tracking, a result is regarded as true positive if a detected beat is in $\pm 70\,\text{ms}$ rage of an annotated beat. One can understand, the number of false positives as extra detections of the system, while the number of false negatives correspond to the missed detections.
 
-$F_1 = 2 \cdot \dfrac{\text{precision} \cdot \text{recall}}{\text{precision} + \text{recall}} = \dfrac{2\, tp}{2\, tp + fp + fn}$
 
-\paragraph{P-score:} Define two sequences $T_a$ and $T_b$ as 
 
-$T_a(n) = \begin{cases}
-	1, &\text{ if } n \in \mathcal A \\
-	0 , & \text{ otherwise }
-\end{cases}, \qquad T_b(n) = \begin{cases}
-	1, &\text{ if } n \in \mathcal B \\
-	0 , & \text{ otherwise }
-\end{cases}$
+\paragraph{Continuity measures} 
+In contrast to the F-measure, where the accuracy is determined from the overall beat tracking success, Hainsworth \cite{Hainsworth2004b} and Klapuri et al. \cite{Klapuri2006} developed evaluation methods, which measure the success of regions of continuously correctly tracked beats. Continuity is enforced by the implementation of tolerance windows of $\theta  = \pm 17.5\, \%$ of the current inter-annotation-interval around each annotation. The closest detected beat to each annotation can only be correct if it falls within this tolerance window and the previous detected beat is also within the tolerance window of the previous annotation. This condition addresses beat phase, but also requires consistency between inter-annotation-intervals. 
 
-$\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(n+m)}{\max(A,B)} \;, \qquad \text{where } w = 0.2 \, \text{median}(\Delta_a)$ 
+Comparing each detected beat $b_i$ to each annotation $a_j$, there is a number of correct beats in each continuously correct segment $Y_m$, where there are $M$ continuous segments. The ratio of the longest continuously correct segment to the length of the annotations $J$ defines the correct metrical level with continuity required
+\begin{align}
+\label{eq:CMLc}
+\text{CML}_\text{c} = \frac{\max(Y_m)}{J}
+\end{align} 
+
+CMLc only reflects information about the longest segment of correct beat tracking. Therefore, it does not include the contribution of any other beats which may also be correct. For example, if a single wrong detected beat occurs and this beat error happens to be in the middle of the excerpt, this would lead to $\text{CML}_\text{c} = 0.5$. To include the effect of beats in other segments $Y_m$, a less strict measure is the total number of correct beats at the correct metrical level
+\begin{align}
+\label{eq:CMLt}
+\text{CML}_\text{t} = \frac{\sum_{m=1}^MY_m}{J}
+\end{align} 
+
+To account for ambiguity in metrical levels, equations (\ref{eq:CMLc}) and (\ref{eq:CMLt}) are recalculated such that the annotation sequence a can be resampled to permit accurate tapping at double or half the correct metrical level and to allow for off-beat tapping. These conditions are referred to as allowed metrical level, which result in the two measures, allowed metrical levels continuity required ($\text{AML}_\text{c}$), and allowed metrical levels continuity not required ($\text{AML}_\text{t}$). 
+
+\paragraph{Information Gain}
+Davies et al. \cite{Davies2009b} developed an evaluation method without reliance on tolerance windows, by measuring the timing error between beats and annotations. The information gain $D$ is a measure of how much information the beats provide about the annotations. To this end, a error histogram with $K$ bins is formed from the resulting timing error sequence. The numerical score is then calculated as the Kullback-Leibler divergence with respect to a uniform histogram. The range for the information gain is $0\,\text{bits}$ to approximately $5.3\,\text{bits}$, where the upper limit is determined as $\log_2(K)$. An information gain of $0\,\text{bits}$ is obtained, when the beat error histogram is uniform, i.e. where the beat sequences are totally unrelated.
+
+
+
+% \paragraph{P-score:} Define two sequences $T_a$ and $T_b$ as 
+
+% $T_a(n) = \begin{cases}
+% 	1, &\text{ if } n \in \mathcal A \\
+% 	0 , & \text{ otherwise }
+% \end{cases}, \qquad T_b(n) = \begin{cases}
+% 	1, &\text{ if } n \in \mathcal B \\
+% 	0 , & \text{ otherwise }
+% \end{cases}$
+
+% $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(n+m)}{\max(A,B)} \;, \qquad \text{where } w = 0.2 \, \text{median}(\Delta_a)$ 
+
+
+\subsection{Results}
+The performance of the proposed beat tracking system is determined using different evaluation methods, which are applied to the subsets of the training set. The achieved performance is compared against the state-of-the-art beat tracker from Böck et al. \cite{Boeck2014}. The overview of the performances of both beat tracking algorithms is shown in Tab. \ref{tab:performance}.
+\begin{table}[htbp]
+\caption{Overview of beat tracking performance}
+\label{tab:performance}
+\centering
+\begin{tabular}{lcccccc}
+\hline \hline
+& F-Measure & CMLc & CMLt & AMLc & AMLt & D
+\vspace{0.0em}\\\hline \vspace{-0.6em}
+\csvreader[head to column names, filter equal={\dataset}{1}]{/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/performance.csv}{}
+{\\\name & \Fmeasure & \CMLc & \CMLt & \AMLc & \AMLt & \D}
+\vspace{0.2em}\\\hline \vspace{-0.6em}
+\csvreader[head to column names, filter equal={\dataset}{2}]{/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/performance.csv}{}
+{\\\name & \Fmeasure & \CMLc & \CMLt & \AMLc & \AMLt & \D}
+\vspace{0.2em}\\\hline \vspace{-0.6em}
+\csvreader[head to column names, filter equal={\dataset}{3}]{/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/performance.csv}{}
+{\\\name & \Fmeasure & \CMLc & \CMLt & \AMLc & \AMLt & \D}
+\vspace{0.2em}\\\hline \vspace{-0.6em}
+\csvreader[head to column names, filter equal={\dataset}{4}]{/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/performance.csv}{}
+{\\\name & \Fmeasure & \CMLc & \CMLt & \AMLc & \AMLt & \D}
+\vspace{0.2em}\\\hline \hline
+\end{tabular}
+\end{table}
+
 
 
 
 \subsection{Saliency Maps}
 
 \begin{itemize}
-\item How do the filters of the ConvNet look like?
 \item Artificial neural networks often give good results, but it is difficult to understand what they learned, or on which basis they generate their output.
-\item compute saliency maps using guided back-propagation [25]
+\item Compute saliency maps using guided back-propagation \cite{Springenberg2014}
+\item How do the filters of the convolutional block look like?
 \end{itemize}
 
 
@@ -898,7 +945,7 @@ $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(
 \subsection{Network Training}
 
 \begin{itemize}
-\item To achieve better results, we could use DNN ensembles instead of a single DNN. We could ensure that the network sees data for which its pre- dictions are wrong more often during training, or similarly, we could simulate a more balanced dataset by showing the net super-frames of rare chords more often \cite{Korzeniowski2016}
+\item Conclusion by Korzeniowski: To achieve better results, we could use DNN ensembles instead of a single DNN. We could ensure that the network sees data for which its predictions are wrong more often during training, or similarly, we could simulate a more balanced dataset by showing the net super-frames of rare chords more often \cite{Korzeniowski2016}
 \end{itemize}
 
 
@@ -906,9 +953,9 @@ $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(
 \subsection{Labeling}
 
 \begin{itemize}
-\item In an editor (Sonic Visualizer) that enables a user to mark beat positions in a digitalized audio signal while listening to the audio and watching its waveform.
+\item Enhance beat annotations the Sonic Visualiser \cite{SonicVisualiser} editor, that enables a user to mark beat positions in a digitalized audio signal while listening to the audio and watching its waveform.
 \item The positions can be finely adjusted by playing back the audio with click tones at beat times.
-\item The audio excerpt in time domain and its spectrogram can be visualised using tools like Sonic Visualizer. Beat locations can first be obtained by recording the tap locations the musical excerpt and then manually correcting these locations for exact onsets.  Annotators can also follow a semi-automatic process, for example in [2], where beats and downbeats were first obtained through the ircambeat software and then errors were manually corrected by human annotators.
+\item The audio excerpt in time domain and its spectrogram can be visualized using tools like Sonic Visualiser. Beat locations can first be obtained by recording the tap locations the musical excerpt and then manually correcting these locations for exact onsets.  Annotators can also follow a semi-automatic process, for example in \cite{Peeters2010}, where beats and downbeats were first obtained through the Ircambeat software and then errors were manually corrected by human annotators.
 \end{itemize}
 
 
@@ -917,45 +964,42 @@ $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(
 \section{Conclusion}
 
 \begin{itemize}
-\item Theoretically, a single network large enough should be able to model all differnt music styles simultaneously but unfortunately this optional solution is hardly achievable. The main reason for this is the diffuculty to choose an absolutely balanced training set with an evenly distributed set of beats over all the different dimensions relevant for detecting beats. These include rhythmic patterns, harmonic aspects and many other features
-\item We have presented an efficient audio based beat tracking algorithm able to produce equivalante results to the current state-of-the-art. 
+\item An efficient audio based beat tracking algorithm was presented, that is able to produce equivalent results to the current state-of-the-art. 
+\item Causal model and less parameters in contrast to \cite{Boeck2014}.
+\item Theoretically, a single network large enough should be able to model all different music styles simultaneously but unfortunately this optional solution is hardly achievable. The main reason for this is the difficulty to choose an absolutely balanced training set with an evenly distributed set of beats over all the different dimensions relevant for detecting beats. These include rhythmic patterns, harmonic aspects and many other features
 \item Limitations in both the amount of training data and the variable quality of the annotations. Perform data augmentation. 
-\item Dataset size: ``\emph{[...] a rough rule of thumb is that a supervised deep learning algorithm will gernerally achieve acceptable performance with around 5000 labeled examples per category and will match or exceed human performance when trained with a dataset containing at least 10 million labeled examples.}'' \cite[Goodfellow2016]{Goodfellow2016}
+\item Dataset size: a rough rule of thumb is that a supervised deep learning algorithm will generally achieve acceptable performance with around 5000 labeled examples per category and will match or exceed human performance when trained with a dataset containing at least 10 million labeled examples \cite{Goodfellow2016}.
 \item The most mentionable aspect is that the neural networks were trained solely on ballroom dance and other kinds of western pop music. The networks accuracy depends on the trainings set. Selective bias. 
 \item Leave higher level analysis to the neural network
-\item System operates causaly, thus an real-time implementation is possible.
+\item Take raw audio as input and learn Fourier transform with neural net.
+\item System operates causally, thus an real-time implementation is possible.
 \item Data augmentation (transformation or adding noise) $\Rightarrow$ prediction gets robust against transformation and noisy signals
-\item Additionally, the tempo, metrical level of the beat and downbeat positions can also be annotated for related tasks like downbeat tracking/ meter tracking/ tempo tracking etc (multi-task learning) [Böck2019]
+\item Additionally, the tempo, metrical level of the beat and downbeat positions can also be annotated for related tasks like downbeat tracking/ meter tracking/ tempo tracking etc (multi-task learning) \cite{Boeck2019}.
 \end{itemize}
 
 \newpage
 
 \section*{General notes}
 \begin{itemize}
-\item Goal of supervised learning: predict not yet observed input
-\item Motivation: ``\emph{It is probable that no universal beat tracking model exist which does not utilise a switching model to recognize style and context prior to application.}'' \cite[Collins2006]{Collins2006}
-\item Instead of calculating the STFT as for input featuress discover a good set of features by representation learning. (``\emph{Learned representations often result in much better performance than can be obtained with hand-designed representations.}'' \cite[Goodfellow2016]{Goodfellow2016})
-\item Common association between sequence modeling and recurrent networks: ``\emph{Given a new sequence modeling task or dataset, wich architecture should one use?}'' \cite[Bai2018]{Bai2018}
-\item Certain convolutional architectures can reach state-of-the-art accuracy in audio synthesis (e.g. Google WaveNet \cite[Oord2016]{Oord2016})
+\item Goal of supervised learning: predict not yet observed input.
+\item Motivation: ``\emph{It is probable that no universal beat tracking model exist which does not utilize a switching model to recognize style and context prior to application.}'' \cite{Collins2006}
+\item Instead of calculating the STFT as for input features discover a good set of features by representation learning. (``\emph{Learned representations often result in much better performance than can be obtained with hand-designed representations.}'' \cite{Goodfellow2016})
+\item Common association between sequence modeling and recurrent networks: ``\emph{Given a new sequence modeling task or dataset, which architecture should one use?}'' \cite{Bai2018}
+\item Certain convolutional architectures can reach state-of-the-art accuracy in audio synthesis (e.g. Google WaveNet \cite{Oord2016})
 \item Do TCNs outperform LSTM architectures in this particular sequence modeling task?
 \item Contrast of the two statements:
 \begin{itemize}
-\item ``\emph{Feature extraction is an essential step towards efective and accurate beat/downbeat positions extraction.}'' \cite[Khadkevich2012]{Khadkevich2012}
-\item ``\emph{The system shows state-of-the-art beat and downbeat tracking performance on a wide range of different musical genres and sryles. It does so ny avoiding hand-crafted features such as harmonic changes, or rhythmic patterns, but rather leans the relevant features directly from audio.}'' \cite[Boeck2016b]{Boeck2016b}
+\item ``\emph{Feature extraction is an essential step towards effective and accurate beat/downbeat positions extraction.}'' \cite{Khadkevich2012}
+\item ``\emph{The system shows state-of-the-art beat and downbeat tracking performance on a wide range of different musical genres and styles. It does so by avoiding hand-crafted features such as harmonic changes, or rhythmic patterns, but rather leans the relevant features directly from audio.}'' \cite{Boeck2016b}
 \end{itemize} 
-\item Hainsworth and Macleaod state that beat tracking systems will have to be style specific in the future in order to improve the state-of-the-art \cite{Hainsworth2004}.
-\item The no free lunch therorem fo machine learning \cite{Wolpert1996} states that, averaged over all possible data-generating distributions, every classification algorithm has the same error rate when classifying previously unobserverd points. This implies that we must design our machine learning algorithms to perform well on a specific task.
+\item Hainsworth and MacLeaod state that beat tracking systems will have to be style specific in the future in order to improve the state-of-the-art \cite{Hainsworth2004}.
+\item The no free lunch theorem for machine learning \cite{Wolpert1996} states that, averaged over all possible data-generating distributions, every classification algorithm has the same error rate when classifying previously unobserved points. This implies that we must design our machine learning algorithms to perform well on a specific task.
 \item The method for obtaining ground truth annotations depends on whether the aim is to identify descriptive beat locations or to replicate a human tapping response. In the former case, an initial estimate of the beat locations can be obtained by recording tap times for a given musical excerpt and iteratively modifying and auditing the obtained beat positions while in the latter case, the ground truth can be completely defined by the tapping response \cite{Davies2009b}.
-\item Due to uncertainties in the annotation process, for many types of inpit signals (especially multi-instriment exerpts) it may not possible to determine onset locations with greater precision than $50\,\text{ms}$. \cite{Leveau2004}
-\item  The ideal outcome of the annotation is an unambigous representation of the start points of musical events
+\item Due to uncertainties in the annotation process, for many types of input signals (especially multi-instrument excerpts) it may not possible to determine onset locations with greater precision than $50\,\text{ms}$. \cite{Leveau2004}
+\item  The ideal outcome of the annotation is an unambiguous representation of the start points of musical events
+\item Tried out Trellis Networks \cite{Bai2018b}, but not better than TCN. 
 \end{itemize}
 
-\section*{Appendix}
-
-\paragraph{Hyperparameter} 
-\begin{itemize}
-\item window function (e.g. Hamming window)
-\end{itemize}
 
 \newpage 
 \bibliographystyle{unsrt}
