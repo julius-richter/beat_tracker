@@ -44,55 +44,111 @@ Second Supervisor: Prof. Dr. Klaus-Robert Müller\\
 \end{titlepage}
 
 
+\section*{Eidesstattliche Erklärung}
+Hiermit erkläre ich an Eides statt gegenüber der Fakultät I der Technischen Universität Berlin, dass die vorliegende, dieser Erklärung angefügte Arbeit selbstständig und nur unter Zuhilfenahme der im Literaturverzeichnis genannten Quellen und Hilfsmittel angefertigt wurde. Alle Stellen der Arbeit, die anderen
+Werken dem Wortlaut oder dem Sinn nach entnommen wurden, sind kenntlich gemacht. Ich reiche die Arbeit erstmals als Prüfungsleistung ein. Ich versichere, dass diese Arbeit oder wesentliche Teile dieser Arbeit nicht bereits dem Leistungserwerb in einer anderen Lehrveranstaltung zugrunde lagen. 
+
+\vspace{1em}
+\subsection*{Titel der schrifltichen Arbeit}
+
+Style-Specific Beat Tracking with Deep Neural Networks
+
+\vspace{1em}
+\subsection*{Verfasser}
+
+Julius Marius Richter (Matrikelnummer: 342740)
+
+\vspace{1em}
+\subsection*{Betreuende Dozenten}
+
+Prof. Dr. Stefan Weinzierl \\
+Prof. Dr. Klaus-Robert Müller \\
+Athanasios Lykartsis \\
+Thomas Schnake 
+
+\vspace{3em}
+
+\noindent Mit meiner Unterschrift bestätige ich, dass ich über fachübliche Zi\-tier\-regeln unterrich\-tet worden bin und verstanden habe. Die im betroffenen Fachgebiet üblichen Zi\-tier\-vorschriften sind eingehalten worden. Eine Überprüfung der Arbeit auf Plagiate mithilfe elektronischer Hilfsmittel darf vorgenommen werden. 
+
+\vspace{4em}
+\noindent Berlin, den \the\day. September \the\year
+
+\vspace{3em}
+\noindent............................................................................
+
+\newpage 
+
+\section*{Acknowledgments}
+I would like to thank
+\begin{itemize}
+\item Athanasios Lykartsis
+\item Thomas Schnake
+\item Sebastian Böck
+\item Matthew Davies 
+\item my brother, Lorenz Richter, for teaching me mathematical insights in statistical learning theory, and for having nice discussions about recent trends in deep learning. 
+\item Bernd Keul, for encouraging me to decide the topic, which I always dreamed of working on. 
+\item Dida for using their Google cloud service, on which I trained my machine learning model using 8 GPUs in parallel.
+\item Michael Flamm
+\item My parents 
+\end{itemize}
+
+\newpage 
+\begin{center} 
+\textsf{\textbf{Abstract}}
+\end{center}
+
+In this thesis, a computational method for extracting the beats from audio signals is presented. The beat tracking system is based on temporal convolutional networks which capture the sequential structure of audio input. A dynamic Bayesian network is used to model bars of various lengths and align the predicted beat positions to the global best solution. The system is evaluated on four datasets of various styles and achieves state-of-the-art performance, although it works causally and requires considerably less learnable parameters.  
+
+
+
+\vspace{15em}
+
+
+\begin{center} 
+\textsf{\textbf{Zusammenfassung}}
+\end{center}
+
+In dieser Arbeit wird eine Rechenmethode zum Extrahieren der Beats aus Audiosignalen vorgestellt. Das Beat-Tracking-System basiert auf Temporal Convolutional Networks, welche die sequentielle Struktur der Audiosignale erfassen. Ein dynamisches Bayes'sches Netzwerk wird verwendet, um Takte unterschiedlicher Längen zu modellieren und die vorhergesagten Best-Positionen an der global besten Lösung auszurichten. Das System wird anhand von vier Datensätzen unterschiedlicher, musikalischer Stile ausgewertet und erreicht eine Leistung vergleichbar mit dem neuesten Stand der Technik, und dies obwohl es kausal funktioniert und erheblich weniger lernbare Parameter benötigt.
+
+\newpage
+
 \tableofcontents
 \newpage
 
 
+
 \section{Introduction}
+\label{sec:introduction}
 
-\begin{itemize}
-\item Rhythm is indispensable for music.
-\item Rhythm is music’s central organizing structure. It orders the movement of musical patterns in time. 
-\item A fundamental research topic in music information retrieval is the automatic extraction of beat locations from music signals. 
-\item The aim of a beat tracker is to recover a sequence of time instants from a musical input that are consistent with the times when a human might tap their foot \cite{Ellis2007}. 
-\item Beat tracking is an important initial step in computer emulation of human music understanding, since beats are fundamental to the perception of (Western) music.
-\item The goal of beat tracking is to construct a computational algorithm capable of extracting a symbolic representation which correspond to the phenomenal experience of beat or pulse of a human listener.
-\item The primary information required for beat tracking is the onset times of musical events, i.e., musical notes and percussive sounds, and this is sufficient for music of low complexity and little variation in tempo.
-\item The interpretation of beat is one of the most fundamental aspects of musical intelligence.
-\item A naive approach to describe the rhythm of musical data is to specify an exhaustive and accurate list of onset times, maybe together with some other musical features characterizing those event, e.g., durations, pitches and intensities. However, such a representations lacks abstraction. Diverse media used for rhythm transmission suffer a trade-off between the level of abstraction and the comprehensiveness of the representation. Standard (Western) music notation provides an accepted method for communication a composition to a performer, but it has little value in representing the interpretation of a work as played in a concert. On the other hand, an acoustic signal implicitly contains all rhythmic aspects but provides no abstraction whatsoever \cite{Gouyon2005}.
-\item The main goal in automatic rhythm description is the parsing of acoustic events that occur in time into the more abstract notions of metrical structure, tempo and timing. A major difficulty is the inherent ambiguity of rhythm.
-\item How well does the proposed model generalize to different musical styles?
-\item The pattern recognition task is a nontrivial problem due to the wide variability of rhythm in music. 
-\item Beat tracking can be tackled using handcrafted rules or heuristics for distinguishing on which time instant a beat is based on the properties of the audio signal. In practice such an approach leads to a proliferation of rules and of exceptions to the rules and so on, and invariably gives poor results. Far better results can be obtained by adopting a machine learning approach in which a large set of $N$ tracks $\{\mathbf x^{(1)}, \dots, \mathbf x^{(N)}\}$ called a training set is used to tune the parameters of an adaptive model. The beat instants of the tracks are known in advance, typically by inspecting them individually and hand-labeling them. So for every track $\mathbf x$ there is a target vector $\mathbf y$. The result of the machine learning algorithm can be expressed as a function $\hat{\mathbf y} = \phi (\mathbf x)$ which takes a new track $\mathbf x$ as input and that generates an output vector $\hat{\mathbf y}$, encoded in the same way as the target vectors. The precise form of the function $\phi (\mathbf x)$ is determined during the training phase, on the basis of the training data. Once the model is trained it can then determine the identity of new tracks, which are said to comprise a test set. The ability to categorize correctly new examples that differ from those used for training is known as generalization. In practical applications, the variability of the input vectors will be such that the training data can comprise only a tiny fraction of all possible input vectors, and so generalization is a central goal in pattern recognition. 
-\item Applications in which the training data comprises examples of the input vectors along with their corresponding target vectors are known as supervised learning problems. 
-\end{itemize}
+Rhythm is indispensable for music and builds its central, hierarchical organizing structure. It represents one of the fundamental dimensions in the perception of music and orders the movement of musical patterns in time. Therefore, rhythm analysis is an essential part of understanding music, and represents an innate cognitive ability of humans even without musical education. Especially, the interpretation of meter is a fundamental aspect of musical intelligence, and thus detecting the beat, defined as the most prominent layer of rhythm, is an important initial step in the computer emulation of human music understanding. 
 
+In music information retrieval (MIR), automatic analysis of the temporal structure in an audio piece is an ongoing research topic since the 1980s. Despite its apparent intuitiveness and simplicity compared to other parts of music perception, beat tracking has remained a difficult task to implement on a computer. The basic goal of beat tracking is to construct a computational method capable of extracting a symbolic representation which corresponds to the phenomenal experience of the perceived pulse of a human listener. Intuitively speaking, beat tracking consists of recovering a sequence of time instants from a musical input that are consistent with the times when a human might tap their foot. The primary information required for this task are the onset times of musical events, i.e., musical notes and percussive sounds. As a consequence, a naive approach to describe the rhythm of a musical piece is to specify an accurate list of onset times, together with some other musical features characterizing those event, e.g., durations, pitches and intensities. From this list, the predominant periodicity can be estimated and beat times are subsequently determined using a temporal decoding strategy. However, such a method lacks abstraction. Diverse media used to hold information about a piece of music suffer a trade-off between the level of abstraction and the comprehensiveness of the representation. Standard music notation provides an accepted method for communication a composition to a performer, but it has little value in representing the interpretation of a work as played in a concert. On the other hand, an acoustic signal implicitly contains all rhythmic aspects but provides no abstraction \cite{Gouyon2005}.
 
+% The main goal in automatic rhythm description is the parsing of acoustic events that occur in time into the more abstract notions of metrical structure, tempo and timing. A major difficulty is the inherent ambiguity of rhythm.
+
+As mentioned above, beat tracking can be accomplished using handcrafted rules or heuristics based on the properties of the audio signal. In practice, such an approach leads to a proliferation of rules and exceptions, and invariably gives poor results. Far better results can be obtained by adopting a machine learning approach in which a large training set of various musical pieces is used to tune the parameters of an adaptive model. The beat instants of the pieces are known in advance, typically by inspecting them individually and hand-labeling them, i.e, for every track $\mathbf x$ there is a target vector $\mathbf y$ with annotated beat times. The result of the machine learning algorithm can be expressed as a function $\hat{\mathbf y} = f (\mathbf x)$ which takes a new track $\mathbf x$ as input and generates an output vector $\hat{\mathbf y}$, encoded in the same way as the target vectors. The precise form of the function $f (\mathbf x)$ is determined during the training phase, on the basis of the training data. Once the model is trained it can then determine the beats of new tracks, which were unseen to the model during the training process. The ability to correctly detect the beat in new examples that differ from those used for training is known as generalization. In practice, the variability of the input will be such that the training data can comprise only a tiny fraction of all possible input tracks, which is the central challenge in pattern recognition. This is mainly because, beat tracking is a nontrivial problem due to the wide variability of rhythm in music. 
+
+The style of music and its associated learned representational schema underlies the human faculty of beat tracking. This also applicable to computational beat tracking systems that utilize supervised machine learning techniques. With the selection of  training data the learned model can be specialized to certain musical styles. For instance, a beat tracking system which should cope with classical music should be ideally trained on classical music only. Nevertheless, the aim of building a universal beat tracking model, which can provide good accuracy across a large corpus of styles, demands a certain model complexity and also requires a large training set which is balanced across the different styles. 
 
 
 \paragraph{Difficulties of Beat Tracking}
 \label{sec:difficulties}
-\begin{itemize}
-\item It is difficult to reliably extract high-level rhythm related features from musical excerpt having properties such as soft onsets, heavy syncopation or making use of expressive timing (e.g. rubato playing) \cite{Quinton2016}.
-\item The principal reason that beat tracking is intrinsically difficult is that it is the problem of inferring an original beat structure that is not expressed explicitly. The degree of beat tracking difficulty is therefore not determined simply by the number of musical instruments performing a musical piece, it depends on how explicitly the beat structure is expressed in the piece. However, it is very difficult to measure its explicitness because it is influenced from various aspects of the songs.
-\item The larger the number of syncopation, the greater the difficulty of beat tracking (quantitative measure: power-difference measure \cite{Goto1999}).
-\item The main reason that different tendencies with regard to the explicitness with which the beat structure is indicated.
-\item There is not necessarily a specific sound that directly indicates the position of beats. In fact, a musical beat may not directly correspond to a real sound, there may even be no signal on a beat. 
-\item absence of a clear rhythmic structure (Classical music)
-\item soft onsets
-\item blurred note transitions (e.g. classical music dominated by string instruments)
-\item heavy syncopation
-\item expressive timing (e.g. rubato playing)
-\item the problem of 'octave errors' (detecting double or half time the rate of the ground truth)
-\item Acoustic signals consist of sound of various kinds of instruments.
-\item The onsets of notes are difficult to obtain, unlike the case of MIDI signals, where there is no such problem.
-\item A beat may not directly correspond to a real sound. It is a perceptual concept that human feels in music. 
-\item Multiple interpretations of beats are possible at any given time.
-\item There is no simple relationship between polyphonic complexity -- the number and timbres of notes played at a single time -- in apiece of music, and its rhythmic complexity or pulse complexity \cite{Scheirer1998}. There are pieces and styles of music which are texturally and timbrally complex, but have straightforward, perceptual simple rhythms; and there also exist music which deal in less complex textures but are more difficult to rhythmically understand an describe.
-\item The complexity of grouping harmonic partials together to form notes, and determining the onset times of those.
-\item For this reason Cemgil et al. \cite{Cemgil2001} define music transcription as the extraction of an \emph{acceptable} music notation.
-\item There is no canonical form for representing rhythm, and lacking this ground truth, it is difficult, if not impossible, to provide a meaningful quantitative comparison of the various computer systems. Therefore we need a common database of test music labeled with the ground truth on which the systems are tested. 
-\end{itemize}
+
+Musicians are often surprised when mentioning the difficulty of programming a computer method that is able to follow the beat of the music. To any adult participant in a given culture, moving in time with music is so natural that one easily forgets that the ability of beat tracking is not given in early development, but usually becomes established by the age of four \cite{Drake2000}. This observation can be seen as evidence, that the perception of rhythm is learned inductively, i.e., learned from examples, instead of obeying some well-defined rules.
+
+The principal reason that beat tracking is intrinsically difficult is that it is the problem of inferring an original beat structure that is not expressed explicitly. The degree of beat tracking difficulty is therefore not determined simply by the number of musical instruments performing a musical piece, it depends on how explicitly the beat structure is expressed in the piece. Nevertheless, it is very difficult to measure this explicitness because it is influenced from various aspects of the musical piece \cite{Quinton2016}.
+
+Usually, audio signals consist of sound of various kinds of instruments and other sound sources. There is not necessarily a specific sound that directly indicates the position of the beats. In fact, a musical beat may not directly correspond to a real sound, there may even be no signal on a beat. Furthermore, it is difficult to reliably extract rhythmical high-level features from musical excerpts having properties such as soft onsets, heavy syncopation or making use of expressive timing, e.g., playing rubato. This is often aggravated by blurred note transitions, and the absence of a clear rhythmic structure, e.g., in classical music which is dominated by string instruments. In addition to the various properties of an musical piece which make beat tracking difficult, there is no canonical form for representing rhythm. A beat may not directly correspond to a real sound, it rather is a perceptual concept that human feels in music. Therefore, multiple interpretations of beats are possible at any given time. Lacking this ground truth, it is difficult, if not impossible, to provide a completely quantitative evaluation of the beat tracking task. However, various beat tracking evaluation methods are developed which involve this ambiguity in rhythm perception, e.g., by circumvent the problem of octave errors, i.e., detecting double or half time the rate of the annotated beats. Still, to compare various computational beat tracking systems, a common database of test music labeled with the ground truth is required on which the systems are tested. 
+
+
+% The larger the number of syncopation, the greater the difficulty of beat tracking (quantitative measure: power-difference measure \cite{Goto1999}).
+ % The main reason that different tendencies with regard to the explicitness with which the beat structure is indicated.
+% the problem of 'octave errors' (detecting double or half time the rate of the ground truth)
+
+% The onsets of notes are difficult to obtain, unlike the case of MIDI signals, where there is no such problem.
+% There is no simple relationship between polyphonic complexity -- the number and timbres of notes played at a single time -- in apiece of music, and its rhythmic complexity or pulse complexity \cite{Scheirer1998}. There are pieces and styles of music which are texturally and timbrally complex, but have straightforward, perceptual simple rhythms; and there also exist music which deal in less complex textures but are more difficult to rhythmically understand an describe.
+% The complexity of grouping harmonic partials together to form notes, and determining the onset times of those.
+% For this reason Cemgil et al. \cite{Cemgil2001} define music transcription as the extraction of an \emph{acceptable} music notation.
 
 
 
@@ -105,33 +161,33 @@ Second Supervisor: Prof. Dr. Klaus-Robert Müller\\
 
 
 \paragraph{Applications of Beat Tracking}
-\begin{itemize}
-\item Estimating the beats of an musical audio opens new possibilities for a wide range of applications. 
-\item Beat tracking can be used to automate time-consuming tasks that must be completed in order to synchronize events with music. 
-\item Video and audio editing, e.g., the visual track can be automatically synchronized with an audio track using beat tracking.
-\item Stage light control. In live performances, beat tracking is useful in the control of stage lighting by a computer. For instance, various properties of lighting such as color, brightness, direction, and effect can be changed in time to the music.
-\item Visualization, e.g., time-grid representation in audio sequencers.
-\item Musical interaction systems \cite{Robertson2007}
-\item Content-based audio effects, for multimedia or interactive performances or studio post-production
-\item Beat-driven real-time computer graphics.
-\item Temporal segmentation to higher level MIR tasks such as chord estimation for harmonic description \cite{Bello2005b}.
-\item Long-term structural segmentation of audio \cite{Bartsch2005}
-\item performance analysis investigates the interpretation of musical works, e.g., the performer's choice of tempo and expressive timing. 
-\item In audio content analysis, beat tracking is important for automatic indexing and content-based retrieval of audio data, such as in multimedia databases and libraries.
-\item Automatic transcription and score extraction from performance data 
-\item Music similarity
-\item Time-stretching of audio loops
-\item Beat tracking can provide computers the ability to participate intelligently in live performances in real time and join the ensemble.
-\item synchronization of a musical performance with computers or other devices
-\item Commercial devices already exist that attempt to extract a MIDI clock from an audio signal, indication both the tempo and the actual location of the beat. Such MIDI clocks can the be used to synchronize other devices such as drum machines or audio effects, enabling a new range of beat-synchronized audio processing.
-\item Automatic playlist generation, where a computer is given the task to choose a series of audio tracks from a track database in a way similar to what a human deejay would do. The track tempo is a very important selection criterion in this context, as deejays will tend to string tracks with similar tempi back to back. Furthermore, deejays also tend to perform beat-synchronous cross-fading between successive track manually, slowing down or speeding up one of the tracks so that the beat in the two tracks line up exactly during the cross-fade. This can easily be done automatically once the beats are located in the two tracks.
-\end{itemize}
+
+The automatic analysis of the metrical structure in audio is a long-standing, ongoing endeavor, since a good underlying beat tracking system is fundamental for various tasks and opens new possibilities for a wide range of applications. In general, beat tracking can be used to automate time-consuming tasks that must be completed in order to synchronize events with music. For instance in video editing, the visual track can be automatically synchronized with an audio track; or stage light control in live performances, where beat tracking is useful in the control of stage lighting by a computer, e.g., various properties of lighting such as color, brightness, direction, and effect can be changed in time to the music. Furthermore, beat-driven real-time computer graphics or content-based audio effects, for multimedia or interactive performances and studio post-production need synchronization with the beat in music.
+
+% Visualization, e.g., time-grid representation in audio sequencers.
+% Time-stretching of audio loops
+
+In audio content analysis, beat tracking is important for the automatic indexing and content-based retrieval of audio data, such as in multimedia databases and libraries. Temporal segmentation can be useful for higher level MIR tasks such as chord estimation, harmonic description, automatic transcription and score extraction from performance data \cite{Bello2005b}. In performance analysis, beat tracking could be used to investigate the interpretation of musical works, e.g., the performer's choice of tempo and expressive timing. Furthermore, rhythm information is required for automatic playlist generation, where a computer is given the task to choose a series of audio tracks from a track database in a way similar to what a human deejay would do. The track tempo is a very important selection criterion in this context, as deejays will tend to string tracks with similar tempi back to back. Furthermore, deejays also tend to perform beat-synchronous cross-fading between successive track manually, slowing down or speeding up one of the tracks so that the beat in the two tracks line up exactly during the cross-fade. This can easily be done automatically once the beats are located in the two tracks.
+
+% Long-term structural segmentation of audio \cite{Bartsch2005}
+% Automatic transcription and score extraction from performance data 
+%  Music similarity
+% synchronization of a musical performance with computers or other devices
+
+Beat tracking can be also used in musical interaction systems. It can provide computers the ability to participate intelligently in live performances in real time and join the ensemble. Commercial devices already exist that attempt to extract a MIDI clock from an audio signal, indication both the tempo and the actual location of the beat. Such MIDI clocks can the be used to synchronize other devices such as drum machines or audio effects, enabling a new range of beat-synchronized audio processing \cite{Robertson2007}. 
+
+
+\paragraph{Overview} This thesis is structured as follows: Chapter \ref{sec:related_work} introduces related work which influenced the development of beat tracking. In Chapter \ref{sec:rhyhtm}, basic principles of rhythm and rhythm perception are explained. Chapter \ref{sec:machine_learning} deals with the foundations of machine learning, and Chapter \ref{sec:dnn} continues with the introduction of deep neural networks. In Chapter \ref{sec:method}, the proposed beat tracking method is described. In Chapter \ref{sec:evaluation}, the experimental set-up for the evaluation is explained and the results are finally discussed Chapter \ref{sec:conclusion}. 
+
+% How well does the proposed model generalize to different musical styles?
+
 
 
 
 \newpage
 % Rename to 'History of Beat Tracking'?
 \section{Related Work}
+\label{sec:related_work}
 
 This chapter is an overview of related work that fostered the development of beat tracking in musical audio. The task of automatic rhythm detection has been well established over the last thirty-five years and beat tracking algorithms have constantly improved in performance. A chronology with the most influential work is shown in Fig. \ref{fig:history}.
 
@@ -226,7 +282,7 @@ Davies and Böck \cite{Davies2019} suggest to use a convolutional neural network
 % basic principles of how humans understand rhythms
 % Old: Basic Principles of Rhythm
 \section{Rhythm}
-\label{sec:perception}
+\label{sec:rhyhtm}
 
 Rhythmic organization is an inherent part of all human activity. As the time structure of music, rhythm is composed of distinct temporal components such as pattern, meter, and tempo. In this chapter, basic principles and definitions of those components of music are explained.  
 
@@ -301,6 +357,7 @@ Rhythmic response is crucially a phased phenomenon, in contrast to human pitch r
 
 % Old: Foundations of Machine Learning
 \section{Machine Learning}
+\label{sec:machine_learning}
 
 Machine learning is subset of artificial intelligence (AI) and deals with algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. It is essentially a form of applied statistics with increase emphasis on the use of computers to estimate complicated functions and a decreased emphasis on providing confidence intervals around these functions \cite{Goodfellow2016}. On the other hand, pattern recognition is concerned with the automatic discovery of regularities in data, and to take actions such as classifying the data into different categories. Both fields, machine learning and pattern recognition are strongly connected with each other, and together they have undergone a substantial development over the past twenty-five years \cite{Bishop2006}.
 
@@ -488,7 +545,7 @@ Sometimes a setting is chosen to be a hyperparameter that the learning algorithm
 
 
 \section{Deep Neural Networks}
-
+\label{sec:dnn}
 
 Deep neural networks are called ``deep'' because they are typically represented by composing together many different functions
 \begin{align}
@@ -620,8 +677,9 @@ While GPUs operate at lower frequencies, they typically have many times the numb
 
 % Old: Beat Tracking System
 \section{Method}
+\label{sec:method}
 
-From an overall perspective, the proposed automatic beat tracking system comprises three major stages, as shown in Fig. \ref{fig:system}. In the first stage, the original audio is preprocessed. Data preprocessing refers to all transformations on the raw data before it is feed to the machine learning algorithm. It includes different methods such as normalization, transformation and feature extraction. 
+From an overall perspective, the proposed automatic beat tracking system comprises three major stages, as shown in Fig. \ref{fig:system}. In the first stage, the original audio is preprocessed. Data preprocessing refers to all transformations on the raw data before it is feed to the machine learning algorithm. It includes different methods such as normalization, transformation and feature extraction. In the second stage, a machine learning model is used to inductively learn the beat activation as a high-level feature of the musical input. Finally as a temporal decoding strategy, a dynamic Bayesian network is used to model bars of various lengths and align the predicted beat positions to the global best solution.  
 
 \begin{figure}[htbp]
 \centering
@@ -744,13 +802,12 @@ which represent the probability of a beat at each frame.
 The final model is trained with the ADAM optimizer \cite{Kingma2014} with a batch size $M = 20$ and a learn rate of $\mu = 1 \,e^{-3}$. The whole system has only $30818$ trainable parameters. 
 
 % Seuqence-to-sequence prediction: the entire input sequence can be used to predict each output (not feasible in real time processing)
-% Binary classification problem: beat (class 1); no beat (class 0)
 
 
 \subsection{Temporal Decoding}
 \label{sec:temporal_decoding}
 
-The metrical structure of music builds upon a hierarchy of approximate regular pulses, as elaborated in Section \ref{sec:perception}. To exploit this sequential structure, a probabilistic dynamic model is used to result in a more robust estimation of the beat instants and to correctly operate under rhythmic fluctuations, such as ritardando and accelarando or metric modulations.
+The metrical structure of music builds upon a hierarchy of approximate regular pulses, as elaborated in Section \ref{sec:rhyhtm}. To exploit this sequential structure, a probabilistic dynamic model is used to result in a more robust estimation of the beat instants and to correctly operate under rhythmic fluctuations, such as ritardando and accelarando or metric modulations.
 
 As a post-processing stage following the feature learning, a dynamic Bayesian network (DBN) is employed which jointly infers tempo and the phase of the beat. Dynamic Bayesian networks are popular frameworks for meter tracking in music because they are able to incorporate prior knowledge about the dynamics of rhythmic parameters. 
 In this DBN, which is a hidden Markov model (HMM) precisely, a sequence of hidden variables that represent the meter of an audio piece is inferred from a sequence of observed variables. The probabilistic state space consist of two hidden variables, the position within a bar and the tempo. 
@@ -831,6 +888,7 @@ P(a_t\,|\,\phi_t) = \begin{cases}
 
 \newpage
 \section{Evaluation}
+\label{sec:evaluation}
 
 Robust evaluation is inevitable, not only to determine the individual successes and failures of the algorithm, but also to measure its relative performance among different algorithms. With the development of the Music Information Retrieval Evaluation eXchange (MIREX) \cite{Downie2008}, evaluation has become a fundamental aspect of research in music information retrieval. MIREX represents a community-based formal evaluation framework for the evaluation of algorithms and techniques related to music information retrieval.  
 
@@ -849,7 +907,7 @@ In this section, existing objective evaluation methods are reviewed, and applied
 
 The choice of evaluation method can have a significant impact on the relative performance of different beat tracking algorithms. An evaluation method should adequately contend with the inherent uncertainty or ambiguity while providing a measurement of performance which is both meaningful and easy to interpret \cite{Davies2009b}. 
 
-Each evaluation method takes a set of annotated beat times $\mathcal A = \{a_1, \dots, a_A\}$ and a corresponding set of predicted beat times $\mathcal B = \{b_1, \dots, b_B\}$, where $A$ refers to the number of annotations, and $B$ to the number of annotations, respectively.
+Each evaluation method takes a set of annotated beat times $\mathcal A = \{a_1, \dots, a_A\}$ and a corresponding set of predicted beat times $\mathcal B = \{b_1, \dots, b_B\}$, where $A$ refers to the number of annotations, and $B$ to the number of detections, respectively.
 
 
 \paragraph{F-measure} 
@@ -891,19 +949,6 @@ Davies et al. \cite{Davies2009b} developed an evaluation method without reliance
 
 
 
-% \paragraph{P-score:} Define two sequences $T_a$ and $T_b$ as 
-
-% $T_a(n) = \begin{cases}
-% 	1, &\text{ if } n \in \mathcal A \\
-% 	0 , & \text{ otherwise }
-% \end{cases}, \qquad T_b(n) = \begin{cases}
-% 	1, &\text{ if } n \in \mathcal B \\
-% 	0 , & \text{ otherwise }
-% \end{cases}$
-
-% $\text{P-score} = \dfrac{\displaystyle \sum_{m=-w}^w  \sum_{n}\,  T_a(n)\,  T_b(n+m)}{\max(A,B)} \;, \qquad \text{where } w = 0.2 \, \text{median}(\Delta_a)$ 
-
-
 \subsection{Results}
 The performance of the proposed beat tracking system is determined using different evaluation methods, which are applied to the subsets of the training set. The achieved performance is compared against the state-of-the-art beat tracker from Böck et al. \cite{Boeck2014}. The overview of the performances of both beat tracking algorithms is shown in Tab. \ref{tab:performance}.
 \begin{table}[htbp]
@@ -930,8 +975,6 @@ The performance of the proposed beat tracking system is determined using differe
 \end{table}
 
 
-
-
 \subsection{Saliency Maps}
 
 \begin{itemize}
@@ -941,13 +984,11 @@ The performance of the proposed beat tracking system is determined using differe
 \end{itemize}
 
 
-
 \subsection{Network Training}
 
 \begin{itemize}
 \item Conclusion by Korzeniowski: To achieve better results, we could use DNN ensembles instead of a single DNN. We could ensure that the network sees data for which its predictions are wrong more often during training, or similarly, we could simulate a more balanced dataset by showing the net super-frames of rare chords more often \cite{Korzeniowski2016}
 \end{itemize}
-
 
 
 \subsection{Labeling}
@@ -962,6 +1003,7 @@ The performance of the proposed beat tracking system is determined using differe
 \newpage 
 
 \section{Conclusion}
+\label{sec:conclusion}
 
 \begin{itemize}
 \item An efficient audio based beat tracking algorithm was presented, that is able to produce equivalent results to the current state-of-the-art. 
@@ -975,6 +1017,7 @@ The performance of the proposed beat tracking system is determined using differe
 \item System operates causally, thus an real-time implementation is possible.
 \item Data augmentation (transformation or adding noise) $\Rightarrow$ prediction gets robust against transformation and noisy signals
 \item Additionally, the tempo, metrical level of the beat and downbeat positions can also be annotated for related tasks like downbeat tracking/ meter tracking/ tempo tracking etc (multi-task learning) \cite{Boeck2019}.
+\item Participate MIREX beat tracking contest 2019
 \end{itemize}
 
 \newpage
