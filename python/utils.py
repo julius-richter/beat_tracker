@@ -104,8 +104,10 @@ def get_sample_rate(file):
     return sr
 
 
-def play_audio(input, normalize=False):
-    sr, signal = read_wav(input, normalize=False)        
+def play_audio(input, normalize=False, xlim=None):
+    sr, signal = read_wav(input, normalize=False)
+    if xlim:
+        signal = signal[int(xlim[0]*sr):int(xlim[1]*sr)]  
     return ipd.Audio(signal, rate=sr)
 
 
@@ -181,7 +183,7 @@ def get_activations(input, model):
     return np.exp(np.array(out[0,1,:]))
 
 
-def show_activations(input, model, subfolder, show_annotations=True, show_predictions=True):
+def show_activations(input, model, subfolder, xlim=None, show_annotations=True, show_predictions=True):
     file, dataset = index_to_file(input)
 
     feature = get_input(input)
@@ -194,7 +196,7 @@ def show_activations(input, model, subfolder, show_annotations=True, show_predic
 
     activations = np.exp(np.array(out[0,1,:]))
 
-    plt.figure(figsize=(8,2))
+    plt.figure(figsize=(4,1))
     plt.plot(activations)
     plt.xlim(0, len(activations))
     plt.ylim(0, 1)
@@ -202,29 +204,37 @@ def show_activations(input, model, subfolder, show_annotations=True, show_predic
     plt.ylabel('Activation')
     if show_annotations:
         for ann in annotations:
-            plt.axvline(x=ann*100, color='k', linestyle='-', linewidth=1)
+            plt.axvline(x=ann*100, color='k', linestyle=':', linewidth=1)
     if show_predictions:
         for ann in predictions:
             plt.axvline(x=ann*100, color='r', linestyle=':', linewidth=1)
+    if xlim:
+        plt.xlim(int(xlim[0]*100), int(xlim[1]*100))
     plt.tight_layout()
 
 
-def plot_audio(file):
+def plot_audio(input, xlim=None):
 
-	sr, signal = wavfile.read('../data/audio/' + file + '.wav', mmap=False)
-	annotations = get_annotations(file)
-	time_vec = np.linspace(0, len(signal)/sr, len(signal))
+    file, dataset = index_to_file(input)
 
-	signal = signal / np.max(np.abs(signal))
+    sr, signal = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
 
-	plt.figure(figsize=(9,2))
-	plt.plot(time_vec, signal);
-	plt.xlabel('Time [s]')
-	plt.ylabel('Amplitude')
+    annotations = get_annotations(input)
 
-	for ann in annotations:
-	    plt.axvline(x=ann, color='k', linestyle=':', linewidth=0.5)
-	plt.tight_layout()
+    time_vec = np.linspace(0, len(signal)/sr, len(signal))
+
+    signal = signal / np.max(np.abs(signal))
+
+    plt.figure(figsize=(4,1))
+    plt.plot(time_vec, signal);
+    plt.xlabel('Time [s]')
+    plt.ylabel('Amplitude')
+    if xlim: 
+        plt.xlim(xlim)
+
+    for ann in annotations:
+        plt.axvline(x=ann, color='k', linestyle=':', linewidth=1)
+    plt.tight_layout()
 
 
 
