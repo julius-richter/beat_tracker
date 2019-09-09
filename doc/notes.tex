@@ -1,6 +1,5 @@
 \documentclass{scrartcl}
 \usepackage[]{geometry}
-% \usepackage[parfill]{parskip}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{subcaption}
@@ -88,14 +87,15 @@ Thomas Schnake
 \section*{Acknowledgments}
 I would like to thank
 \begin{itemize}
-\item Athanasios Lykartsis
+\item Athanasios Lykartsis, for being 
 \item Thomas Schnake
 \item Sebastian Böck
 \item Matthew Davies 
-\item my brother, Lorenz Richter, for teaching me mathematical insights in statistical learning theory, and for having nice discussions about recent trends in deep learning. 
+\item Lorenz Richter, my brother, for teaching me mathematical insights in statistical learning theory, and for having nice discussions about recent trends in deep learning. 
 \item Bernd Keul, for encouraging me to decide the topic, which I always dreamed of working on. 
-\item Dida for using their Google cloud service, on which I trained my machine learning model using 8 GPUs in parallel.
-\item Michael Flamm
+\item Dida, for using their Google cloud service, on which I trained my machine learning model using 8 GPUs in parallel.
+\item Brandon Oxendine for helping me to revise the text as a native speaker. 
+\item Michael Flamm, for constantly supporting me while being a great motivator.  
 \item My parents 
 \end{itemize}
 
@@ -104,12 +104,10 @@ I would like to thank
 \textsf{\textbf{Abstract}}
 \end{center}
 
-In this thesis, a computational method for extracting the beats from audio signals is presented. The proposed beat tracking system is based on convolutional neural networks which capture the sequential structure of audio input. A dynamic Bayesian network is used to model beat periods of various lengths and align the predicted beat positions to the global best solution. The system is evaluated on four datasets of various styles and achieves state-of-the-art performance, while working causally and requiring considerably less learnable parameters.  
-
+In this thesis, a computational method for extracting the beat positions from audio signals is presented. The proposed beat tracking system is based on convolutional neural networks which capture the sequential structure of audio input. A dynamic Bayesian network is used to model beat periods of various lengths and align the predicted beat positions to the global best solution. The system is evaluated on four datasets of various styles and achieves state-of-the-art performance. It maintains competitive performance but with two distinct computational advantages. that is works causally and requires considerably less learnable parameters.  
 
 
 \vspace{15em}
-
 
 \begin{center} 
 \textsf{\textbf{Zusammenfassung}}
@@ -121,7 +119,6 @@ In dieser Arbeit wird eine Rechenmethode zum Extrahieren der Beats aus Audiosign
 
 \tableofcontents
 \newpage
-
 
 
 \section{Introduction}
@@ -187,14 +184,32 @@ In audio content analysis, beat tracking is important for the automatic indexing
 % synchronization of a musical performance with computers or other devices
 
 Beat tracking is also used in musical interaction systems. It can provide computers the ability to participate intelligently in live performances in real time and join the ensemble. Commercial devices already exist that attempt to extract a MIDI clock from an audio signal, indication both the tempo and the actual location of the beat. Such MIDI clocks can the be used to synchronize other devices such as drum machines or audio effects, enabling a new range of beat-synchronized audio processing \cite{Robertson2007}. 
-
+\newpage
 
 \subsection{Goals of the Thesis}
 
-Do TCNs outperform LSTM architectures in this particular sequence modeling task?
+The main goal of the theses is to develop a computational beat tracking system which achieves competitive performance compared with the current state-of-the-art. The system should work on a wide range of different musical genres and styles. Instead of using hand-crafted features, such as harmonic changes, or rhythmic patterns, the beat tracking system should follow the current trend and utilize a machine learning model to directly learn the relevant features from audio. 
+
+In contrast to current state-of-the-art systems, which use recurrent neural networks, the proposed system should employ a convolutional approach. Influenced by good results of convolutional architectures in audio synthesis \cite{Oord2016}, the beat tracking system should be build upon a similar network structure, designed to perform well on the specific task of beat tracking. Considering to train the model on a large dataset, computational efficiency should be a main focus, when designing the model's architecture. Compared to recurrent architectures, convolutional neural networks have the advantage of being highly parallelizable, and therefore they can be trained with a considerable faster rate. The model complexity should large enough to model different musical styles. However, the goal is to decrease the number of learnable parameters in comparison to state-of-the-art systems.
 
 
-\paragraph{Overview} This thesis is structured as follows: Chapter \ref{sec:related_work} introduces related work which influenced the development of beat tracking. In Chapter \ref{sec:rhyhtm}, basic principles of rhythm and rhythm perception are explained. Chapter \ref{sec:machine_learning} deals with the foundations of machine learning, and Chapter \ref{sec:dnn} continues with the introduction of deep neural networks. In Chapter \ref{sec:method}, the proposed beat tracking method is described. In Chapter \ref{sec:evaluation}, the experimental set-up for the evaluation is explained and the results are finally discussed in Chapter \ref{sec:conclusion}. 
+
+
+% convolutional model uses considerably less learnable parameters
+
+% proposed approach can encode knowledge about the beat structure in music in a more compact representation than the recurrent approach.
+
+
+
+% Common association between sequence modeling and recurrent networks: ``\emph{Given a new sequence modeling task or dataset, which architecture should one use?}'' \cite{Bai2018}
+
+% Do TCNs outperform LSTM architectures in this particular sequence modeling task?
+
+
+
+
+
+\paragraph{Overview} The thesis is structured as follows: Section \ref{sec:related_work} introduces related work which influenced the development of beat tracking. In Section \ref{sec:rhyhtm}, basic principles of rhythm and rhythm perception are explained. Section \ref{sec:machine_learning} deals with the foundations of machine learning, and Section \ref{sec:dnn} continues with the introduction of deep neural networks. In Section \ref{sec:method}, the proposed beat tracking method is described. In Section \ref{sec:evaluation}, the experimental set-up for the evaluation is explained and the results are finally discussed in Section \ref{sec:conclusion}. 
 
 % How well does the proposed model generalize to different musical styles?
 
@@ -315,12 +330,10 @@ An onset refers to the beginning of a musical note or other sound. Any rhythmic 
 
 
 \paragraph{Beat} 
-The term beat, or more technically the \emph{tactus}, refers to the perceived pulses which are approximately equally spaced and define the rate at which notes in a piece of music are played \cite{Handel1989}. Intuitively, it is often defined as the rhythm listeners would tap their foot to when listening to a piece of music, or the numbers a musician counts while performing. Therefore, the beat is most often designated as a crotchet or quarter note in western notation. In beat tracking, the period of a beat is the time duration between two successive beats, i.e. the reciprocal of the tempo. Whereas the phase refers to the 
-
- the position within 
+The term beat, or more technically the \emph{tactus}, refers to the perceived pulses which are approximately equally spaced and define the rate at which notes in a piece of music are played \cite{Handel1989}. Intuitively, it is often defined as the rhythm listeners would tap their foot to when listening to a piece of music, or the numbers a musician counts while performing. Therefore, the beat is most often designated as a crotchet or quarter note in western notation. In beat tracking, the period of a beat is the time duration between two successive beats, i.e. the reciprocal of the tempo. Whereas the phase refers to the position inside a beat period.  
 
 
- where a beat occurs with respect to performance time.
+ % where a beat occurs with respect to performance time.
 % For a specific performance, the beat is defined by the occurance times, beat times, of these pulses.
 % The beat of a piece of music is the sequence of equally spaced phenomenal impulses which define a tempo for the music. 
 
@@ -386,9 +399,7 @@ Machine learning is a scientific study, often associated with artificial intelli
 
 Most machine learning algorithms can be divided into the categories of \emph{supervised learning} and \emph{unsupervised learning}. Supervised learning algorithms build a mathematical model of a set of data that contains both the inputs and the desired outputs. Supervised learning algorithms include classification and regression. Unsupervised learning algorithms take a set of data that contains only inputs, and find structure in the data, like clustering of data points. 
 
-Machine learning tasks are usually described in terms of how the machine learning system should process a data point $\mathbf x$, where a data point can be a collection of $n$ features $x_i$ that have been quantitatively measured from some object or event. Many kinds of tasks can be solved with machine learning, e.g. classification, regression, transcription, machine translation, synthesis, and sampling, just to name a few.
-
-In this thesis, the focus is on supervised sequence modeling and classification. In the following, basic concepts of machine learning are described. 
+Machine learning tasks are usually described in terms of how the machine learning system should process a data point $\mathbf x$, where a data point can for instance be a collection of $n$ features $x_i$ that have been quantitatively measured from some object or event. Many kinds of tasks can be solved with machine learning, e.g. classification, regression, transcription, machine translation, synthesis, and sampling, just to name a few. In this thesis, the focus is on supervised sequence modeling and classification. In the following, basic concepts of machine learning are described. 
 
 % Old: Sequence Modeling
 \subsection{Sequence Modeling}
@@ -455,11 +466,8 @@ In practical applications, the values of the model's parameters are determined b
 
 The performance on the training set is not a good indicator of predictive performance on unseen data due to the problem of over-fitting. If data is plentiful, then one approach is simply to use some of the available data to train a range of models, or a given model with a range of values for its complexity parameters, and then to compare them on independent data, also called the validation set, and select the one having the best predictive performance. If the model design is iterated many times using a limited dataset, then some overfitting to the validation data can occur and so it may be necessary to keep aside a third test set on which the performance of the selected model is finally evaluated. 
 
+Given a specific task or dataset, the main question of model selection is, which architecture should one use? For sequence modeling, Bai et al. \cite{Bai2018} show that a simple convolutional architectures outperform canonical recurrent networks such as LSTMs across a diverse range of tasks and datasets, while demonstrating longer effective memory. It remains the question if this is also the case in beat tracking?
 
-\begin{itemize}
-\item Given a sequence modeling task or dataset, which architecture should one use?
-\item Bai et al. \cite{Bai2018} show that a simple convolutional architectures outperforms canonical recurrent networks such as LSTMs across a diverse range of tasks and datasets, while demonstrating longer effective memory. Is it also the case in beat tracking?
-\end{itemize}
 
 
 \subsection{Optimization}
@@ -511,11 +519,11 @@ In the following, several basic regularization techniques are reviewed, which ar
 
 \paragraph{Weight Decay}
 
-One of the most common  form of regularization is termed Tikhonov regularization \cite{Tikhonov1943}, also known as ridge regression or weight decay. It is particularly useful to mitigate the problem of multicollinearity in linear regression, which often occurs in models with large numbers of parameters. Many regularization approaches try to limit the capacity of a model, and weight decay is doing so by adding a parameter norm penalty to the objective function. For the sake of readability, parameters  $\boldsymbol \theta$ at the moment are assumed to have no bias, only weights $\mathbf w$. Then, the regularized objective function with weight decay is defined as
+One of the most common  form of regularization is termed Tikhonov regularization \cite{Tikhonov1943}, also known as ridge regression or weight decay. It is particularly useful to mitigate the problem of multicollinearity in linear regression, which often occurs in models with large numbers of parameters. Many regularization approaches try to limit the capacity of a model, and weight decay is doing so by adding a parameter norm penalty to the objective function. Then, the regularized objective function with weight decay is defined as
 \begin{align}
-\tilde L(\mathbf x, \mathbf y; \mathbf w) = L(\mathbf x, \mathbf y; \mathbf w) + \alpha \,||\mathbf w||^2
+\tilde L(\mathbf x, \mathbf y; \boldsymbol \theta) = L(\mathbf x, \mathbf y; \boldsymbol \theta) + \alpha \,||\boldsymbol \theta||^2
 \end{align} 
-where $\alpha$ is a hyperparameter that weights the relative contribution of the norm penalty term. This has the effect that in every training step the weight vector multiplicatively shrinks by a constant factor, before performing the usual gradient update. 
+where $\alpha$ is a hyperparameter that weights the relative contribution of the norm penalty term. This has the effect that in every training step the parameter vector multiplicatively shrinks by a constant factor, before performing the usual gradient update. 
 
 
 \paragraph{Early Stopping} 
@@ -524,7 +532,7 @@ During the training of models with sufficient representational capacity to overf
 
 
 
-\paragraph{Dropout} Another regularization approach is termed dropout \cite{Srivastava2014}, which provides a computationally inexpensive but powerful method applicable to a broad family of models. With dropout an ensemble consisting of all subnetworks that can be formed by removing any elementary units except output units from an underlying base network. Therefore, dropout is regarded as an approximation to training and evaluating a bagged ensemble of exponentially many networks, where bagging involves training multiple models and evaluating multiple models on each test example. The regularization effect of dropout can be explained, that with randomly omitting units from the hidden layers during training, rare dependencies are excluded in model \cite{Dahl2013}.
+\paragraph{Dropout} Another regularization approach is termed dropout \cite{Srivastava2014}, which provides a computationally inexpensive but powerful method applicable to a broad family of models. With dropout an ensemble consisting of all subnetworks that can be formed by removing any elementary units except output units from an underlying base network. Therefore, dropout is regarded as an approximation to training and evaluating a bagged ensemble of exponentially many networks, where bagging involves training multiple models and evaluating multiple models on each test example. One possible explanation for the re\-gu\-larization effect of dropout is, that with randomly omitting units from the hidden layers during training, rare dependencies are excluded in model \cite{Dahl2013}.
 
 
 \subsection{Validation}
@@ -655,20 +663,20 @@ The gated recurrent unit (GRU) \cite{Cho2014} is a gating mechanism in recurrent
 
 \subsection{Temporal Convolutional Networks}
 
-A temporal convolutional network (TCN) \cite{Bai2018} represents a special architecture of convolutional neural network and is informed by recent convolutional architectures for sequential data. It is designed from first principles and combines simplicity, autoregressive prediction, and very long memory. In comparison to WaveNet \cite{Oord2016}, the TCN does not employ skip connections across layers (no conditioning, context stacking, or gated activations).
+A temporal convolutional network (TCN) \cite{Bai2018} represents a special architecture of convolutional neural network and is inspired by recent convolutional architectures for sequential data. It is designed from first principles and combines simplicity, autoregressive prediction, and very long memory. In comparison to WaveNet \cite{Oord2016}, the TCN does not employ skip connections across layers (no conditioning, context stacking, or gated activations).
 
 The TCN is based upon two principles: 1) the convolutions are casual, i.e, no information leakage from future to past; 2) the architecture can take a sequence of any length and map it to an output sequence of the same length just as with an RNN. To achieve the first point, the TCN uses a 1D fully-convolutional network architecture \cite{Long2015}, where each hidden layer is the same length as the input layer. To accomplish the second point, the TCN uses causal convolutions, i.e., convolutions where an output at time $t$ is convolved only with elements from time $t$ and earlier in the previous layer.
 
-Simple causal convolutions have the disadvantage to only look back at history with size linear in the depth of the network. To circumvent this fact, the architecture employs dilated convolutions that enable an exponentially large receptive field. More formally, for a input sequence $\mathbf x \in \mathbb R^T$ and a filter $f:\{ 0, \dots, k-1\} \rightarrow \mathbb R$, the dilated convolution operation $F$ on element $s$ of the sequence is defined as
+Simple causal convolutions have the disadvantage to only look back at history with size linear in the depth of the network. To circumvent this fact, the architecture employs dilated convolutions that enable an exponentially large receptive field. More formally, for an input sequence $\mathbf x \in \mathbb R^T$ and a filter $f:\{ 0, \dots, k-1\} \rightarrow \mathbb R$, the dilated convolution operation $F$ on element $x$ of the sequence is defined as
 \begin{align}
-F(s) = (\mathbf x *_d f)(s) = \sum_{i=0}^{k-1} f(i) \, \mathbf x_{s-d\cdot i}
+F(x) = (\mathbf x *_d f)(x) = \sum_{i=0}^{k-1} f(i) \, \mathbf x_{s-d\cdot i}
 \end{align}
 where $d = 2^\nu$ is the dilation factor, with $\nu$ the level of the network, and $k$ is the filter size. The term $s-d\cdot i$ accounts for the direction of the past. Dilation is equivalent to introducing a fixed  step between every two adjacent filter taps, as it can be seen in Fig. \ref{fig:dilated_convolutions}. Using larger dilation enables an output at the top level to represent a wider range of inputs, thus effectively expanding the receptive field of a CNN. There are two ways to increase the receptive field of a TCN: choosing lager filter sizes $k$ and increasing the dilation factor $d$, since the effective history of one layer is $(k-1) \, d$. 
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=1]{figures/dilated_conv.eps}
-\caption{A dilated casual convolution with dilation factors $d = 1,2,4$ and filter size $k=3$.}
+\caption{A dilated casual convolution with dilation factors $d = 1,2,4$ and filter size $k=3$. The black lines represent the dependencies for the last element $\hat{\mathbf y}_T$ in the upper right corner of the figure.}
 \label{fig:dilated_convolutions} 
 \end{figure}
 
@@ -678,7 +686,7 @@ o = \text{Activation} \big(\mathbf x + \mathcal F(\mathbf x)\big)
 \end{align}
 This effectively allows layers to learn modifications to the identity mapping rather than the entire transformation, which has been shown to benefit deep neural networks \cite{He2016}. Especially for very deep networks stabilization becomes important, for example, in the case where the prediction depends on a large history size ($> 2^{12}$) with a high-dimensional input sequence. 
 
-A residual block has two layers of dilated causal convolutions and rectified linear units (ReLU) as non-linearity, shown in Fig. \ref{fig:residual_block}. For normalization, weight normalization \cite{Salimans2016} is applied to the convolutional filters. In addition, a spatial dropout \cite{Srivastava2014} is added after each dilated convolution for regularization, i.e., at each training step, a whole channel is zeroed out.
+A residual block has two layers of dilated causal convolutions and rectified linear units (ReLU) as non-linearities, shown in Fig. \ref{fig:residual_block}. For normalization, weight normalization \cite{Salimans2016} is applied to the convolutional filters. In addition, a spatial dropout \cite{Srivastava2014} is added after each dilated convolution for regularization, i.e., at each training step, a whole channel is zeroed out.
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=1]{figures/residual_block.eps}
@@ -694,7 +702,7 @@ A residual block has two layers of dilated causal convolutions and rectified lin
 \item within a residual block there exist two layers of dilated causal convolution and a rectified linear unit (ReLU) \cite{Nair2010} as a non-linearity
 \item for normalization a weight normalization \cite{Salimans2016} is applied to the convolutional filters 
 \item additionally spatial dropout \cite{Srivastava2014} is added after each dilated convolution for regularization (at each training step, a whole channel is zeroed out)
-\item The TCN architecture appears not inly more accurate than canonical recurrent networks such as LSTMs and GRUs, but also simpler and clearer.
+\item The TCN architecture appears not only more accurate than canonical recurrent networks such as LSTMs and GRUs, but also simpler and clearer.
 \end{itemize}
 
 
@@ -704,7 +712,7 @@ A residual block has two layers of dilated causal convolutions and rectified lin
 
 \subsection{General-Purpose Computing on GPUs} 
 
-In 2004, it was shown by K. S. Oh and K. Jung that standard neural networks can be greatly accelerated on GPUs. Their implementation was 20 times faster than an equivalent implementation on CPU \cite{Oh2004}. In 2005, another paper also emphasized the value of GPGPU for machine learning \cite{Steinkraus2005}.
+In 2004, it was shown by K. S. Oh and K. Jung that standard neural networks can be greatly accelerated on GPUs. Their implementation was 20 times faster than an equivalent implementation on CPUs \cite{Oh2004}. In 2005, another paper also emphasized the value of general-purpose computing on GPUs (GPGPU) for machine learning \cite{Steinkraus2005}.
 
 While GPUs operate at lower frequencies, they typically have many times the number of cores. Thus, GPUs can process far more pictures and graphical data per second than a traditional CPU. Migrating data into graphical form and then using the GPU to scan and analyze it can create a large speedup.
 
@@ -716,7 +724,7 @@ While GPUs operate at lower frequencies, they typically have many times the numb
 \section{Method}
 \label{sec:method}
 
-From an overall perspective, the proposed beat tracking system comprises three major stages, as shown in Fig. \ref{fig:system}. In the first stage, the original audio signal is preprocessed. Generally, data preprocessing refers to all transformations on the raw data before it is feed to the machine learning algorithm. It includes different methods such as normalization, transformation and feature extraction. The second stage represents the actual machine learning model, which is optimized based on the  training data. The learned model takes the preprocessed audio as an input and outputs the beat activation which can be seen as a high-level feature of the musical piece. Finally, in the temporal decoding stage a dynamic Bayesian network (DBN) is used to model bars of various lengths and align the predicted beat positions to the global best solution.  
+From an overall perspective, the proposed beat tracking system comprises three major stages, as shown in Fig. \ref{fig:system}. In the first stage, the original audio signal is preprocessed. Generally, data preprocessing refers to all transformations on the raw data before it is fed to the machine learning algorithm. It includes different methods such as normalization, transformation and feature extraction. The second stage represents the actual machine learning model, which is optimized based on the  training data. The learned model takes the preprocessed audio as an input and outputs the beat activation which can be seen as a high-level feature of the musical piece. Finally, in the temporal decoding stage a dynamic Bayesian network (DBN) is used to model bars of various lengths and align the predicted beat positions to the global best solution.  
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=1.0,trim={0 0 0 -0.5em}]{figures/beat_tracking_system.eps}
@@ -728,7 +736,7 @@ To better understand the signal flow of the beat tracking system, the input sign
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=0.82,trim={0.4cm 0.4cm 0cm 0.2cm},clip]{figures/pipeline.eps}
-\caption{Input signals to the three main processing blocks of the beat tracking system for the first verse of the track Yesterday by the Beatles. On top the original audio signal is shown; in the middle the filtered log power spectrum; and bottom the beat activations. Dashed lines represent the annotated beats.}
+\caption{Input signals to the three main processing blocks of the beat tracking system for the first verse of the track Yesterday by the Beatles. On top the original audio signal is shown; in the middle the filtered log power spectrum; and bottom the beat activations. Dashed lines represent the estimated beats.}
 \label{fig:pipeline}
 \end{figure}
 The input to the data preprocessing stage is the discrete audio signal sampled at sampling rate $f_s$. In data preprocessing, the 1-dimensional audio file is transfered to a 2-dimensional filtered log power spectrum, which represents the amplitude of a particular frequency at a particular time. The output of the feature learning stage is the 1-dimensional beat activation, and represents the probability of a beat at each frame. In the last processing step, the temporal decoding stage take this high-level feature as an input and subsequently estimates the most probable beat sequence.
@@ -740,22 +748,22 @@ The dataset that is used to train and evaluate the proposed beat tracking system
 \caption{Datasets used for training and evaluation.}
 \label{tab:datasets}
 \centering
-\begin{tabular}{lrr}
+\begin{tabular}{lrrr}
 \hline
 \hline
-\textbf{Dataset} & \textbf{Files} & \textbf{Length} \\
+\textbf{Dataset} & \textbf{Files} & \textbf{Length} & \textbf{Beats} \\
 \hline
-Ballroom \cite{Gouyon2006b, Krebs2013} & $685$ & $5\,\text{h} \;57\,\text{m}$\\
-GTZAN \cite{Tzanetakis2002b, marchand2015swing} & $1000$ & $8\,\text{h}\;20\,\text{m}$\\
-Hainsworth \cite{Hainsworth2004} & $222$ & $3\,\text{h}\;19\,\text{m}$\\
-SMC \cite{Holzapfel2012} & $217$ & $2\,\text{h}\;25\,\text{m}$\\    
+Ballroom \cite{Gouyon2006b, Krebs2013} & $685$ & $5\,\text{h} \;57\,\text{m}$ & $\num{44653}$\\
+GTZAN \cite{Tzanetakis2002b, marchand2015swing} & $1000$ & $8\,\text{h}\;20\,\text{m}$ & $\num{59277}$\\
+Hainsworth \cite{Hainsworth2004} & $222$ & $3\,\text{h}\;19\,\text{m}$ & $\num{22339}$\\
+SMC \cite{Holzapfel2012} & $217$ & $2\,\text{h}\;25\,\text{m}$ & $\num{10628}$\\    
 \hline
-Total & $2124$ & $ 20\,\text{h}\; 01\,\text{m}$\\  
+Total & $2124$ & $ 20\,\text{h}\; 01\,\text{m}$ & $\num{136897}$\\  
 \hline
 \hline
 \end{tabular}
 \end{table}  
-In total, the compound dataset has a length of approximately 20 hours and contains 2124 files with $?$ beat annotations. The dataset comprises a wide range of different musical styles. However, the majority of the tracks represents western music. In the following, the properties of different subsets are described more detailedly.   
+In total, the compound dataset has a length of approximately 20 hours and contains 2124 files with $\num{136897}$ beat annotations. The dataset comprises a wide range of different musical styles. However, the majority of the tracks represents western music. In the following, the properties of different subsets are described more detailedly.   
 
 
 \paragraph{Ballroom} 
@@ -806,7 +814,6 @@ The beat tracking task requires annotations in the form of time instants of beat
 % \paragraph{Training Set} 
 % After preprocessing the audio data, we obtain the training set $ O = \left\{ \mathbf x^{(\alpha)}, \, y^{(\alpha)} \right \}_{\alpha = 1}^p$, with $p$ samples in total. 
 
-
 % \paragraph{Chroma Representation}
 
 % \begin{itemize}
@@ -828,7 +835,10 @@ The neural network architecture consist of two main blocks, as shown in Fig. \re
 \label{fig:neural_net}
 \end{figure}    
 
-The convolutional block is a set of convolution and max pooling layers and reduce the dimensionality both in time and frequency. All convolutional layers contain $16$ filters, with kernel sizes of $3\times3$ for the first two, and $1\times8$ for the last layer, as it is shown in Fig \ref{fig:conv_block}. The filters move with stride 1 and no zero padding is used. The intermediate max pooling layers apply pooling only in the frequency direction over $3$ frequency bins. A dropout \cite{Tompson2015} rate of $0.1$ is used with the exponential linear (ELU) \cite{Clevert2015} as activation function.
+The convolutional block is a set of convolution and max pooling layers and it reduces the dimensionality both in time and frequency. All convolutional layers contain $16$ filters, with kernel sizes of $3\times3$ for the first two, and $1\times8$ for the last layer, as it is shown in Fig \ref{fig:conv_block}. The filters move with stride 1 and no zero padding is used. The intermediate max pooling layers apply pooling only in the frequency direction over $3$ frequency bins. A dropout \cite{Tompson2015} rate of $0.1$ used and the activation function corresponds to an exponential linear unit (ELU) \cite{Clevert2015}, defined as
+\begin{align}
+{ f(x)={\begin{cases}e^{x}-1&{\text{for }}x\leq 0\\x&{\text{for }}x>0.\end{cases}}}
+\end{align}
 \begin{figure}[htbp]
 \centering
 \includegraphics[scale=1.0]{figures/conv_block.eps}
@@ -847,7 +857,7 @@ Thus, the resulting receptive field is approximately $81.5\,\text{s}$ long. A sp
 \begin{align}
 \log \text{softmax}(\hat{y}_i) = \log\left(\frac{\exp{(\hat{y}_i)}}{\sum_j \exp(\hat{y}_j)}\right)
 \end{align} 
-is used which is added to the last layer of the neural network. Hence, the output $\hat{\mathbf y}_t = (\hat{y}_{1_t}, \hat{y}_{2_t})^T$ represent the log-probabilities for the two classes at time $t$. The network can thus be trained as a binary classifier with the cross entropy loss function, as defined in (\ref{eq:binary_cros_entropy_loss}). The ``beat'' class is weighted with the factor $w_1=70$ to compensate the unbalancedness of the two classes. Finally, the beat activation $a_t$ can be calculated by
+is used which is added to the last layer of the neural network. Hence, the output $\hat{\mathbf y}_t = (\hat{y}_{1_t}, \hat{y}_{2_t})^T$ represent the log-probabilities for the two classes at time $t$. The network can thus be trained as a binary classifier with the cross entropy loss function, as defined in \eqref{eq:binary_cros_entropy_loss}. The ``beat'' class is weighted with the factor $w_1=70$ to compensate the unbalancedness of the two classes. Finally, the beat activation $a_t$ can be calculated by
 \begin{align}
 a_t = \exp \left({\hat{y}_{1_t}} \right), \quad \forall \, t= 1,\dots,T
 \end{align}  
@@ -935,9 +945,6 @@ P(a_t\,|\,\phi_t) = \begin{cases}
 \end{align} 
 
 
-
-
-
 % \subsection{Time-Frequency Reassignment}
 % \begin{itemize}
 % \item audio signals have a distribution of energy that varies in time and frequency
@@ -973,11 +980,11 @@ Each evaluation method takes a set of annotated beat times $\mathcal A = \{a_1, 
 
 
 \paragraph{F-measure} 
-In statistical analysis of binary classification, the F-measure, also called the $F_1$ score, is a generic measure to test accuracy. It considers both the precision $p$ and the recall $r$ of the test to compute a numerical score. The precision $p$ is the number of true positives $tp$ divided by the number of all positive results returned by the classifier, i.e, the number of true positives $tp$ plus the number of false positives $fp$
+In statistical analysis of binary classification, the F-measure, also called the $F_1$ score, is a generic measure to test performance. It considers both the precision $p$ and the recall $r$ of the test data to compute a numerical score. The precision $p$ is the number of true positives $tp$ divided by the number of all positive results returned by the classifier, i.e., the number of true positives $tp$ plus the number of false positives $fp$
 \begin{align}
 p = \frac{tp}{tp + fp}
 \end{align} 
-The recall $r$ is referred to as the number of true positives $tp$ divided by the number of all relevant samples, i.e, all samples that should have been identified as positive
+The recall $r$ is referred to as the number of true positives $tp$ divided by the number of all relevant samples, i.e., all samples that should have been identified as positive
 \begin{align}
 r = \frac{tp}{tp + fn}
 \end{align} 
@@ -986,7 +993,6 @@ The F-measure is the harmonic mean of precision and recall
 F_1=  \frac{2\,p\, r}{p +r} = \dfrac{2\, tp}{2\, tp + fp + fn}
 \end{align} 
 where an F-measure reaches its best value at 1 (perfect precision and recall) and worst at 0. In beat tracking, a detected beat is regarded as true positive if it is in $\pm 70\,\text{ms}$ range of an annotated beat. One can understand, the number of false positives as extra detections of the system, while the number of false negatives correspond to the missed detections.
-
 
 
 \paragraph{Continuity measures} 
@@ -1042,7 +1048,9 @@ The performance of the proposed beat tracking system is determined using the afo
 
 The inspection of Tab. \ref{tab:performance} demonstrates that across all datasets and evaluation methods, the performance of the proposed beat tracking system is highly comparable to the existing state-of-the-art. For the Ballroom dataset, the performance is on a very high level and outperforms the approach in \cite{Boeck2014} in almost every evaluation method. Conversely, the SMC dataset reveals a significant drop in performance due to the large proportion of highly challenging musical excerpts. As a reminder, the approach in \cite{Boeck2014} uses multiple models which are specialized on certain datasets. In this case, exactly one model was trained only on the SMC dataset. Therefore the performance is essentially higher when compared against the proposed beat tracking system. This also confirms the assumption, that with the selection of training data the learned model can be specialized to certain musical styles.
 
-In this case, exactly one model was trained only on the SMC dataset. Therefore the performance is essentially higher when compared against the proposed beat tracking system. This also confirms the assumption, that with the selection of training data the learned model can be specialized to certain musical styles.
+\newpage
+
+% In this case, exactly one model was trained only on the SMC dataset. Therefore the performance is essentially higher when compared against the proposed beat tracking system. This also confirms the assumption, that with the selection of training data the learned model can be specialized to certain musical styles.
 
 % Filter Inspection
 \subsection{Filter Activation Maps}
@@ -1079,15 +1087,13 @@ In general, artificial neural networks are used because of good results. However
 
 and visualized to discover the types of features that the model will detect, and the activation maps output by convolutional layers can be inspected to understand exactly what features were detected for a given input image.
 
-
-
 % compute saliency maps using guided back-propagation \cite{Springenberg2014}
-% How do the filters of the convolutional block look like?
 
 
+\newpage
 
 \subsection{Network Training}
-The final model is trained with the ADAM optimizer \cite{Kingma2014} with a batch size $M = 20$ and a learn rate of $\mu = 1 \,e^{-3}$. The whole system has only $30818$ trainable parameters. 
+The final model is trained with the ADAM optimizer \cite{Kingma2014} with a batch size $M = 20$ and a learn rate of $\mu = 5 \cdot10^{-3}$. The whole system has only $30818$ trainable parameters. 
 
 \begin{itemize}
 \item Conclusion by Korzeniowski: To achieve better results, we could use DNN ensembles instead of a single DNN. We could ensure that the network sees data for which its predictions are wrong more often during training, or similarly, we could simulate a more balanced dataset by showing the net super-frames of rare chords more often \cite{Korzeniowski2016}
@@ -1114,78 +1120,34 @@ The final model is trained with the ADAM optimizer \cite{Kingma2014} with a batc
 \label{sec:conclusion}
 
 
-In this theses, a beat tracking system for musical audio was proposed, that uses convolutional neural networks to learn the beat activation as a high-level feature directly from the preprocessed audio. In a subsequent temporal decoding stage, a dynamic Bayesian network is used to model beat periods of various lengths and align the predicted beat positions to the global best solution.
+In this theses, a computational beat tracking system for musical audio was proposed, that uses convolutional neural networks to learn the beat activation as a high-level feature directly from the preprocessed audio. In a subsequent temporal decoding stage, a dynamic Bayesian network is used to model beat periods of various lengths and align the predicted beat positions to the global best solution. An objective evaluation on four datasets covering a large corpus of different musical styles showed that the proposed beat tracking system achieves equivalent performance compared with the current state-of-the-art.
+
+
+The beat tracking system was compared against the approach in \cite{Boeck2014} which is based upon multiple recurrent LSTM networks. In contrast to the recurrent approach, which takes the whole sequence as an input, the convolutional approach operates causally, that means, there is no leakage of information from the future, and thus the algorithm could also run in a real-time implementation. Although the proposed system is provided with less information due to the causality constraint, it maintains competitive performance against the recurrent approach. Another noteworthy difference is that the convolutional model uses considerably less learnable parameters ($\num{30818}$ vs. $\num{67301}$), which implies that the proposed approach can encode knowledge about the beat structure in music in a more compact representation than the recurrent approach. Due to the highly parallelizable structure of the feed-forward convolutional network, computational efficiency dramatically increases when training on GPUs. That means, the proposed model learns information in a considerably faster rate, which is an important property when training on large datasets. 
+
+% is that it can maintain competitive performances but with two distinct computational advantages over the state-of-the-art. The approach uses only 3xxxx parameters compared to 
+% An efficient audio based beat tracking algorithm was presented, that is able to produce. 
+
+In general, the goal of supervised learning is to predict a not yet observed input. This quality of generalizability is not only controlled with the complexity of the model, e.g., through finding the model with the right architecture, and with the right number of parameters, it also depends on how the model has been regularized and on which data it has been trained on. The \emph{no free lunch theorem} for machine learning \cite{Wolpert1996} states that, averaged over all possible data-generating distributions, every classification algorithm has the same error rate when classifying previously unobserved data points. This implies that the machine learning algorithms should be designed to perform well on a specific task. However, the domain of music is extremely complicated, and a machine learning model that perfectly understands music essentially involves simulating the entire universe. In practice, this can not be achieved and an overly complex model does not necessarily include the target function or the true data generating process. 
+
+% Tried out Trellis Networks \cite{Bai2018b}, but not better than TCN. 
+
+To solve the problem of universality, Hainsworth and Macleod \cite{Hainsworth2004} claim that beat tracking systems will have to be style-specific in the future in order to improve the state-of-the-art. Furthermore, Collins \cite{Collins2006} adds that it is probable that no universal beat tracking model exist which does not utilize a switching model to recognize style and context prior to application. A realization of this proposal can also be found in the approach of Böck et al. \cite{Boeck2014} where multiple neural networks are trained on certain heterogeneous music styles in order to improve the overall performance. However, the method for splitting the data into sets of different styles is rather simple and the selection of suitable data for the creation of specialized models remains inadequate. 
+
+In comparison with the multi-model approach, the proposed beat tracking system in this thesis solely utilizes a single neural network. Theoretically, a single network complex enough should be able to  model all different music styles simultaneously. The main difficulty is to create an highly balanced training set with an evenly distributed set of beats over all the different dimensions relevant for detecting beats. Admittedly, this is hardly achievable, however, the best way to make the machine learning model generalize better is to train it on more data. A rough rule of thumb is that a supervised deep learning algorithm will generally achieve acceptable performance with around $\num{5000}$ labeled examples per category and will match or exceed human performance when trained with a dataset containing at least 10 million labeled examples \cite{Goodfellow2016}. As a reminder, the used training set has approximately $\num{136000}$ beat annotations in total, and an inspection of the annotations revealed inaccuracies and even beat tracking on the off-beat. Therefore, a remaining task for the future is to reduce the limitations both in the amount of training data and the actual correctness of the beat annotations. One simple way to do so is to perform data augmentation in order to become robust against transformation and noisy signals. 
+
+
+Generally, learned representations often result in much better performance than can be obtained with hand-designed representations \cite{Goodfellow2016}. Therefore, another investigation for future research could be to leave the high-level rhythmical analysis solely to the neural network. Instead of preprocessing the audio signal with the STFT, the network takes raw audio as input and automatically learns a representation that possibly acts similar to the Fourier transform. Additionally, the tempo can also be annotated for the task of beat tracking to utilize multi-task learning strategy \cite{Boeck2019}. Furthermore, new approaches for modeling sequential data could be tested, for instance the deep equilibrium models \cite{Bai2019b}. As an outlook, the proposed algorithm will participate at the MIREX beat tracking contest 2019 and a real-time implementation is already in the making\footnote{For the code please check \url{https://github.com/julius-richter/beat_tracker}.}.
 
 
 
-Goal of supervised learning: predict not yet observed input.
+% Data augmentation (transformation or adding noise) $\Rightarrow$ prediction gets robust against transformation and noisy signals
 
-Certain convolutional architectures can reach state-of-the-art accuracy in audio synthesis (e.g. Google WaveNet \cite{Oord2016})
+% The most mentionable aspect is that the neural networks were trained solely on ballroom dance and other kinds of western pop music. The networks accuracy depends on the trainings set. Selective bias. 
 
-Common association between sequence modeling and recurrent networks: ``\emph{Given a new sequence modeling task or dataset, which architecture should one use?}'' \cite{Bai2018}
+% Instead of calculating the STFT as for input features discover a good set of features by representation learning. (``\emph{Learned representations often result in much better performance than can be obtained with hand-designed representations.}'' \cite{Goodfellow2016})
 
-
-
-
-An efficient audio based beat tracking algorithm was presented, that is able to produce equivalent results to the current state-of-the-art. 
-
-Causal model and less parameters in contrast to \cite{Boeck2014}.
-
-System operates causally, thus an real-time implementation is possible.
-
-What is most noteworthy about the proposed approach is that it can maintain competitive performances but with two distinct computational advantages over the state-of-the-art. The approach uses only 3xxxx parameters compared to 
-
-
-
-
-The no free lunch theorem for machine learning \cite{Wolpert1996} states that, averaged over all possible data-generating distributions, every classification algorithm has the same error rate when classifying previously unobserved points. This implies that we must design our machine learning algorithms to perform well on a specific task.
-
-The most mentionable aspect is that the neural networks were trained solely on ballroom dance and other kinds of western pop music. The networks accuracy depends on the trainings set. Selective bias. 
-
-The domain of music is extremely complicated, and the machine learning model essentially involves simulating the entire universe.
-
-Controlling the complexity of the model is not a simple matter of finding the model of the right size, with the right number of parameters. Instead, we might find that the best fitting model is a large mode that has been regularized appropriately.
-
-Motivation: ``\emph{It is probable that no universal beat tracking model exist which does not utilize a switching model to recognize style and context prior to application.}'' \cite{Collins2006}
-
-Hainsworth and MacLeaod state that beat tracking systems will have to be style specific in the future in order to improve the state-of-the-art \cite{Hainsworth2004}.
-
-Theoretically, a single network large enough should be able to model all different music styles simultaneously but unfortunately this optional solution is hardly achievable. The main reason for this is the difficulty to choose an absolutely balanced training set with an evenly distributed set of beats over all the different dimensions relevant for detecting beats. These include rhythmic patterns, harmonic aspects and many other features
-
-In practice, an overly complex model family does not necessarily include the target function or the true data.generating process, or even a close approximation of either.
-
-
-
-
-The best way to make a machine learning model generalize better is to train it on more data. 
-
-Limitations in both the amount of training data and the variable quality of the annotations. Perform data augmentation. 
-
-Dataset size: a rough rule of thumb is that a supervised deep learning algorithm will generally achieve acceptable performance with around 5000 labeled examples per category and will match or exceed human performance when trained with a dataset containing at least 10 million labeled examples \cite{Goodfellow2016}.
-
-
-
-Outlook:
-
-Participate MIREX beat tracking contest 2019
-
-Leave higher level analysis to the neural network
-
-Instead of calculating the STFT as for input features discover a good set of features by representation learning. (``\emph{Learned representations often result in much better performance than can be obtained with hand-designed representations.}'' \cite{Goodfellow2016})
-
-``\emph{Feature extraction is an essential step towards effective and accurate beat/downbeat positions extraction.}'' \cite{Khadkevich2012}
-
-``\emph{The system shows state-of-the-art beat and downbeat tracking performance on a wide range of different musical genres and styles. It does so by avoiding hand-crafted features such as harmonic changes, or rhythmic patterns, but rather leans the relevant features directly from audio.}'' \cite{Boeck2016b}
-
-Take raw audio as input and learn Fourier transform with neural net.
-
-Data augmentation (transformation or adding noise) $\Rightarrow$ prediction gets robust against transformation and noisy signals
-
-Additionally, the tempo, metrical level of the beat and downbeat positions can also be annotated for related tasks like downbeat tracking/ meter tracking/ tempo tracking etc (multi-task learning) \cite{Boeck2019}.
-
-Tried out Trellis Networks \cite{Bai2018b}, but not better than TCN. 
-
-
+% ``\emph{Feature extraction is an essential step towards effective and accurate beat/downbeat positions extraction.}'' \cite{Khadkevich2012}
 
 \newpage 
 \bibliographystyle{ieeetr}

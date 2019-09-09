@@ -2,7 +2,7 @@
 \contentsline {subsection}{\numberline {1.1}Motivation}{7}{subsection.1.1}
 \contentsline {paragraph}{\nonumberline Difficulties of Beat Tracking}{7}{section*.7}
 \contentsline {paragraph}{\nonumberline Applications of Beat Tracking}{8}{section*.8}
-\contentsline {subsection}{\numberline {1.2}Goals of the Thesis}{8}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.2}Goals of the Thesis}{9}{subsection.1.2}
 \contentsline {paragraph}{\nonumberline Overview}{9}{section*.9}
 \contentsline {section}{\numberline {2}Related Work}{10}{section.2}
 \contentsline {section}{\numberline {3}Rhythm}{14}{section.3}
@@ -59,7 +59,7 @@
 \contentsline {paragraph}{\nonumberline Information Gain}{41}{section*.48}
 \contentsline {subsection}{\numberline {7.2}Results}{42}{subsection.7.2}
 \contentsline {subsection}{\numberline {7.3}Filter Activation Maps}{43}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Network Training}{43}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.4}Network Training}{44}{subsection.7.4}
 \contentsline {subsection}{\numberline {7.5}Labeling}{44}{subsection.7.5}
 \contentsline {section}{\numberline {8}Conclusion}{45}{section.8}
 \contentsline {section}{\numberline {9}References}{47}{section.9}
