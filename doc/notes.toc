@@ -14,21 +14,21 @@
 \contentsline {paragraph}{\nonumberline Meter}{15}{section*.15}
 \contentsline {subsection}{\numberline {3.2}Rhythm Perception}{15}{subsection.3.2}
 \contentsline {section}{\numberline {4}Machine Learning}{18}{section.4}
-\contentsline {subsection}{\numberline {4.1}Sequence Modeling}{18}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.1}Sequence to Sequence Modeling}{18}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Feature Extraction}{19}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Performance Measure}{19}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Model Selection}{20}{subsection.4.4}
 \contentsline {subsection}{\numberline {4.5}Optimization}{20}{subsection.4.5}
 \contentsline {paragraph}{\nonumberline Stochastic Gradient Decent}{21}{section*.16}
 \contentsline {paragraph}{\nonumberline Back-Propagation}{21}{section*.17}
-\contentsline {paragraph}{\nonumberline Adam}{22}{section*.18}
+\contentsline {paragraph}{\nonumberline Adam}{21}{section*.18}
 \contentsline {subsection}{\numberline {4.6}Regularization}{22}{subsection.4.6}
 \contentsline {paragraph}{\nonumberline Weight Decay}{22}{section*.19}
-\contentsline {paragraph}{\nonumberline Early Stopping}{23}{section*.20}
-\contentsline {paragraph}{\nonumberline Dropout}{23}{section*.21}
+\contentsline {paragraph}{\nonumberline Early Stopping}{22}{section*.20}
+\contentsline {paragraph}{\nonumberline Dropout}{22}{section*.21}
 \contentsline {subsection}{\numberline {4.7}Validation}{23}{subsection.4.7}
 \contentsline {paragraph}{\nonumberline Cross-validation}{23}{section*.22}
-\contentsline {paragraph}{\nonumberline Test set method}{24}{section*.23}
+\contentsline {paragraph}{\nonumberline Test set method}{23}{section*.23}
 \contentsline {subsection}{\numberline {4.8}Hyperparameters}{24}{subsection.4.8}
 \contentsline {section}{\numberline {5}Deep Neural Networks}{25}{section.5}
 \contentsline {subsection}{\numberline {5.1}Feedforward Neural Networks}{25}{subsection.5.1}
@@ -37,29 +37,28 @@
 \contentsline {paragraph}{\nonumberline LSTM}{27}{section*.26}
 \contentsline {paragraph}{\nonumberline GRU}{27}{section*.27}
 \contentsline {subsection}{\numberline {5.4}Temporal Convolutional Networks}{27}{subsection.5.4}
-\contentsline {subsection}{\numberline {5.5}General-Purpose Computing on GPUs}{30}{subsection.5.5}
-\contentsline {section}{\numberline {6}Method}{31}{section.6}
-\contentsline {subsection}{\numberline {6.1}Dataset}{32}{subsection.6.1}
-\contentsline {paragraph}{\nonumberline Ballroom}{32}{section*.33}
-\contentsline {paragraph}{\nonumberline GTZAN}{32}{section*.34}
-\contentsline {paragraph}{\nonumberline Hainsworth}{33}{section*.35}
-\contentsline {paragraph}{\nonumberline SMC}{33}{section*.36}
-\contentsline {subsection}{\numberline {6.2}Data Preprocessing}{33}{subsection.6.2}
-\contentsline {paragraph}{\nonumberline Input}{33}{section*.37}
-\contentsline {paragraph}{\nonumberline Labels}{34}{section*.38}
-\contentsline {subsection}{\numberline {6.3}Feature Learning}{34}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Temporal Decoding}{36}{subsection.6.4}
-\contentsline {paragraph}{\nonumberline Initial Distribution}{38}{section*.43}
-\contentsline {paragraph}{\nonumberline Transition Model}{38}{section*.44}
-\contentsline {paragraph}{\nonumberline Observation Model}{39}{section*.45}
-\contentsline {section}{\numberline {7}Evaluation}{40}{section.7}
-\contentsline {subsection}{\numberline {7.1}Evaluation Methods}{40}{subsection.7.1}
-\contentsline {paragraph}{\nonumberline F-measure}{40}{section*.46}
-\contentsline {paragraph}{\nonumberline Continuity measures}{41}{section*.47}
-\contentsline {paragraph}{\nonumberline Information Gain}{41}{section*.48}
-\contentsline {subsection}{\numberline {7.2}Results}{42}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Filter Activation Maps}{43}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Network Training}{44}{subsection.7.4}
-\contentsline {subsection}{\numberline {7.5}Labeling}{44}{subsection.7.5}
-\contentsline {section}{\numberline {8}Conclusion}{45}{section.8}
-\contentsline {section}{\numberline {9}References}{47}{section.9}
+\contentsline {section}{\numberline {6}Method}{30}{section.6}
+\contentsline {subsection}{\numberline {6.1}Dataset}{31}{subsection.6.1}
+\contentsline {paragraph}{\nonumberline Ballroom}{31}{section*.33}
+\contentsline {paragraph}{\nonumberline GTZAN}{31}{section*.34}
+\contentsline {paragraph}{\nonumberline Hainsworth}{32}{section*.35}
+\contentsline {paragraph}{\nonumberline SMC}{32}{section*.36}
+\contentsline {subsection}{\numberline {6.2}Data Preprocessing}{32}{subsection.6.2}
+\contentsline {paragraph}{\nonumberline Input}{32}{section*.37}
+\contentsline {paragraph}{\nonumberline Labels}{33}{section*.38}
+\contentsline {subsection}{\numberline {6.3}Feature Learning}{33}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Temporal Decoding}{35}{subsection.6.4}
+\contentsline {paragraph}{\nonumberline Initial Distribution}{37}{section*.43}
+\contentsline {paragraph}{\nonumberline Transition Model}{37}{section*.44}
+\contentsline {paragraph}{\nonumberline Observation Model}{38}{section*.45}
+\contentsline {section}{\numberline {7}Evaluation}{39}{section.7}
+\contentsline {subsection}{\numberline {7.1}Evaluation Methods}{39}{subsection.7.1}
+\contentsline {paragraph}{\nonumberline F-measure}{39}{section*.46}
+\contentsline {paragraph}{\nonumberline Continuity measures}{40}{section*.47}
+\contentsline {paragraph}{\nonumberline Information Gain}{40}{section*.48}
+\contentsline {subsection}{\numberline {7.2}Results}{41}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Filter Activation Maps}{42}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Network Training}{42}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.5}Labeling}{43}{subsection.7.5}
+\contentsline {section}{\numberline {8}Conclusion}{44}{section.8}
+\contentsline {section}{\numberline {9}References}{46}{section.9}

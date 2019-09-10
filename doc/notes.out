@@ -6,7 +6,7 @@
 \BOOKMARK [2][-]{subsection.3.1}{Terminology}{section.3}% 6
 \BOOKMARK [2][-]{subsection.3.2}{Rhythm Perception}{section.3}% 7
 \BOOKMARK [1][-]{section.4}{Machine Learning}{}% 8
-\BOOKMARK [2][-]{subsection.4.1}{Sequence Modeling}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Sequence to Sequence Modeling}{section.4}% 9
 \BOOKMARK [2][-]{subsection.4.2}{Feature Extraction}{section.4}% 10
 \BOOKMARK [2][-]{subsection.4.3}{Performance Measure}{section.4}% 11
 \BOOKMARK [2][-]{subsection.4.4}{Model Selection}{section.4}% 12
@@ -19,17 +19,16 @@
 \BOOKMARK [2][-]{subsection.5.2}{Convolutional Neural Networks}{section.5}% 19
 \BOOKMARK [2][-]{subsection.5.3}{Recurrent Neural Networks}{section.5}% 20
 \BOOKMARK [2][-]{subsection.5.4}{Temporal Convolutional Networks}{section.5}% 21
-\BOOKMARK [2][-]{subsection.5.5}{General-Purpose Computing on GPUs}{section.5}% 22
-\BOOKMARK [1][-]{section.6}{Method}{}% 23
-\BOOKMARK [2][-]{subsection.6.1}{Dataset}{section.6}% 24
-\BOOKMARK [2][-]{subsection.6.2}{Data Preprocessing}{section.6}% 25
-\BOOKMARK [2][-]{subsection.6.3}{Feature Learning}{section.6}% 26
-\BOOKMARK [2][-]{subsection.6.4}{Temporal Decoding}{section.6}% 27
-\BOOKMARK [1][-]{section.7}{Evaluation}{}% 28
-\BOOKMARK [2][-]{subsection.7.1}{Evaluation Methods}{section.7}% 29
-\BOOKMARK [2][-]{subsection.7.2}{Results}{section.7}% 30
-\BOOKMARK [2][-]{subsection.7.3}{Filter Activation Maps}{section.7}% 31
-\BOOKMARK [2][-]{subsection.7.4}{Network Training}{section.7}% 32
-\BOOKMARK [2][-]{subsection.7.5}{Labeling}{section.7}% 33
-\BOOKMARK [1][-]{section.8}{Conclusion}{}% 34
-\BOOKMARK [1][-]{section.9}{References}{}% 35
+\BOOKMARK [1][-]{section.6}{Method}{}% 22
+\BOOKMARK [2][-]{subsection.6.1}{Dataset}{section.6}% 23
+\BOOKMARK [2][-]{subsection.6.2}{Data Preprocessing}{section.6}% 24
+\BOOKMARK [2][-]{subsection.6.3}{Feature Learning}{section.6}% 25
+\BOOKMARK [2][-]{subsection.6.4}{Temporal Decoding}{section.6}% 26
+\BOOKMARK [1][-]{section.7}{Evaluation}{}% 27
+\BOOKMARK [2][-]{subsection.7.1}{Evaluation Methods}{section.7}% 28
+\BOOKMARK [2][-]{subsection.7.2}{Results}{section.7}% 29
+\BOOKMARK [2][-]{subsection.7.3}{Filter Activation Maps}{section.7}% 30
+\BOOKMARK [2][-]{subsection.7.4}{Network Training}{section.7}% 31
+\BOOKMARK [2][-]{subsection.7.5}{Labeling}{section.7}% 32
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 33
+\BOOKMARK [1][-]{section.9}{References}{}% 34
