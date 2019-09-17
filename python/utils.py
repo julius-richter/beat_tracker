@@ -132,7 +132,7 @@ def get_predictions(input, subfolder):
     return np.loadtxt('../data/predictions/{}/{}/{}.beats'.format(subfolder, dataset, file))
 
 
-def play_annotations(input, modified=False, normalize=True):
+def play_annotations(input, modified=False, normalize=True, xlim=None):
     file, dataset = index_to_file(input)
 
     sr, signal = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
@@ -149,11 +149,14 @@ def play_annotations(input, modified=False, normalize=True):
 
     signal = signal + metronome    
     signal = signal / np.max(np.abs(signal))
+
+    if xlim:
+        signal = signal[int(xlim[0]*sr):int(xlim[1]*sr)]  
         
     return ipd.Audio(signal, rate=sr)
 
 
-def play_predictions(input, subfolder, section=None, normalize=True):
+def play_predictions(input, subfolder, normalize=True, xlim=None):
     file, dataset = index_to_file(input)
 
     sr, signal = wavfile.read('../data/audio/{}/{}.wav'.format(dataset, file), mmap=False)
@@ -167,8 +170,8 @@ def play_predictions(input, subfolder, section=None, normalize=True):
         
     signal = signal / np.max(np.abs(signal))
 
-    if section:
-        signal = signal[int(sr/100*section[0]):int(sr/100*section[1])]
+    if xlim:
+        signal = signal[int(xlim[0]*sr):int(xlim[1]*sr)]  
         
     return ipd.Audio(signal, rate=sr)
 

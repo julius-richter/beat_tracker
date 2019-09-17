@@ -1,0 +1,8 @@
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Beat Tracking System}{7}{0}{2}
+\beamer@subsectionintoc {2}{1}{Data Preprocessing}{9}{0}{2}
+\beamer@subsectionintoc {2}{2}{Feature Learning}{10}{0}{2}
+\beamer@subsectionintoc {2}{3}{Temporal Decoding}{18}{0}{2}
+\beamer@sectionintoc {3}{Evaluation}{22}{0}{3}
+\beamer@sectionintoc {4}{Examples}{24}{0}{4}
+\beamer@sectionintoc {5}{Conclusion}{29}{0}{5}
