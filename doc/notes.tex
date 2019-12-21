@@ -1137,7 +1137,6 @@ In comparison with the multi-model approach, the proposed beat tracking system i
 Generally, learned representations often result in much better performance than can be obtained with hand-designed representations. Therefore, another investigation for future research could be to leave the high-level rhythmical analysis solely to the neural network. Instead of preprocessing the audio signal with the STFT, the network takes raw audio as input and automatically learns a representation that possibly acts similar to the Fourier transform. Additionally, the basic tempo can be annotated for the task of beat tracking to utilize a multi-task learning strategy \cite{Boeck2019}. Furthermore, new approaches for modeling sequential data could be tested, for instance deep equilibrium models \cite{Bai2019b}. To give an outlook on future activities, the proposed algorithm will participate at the MIREX beat tracking contest 2019 and a real-time implementation is already in the making\footnote{For the code please check \url{https://github.com/julius-richter/beat_tracker}.}.
 
 
-
 % Data augmentation (transformation or adding noise) $\Rightarrow$ prediction gets robust against transformation and noisy signals
 
 % The most mentionable aspect is that the neural networks were trained solely on ballroom dance and other kinds of western pop music. The networks accuracy depends on the trainings set. Selective bias. 
