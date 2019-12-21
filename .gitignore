@@ -1,4 +1,4 @@
-# data 
+# ignore the following data types
 *.wav
 *.WAV
 *.Wav
@@ -17,9 +17,17 @@
 *.gz
 *.ipe
 *.zip
+*.jucer
+*.nav
+*.out
+*.snm
+*.toc
 
+# ignore the build and lib dirs
+juce/Builds/*
+juce/JuceLibraryCode/*
 
-# OS generated files
+# ignore OS generated files
 .DS_Store
 .ipynb_checkpoints/
 
