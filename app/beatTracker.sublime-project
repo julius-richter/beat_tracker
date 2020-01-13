@@ -1,0 +1,32 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		},
+		{
+			"path": "BeatTracker"
+		},
+		{
+			"path": "FRUT"
+		},
+		{
+			"path": "JUCE"
+		}
+	],
+
+
+	"build_systems":
+    [
+        {
+            "name": "cmake",
+            "shell_cmd": "cmake --build ../build --config Release",
+            "file_regex": "/([^/:]+):(\\d+):(\\d+): "
+        }
+    ],
+
+	"cmake":
+		{
+		   "build_folder": "BeatTracker/build"
+		}
+}

@@ -1,0 +1,13 @@
+,name,dataset,Fmeasure,CMLc,CMLt,AMLc,AMLt,D
+0,\emph{Ballroom},1, , , , , , 
+1,TCN,1,\textbf{0.848},\textbf{0.826},\textbf{0.850},0.906,\textbf{0.946},\textbf{4.761}
+2,Madmom,1,0.839,0.797,0.815,\textbf{0.913},0.933,\textnormal{ 4.626}
+3,\emph{SMC},2, , , , , , 
+4,TCN,2,0.244,0.145,0.183,0.237,0.426,3.476
+5,Madmom,2,\textbf{0.324},\textbf{0.347},\textbf{0.468},\textbf{0.463},\textbf{0.631},\textbf{ 3.859}
+6,\emph{Hainsworth},3, , , , , , 
+7,TCN,3,0.536,0.615,0.695,0.711,0.845,4.661
+8,Madmom,3,\textbf{0.560},\textbf{0.740},\textbf{0.830},\textbf{0.818},\textbf{0.919},\textbf{ 4.796}
+9,\emph{GTZAN},4, , , , , , 
+10,TCN,4,\textbf{0.740},0.700,0.726,0.866,0.914,4.543
+11,Madmom,4,0.722,\textbf{0.755},\textbf{0.775},\textbf{0.902},\textbf{0.930},\textbf{ 4.610}

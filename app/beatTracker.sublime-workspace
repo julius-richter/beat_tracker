@@ -1,0 +1,1188 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fil",
+				"filteredSpectrogramComp"
+			],
+			[
+				"filte",
+				"filteredSpectrogramComp"
+			],
+			[
+				"Spe",
+				"spectrogramComp"
+			],
+			[
+				"filter",
+				"filteredSpectrogramComp"
+			],
+			[
+				"Fil",
+				"FilteredSpectrogramComponent"
+			],
+			[
+				"filt",
+				"filteredSpectogramImage"
+			],
+			[
+				"filr",
+				"filteredSpectogram"
+			],
+			[
+				"spec",
+				"spectogram"
+			],
+			[
+				"bin",
+				"bins2filterbank"
+			],
+			[
+				"cal",
+				"calculateFftFrequencies"
+			],
+			[
+				"fre",
+				"frequencies"
+			],
+			[
+				"fm",
+				"fmax"
+			],
+			[
+				"ffF",
+				"fftFrequencies"
+			],
+			[
+				"low",
+				"lowBound"
+			],
+			[
+				"si",
+				"size"
+			],
+			[
+				"result",
+				"results"
+			],
+			[
+				"ve",
+				"vector\tstd::vector"
+			],
+			[
+				"string",
+				"stringstream"
+			],
+			[
+				"log",
+				"logFrequencies"
+			],
+			[
+				"freq",
+				"freqRange"
+			],
+			[
+				"flt",
+				"filterbank"
+			],
+			[
+				"res",
+				"resized"
+			],
+			[
+				"im",
+				"imageWidth"
+			],
+			[
+				"fr",
+				"numFrames"
+			],
+			[
+				"num",
+				"numFreqBin"
+			],
+			[
+				"cun",
+				"chunk"
+			],
+			[
+				"ma",
+				"maxLevel"
+			],
+			[
+				"spe",
+				"spectogram"
+			],
+			[
+				"spectro",
+				"spectogram"
+			],
+			[
+				"Re",
+				"ReferencePreProcessor"
+			],
+			[
+				"file",
+				"filename"
+			],
+			[
+				"dist",
+				"dist_tmp"
+			],
+			[
+				"i",
+				"i"
+			],
+			[
+				"p",
+				"point1"
+			],
+			[
+				"eq",
+				"equi_tracks"
+			],
+			[
+				"fi",
+				"filename_mp3"
+			],
+			[
+				"prin",
+				"print_vector"
+			],
+			[
+				"G",
+				"G_rec"
+			],
+			[
+				"con",
+				"convertOctalToBinary"
+			],
+			[
+				"in",
+				"initial_state"
+			],
+			[
+				"generate",
+				"generate_data"
+			],
+			[
+				"druc",
+				"drucke_array"
+			],
+			[
+				"sum",
+				"summe_b"
+			],
+			[
+				"sum_",
+				"sum_all_prod"
+			],
+			[
+				"sk",
+				"skalar"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "BeatTracker/Source/Main.cpp",
+			"settings":
+			{
+				"buffer_size": 1691,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": ".sublime-project",
+			"settings":
+			{
+				"buffer_size": 55,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "BeatTracker/Source/BeatTracker.h",
+			"settings":
+			{
+				"buffer_size": 22772,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "BeatTracker/CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 4689,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/C++_Boost.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				],
+				[
+					"Packages/User/C++_Boost.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/MarkdownPreview/Markdown.sublime-build",
+					""
+				],
+				[
+					"Packages/User/C++_Boost.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/MarkdownPreview/Markdown.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/User/C++_Boost.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"ge con",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"mark",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"item",
+				"Snippet: Itemize"
+			],
+			[
+				"temp",
+				"Snippet: template"
+			],
+			[
+				"markdow",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"mark live",
+				"MarkdownLivePreview: Edit Current File"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"markd",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"ite",
+				"Snippet: Itemize"
+			],
+			[
+				"al",
+				"Snippet: align"
+			],
+			[
+				"alin",
+				"Snippet: align"
+			],
+			[
+				"templ",
+				"Snippet: template"
+			],
+			[
+				"fram",
+				"Snippet: frame"
+			],
+			[
+				"ali",
+				"Snippet: align"
+			],
+			[
+				"frame",
+				"Snippet: frame"
+			],
+			[
+				"fra",
+				"Snippet: frame"
+			],
+			[
+				"fig",
+				"Snippet: figure"
+			],
+			[
+				"frac",
+				"Snippet: frac"
+			],
+			[
+				"figure",
+				"Snippet: figure"
+			],
+			[
+				"figu",
+				"Snippet: figure"
+			],
+			[
+				"fi",
+				"Snippet: figure"
+			],
+			[
+				"tab",
+				"Snippet: table"
+			],
+			[
+				"cases",
+				"Snippet: Cases"
+			],
+			[
+				"cased",
+				"Package Control: Satisfy Dependencies"
+			],
+			[
+				"case",
+				"Snippet: Cases"
+			],
+			[
+				"alig",
+				"Snippet: align"
+			],
+			[
+				"align",
+				"Snippet: align"
+			],
+			[
+				"i",
+				"Snippet: Itemize"
+			],
+			[
+				"int",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"ie",
+				"Snippet: Insert a LaTeX environment"
+			],
+			[
+				"table",
+				"Snippet: table"
+			],
+			[
+				"cas",
+				"Snippet: Cases"
+			],
+			[
+				"a",
+				"Snippet: align"
+			],
+			[
+				"figur",
+				"Snippet: figure"
+			],
+			[
+				"fr",
+				"Snippet: frac"
+			],
+			[
+				"AL",
+				"Snippet: align"
+			],
+			[
+				"simple",
+				"Snippet: template"
+			],
+			[
+				"hermes",
+				"Hermes: List Kernels"
+			],
+			[
+				"package cont",
+				"Package Control: Install Package"
+			],
+			[
+				"open",
+				"Open IPython Notebook"
+			],
+			[
+				"packagec",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			],
+			[
+				"emph",
+				"Snippet: Emphasize text"
+			],
+			[
+				"ta",
+				"Snippet: table"
+			],
+			[
+				"it",
+				"Snippet: Itemize"
+			],
+			[
+				"f",
+				"Snippet: frac"
+			],
+			[
+				"simpl",
+				"Snippet: template"
+			],
+			[
+				"tabel",
+				"Snippet: table"
+			],
+			[
+				"tex",
+				"Set Syntax: LaTeX"
+			],
+			[
+				"tabl",
+				"Snippet: table"
+			],
+			[
+				"sum",
+				"Snippet: sum"
+			],
+			[
+				"s",
+				"Snippet: sum"
+			],
+			[
+				"ma",
+				"Snippet: Matrix"
+			],
+			[
+				"matr",
+				"Snippet: Matrix"
+			],
+			[
+				"cite",
+				"Snippet: citeframe"
+			],
+			[
+				"tabe",
+				"Snippet: table"
+			],
+			[
+				"fir",
+				"Snippet: figure"
+			],
+			[
+				"form",
+				"Snippet: formula"
+			],
+			[
+				"fa",
+				"Snippet: frac"
+			],
+			[
+				"for",
+				"Snippet: formula"
+			],
+			[
+				"the",
+				"Snippet: theorem"
+			],
+			[
+				"cor",
+				"Snippet: corollary"
+			],
+			[
+				"fro",
+				"Snippet: formula"
+			],
+			[
+				"rac",
+				"Snippet: frac"
+			],
+			[
+				"theo",
+				"Snippet: theorem"
+			],
+			[
+				"def",
+				"Snippet: definition"
+			],
+			[
+				"teh",
+				"Snippet: theorem"
+			],
+			[
+				"lte",
+				"LaTeXTools: Check system"
+			],
+			[
+				"para",
+				"Snippet: Paragraph"
+			],
+			[
+				"lem",
+				"Snippet: lemma"
+			],
+			[
+				"lemm",
+				"Snippet: lemma"
+			],
+			[
+				"defi",
+				"Snippet: definition"
+			],
+			[
+				"de",
+				"Snippet: definition"
+			],
+			[
+				"leam",
+				"Snippet: lemma"
+			],
+			[
+				"su",
+				"Snippet: sum"
+			],
+			[
+				" fra",
+				"Snippet: frac"
+			],
+			[
+				"mat",
+				"Snippet: Matrix"
+			],
+			[
+				"pres",
+				"Snippet: preset"
+			],
+			[
+				"figr",
+				"Snippet: figure"
+			],
+			[
+				"frace",
+				"Preferences: Package Control Settings – Default"
+			],
+			[
+				"farc",
+				"Snippet: frac"
+			],
+			[
+				"alg",
+				"Snippet: align"
+			],
+			[
+				"",
+				"Build With: LaTeX - Basic Builder"
+			],
+			[
+				"b",
+				"Build With: LaTeX - Basic Builder"
+			]
+		],
+		"width": 412.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source"
+	],
+	"file_history":
+	[
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/test/JuceLibraryCode/JuceHeader.h",
+		"/Users/juliusrichter/Downloads/SimpleFFTTutorial/Source/SimpleFFTTutorial_02.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/python/utils.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/python/models.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/python/signal_processing.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/test/example-app.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/juce/Source/CMakeLists.txt",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/test/CMakeLists.txt",
+		"/usr/local/Homebrew/Library/Homebrew/brew.sh",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/juce/build/CMakeLists.txt",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/juce/JuceLibraryCode/JuceHeader.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/juce/JuceLibraryCode/AppConfig.h",
+		"/Users/juliusrichter/JUCE/modules/juce_dsp/frequency/juce_FFT.cpp",
+		"/Users/juliusrichter/Downloads/SimpleFFTTutorial/Source/Main.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/juce/notes.tex",
+		"/Users/juliusrichter/Documents/dida/tcn/tcn.md",
+		"/Users/juliusrichter/Documents/dida/beat_tracking/beat_tracking.md",
+		"/Users/juliusrichter/Downloads/AudioThumbnailTutorial/Source/AudioThumbnailTutorial_04.h",
+		"/Users/juliusrichter/Downloads/PlayingSoundFilesTutorial/Source/Component_tutorial.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/juce/Source/MainComponent.h",
+		"/Users/juliusrichter/Downloads/PlayingSoundFilesTutorial/Source/Main_tutorial.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/juce/Source/Main.cpp",
+		"/Users/juliusrichter/Downloads/PlayingSoundFilesTutorial/Source/Main.cpp",
+		"/Users/juliusrichter/Downloads/PlayingSoundFilesTutorial/Source/PlayingSoundFilesTutorial_03.h",
+		"/Users/juliusrichter/Downloads/PlayingSoundFilesTutorial/Source/PlayingSoundFilesTutorial_01.h",
+		"/Users/juliusrichter/Downloads/PlayingSoundFilesTutorial/Source/PlayingSoundFilesTutorial_02.h",
+		"/Users/juliusrichter/Documents/SE_SS/.gitignore",
+		"/Volumes/Transcend/fotos_erina/No-Name7671/Miho Kei & JAZZ ELEVEN/[1971] Kokezaru Kumikyoku/Miho Kei & JAZZ ELEVEN - 1971 - Kokezaru Kumikyoku.cue",
+		"/Users/juliusrichter/Documents/speech_enhancement/job_application/references_slides.bib",
+		"/Users/juliusrichter/Documents/speech_enhancement/job_application/beat_tracking.tex",
+		"/Users/juliusrichter/Documents/speech_enhancement/references/references.bib",
+		"/Users/juliusrichter/Documents/speech_enhancement/job_application/vision.tex",
+		"/Users/juliusrichter/Documents/speech_enhancement/job_application/vision_slides.tex",
+		"/Users/juliusrichter/Documents/speech_enhancement/read/read.tex",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/.gitignore",
+		"/Users/juliusrichter/Documents/speech_enhancement/read.tex",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/presentation.tex",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/notes.tex",
+		"/Users/juliusrichter/Documents/Lebenslauf/Cover_letter.tex",
+		"/Users/juliusrichter/Documents/speech_enhancement/job_application/references.bib",
+		"/Users/juliusrichter/Documents/Lebenslauf/hamburg/speech_enhancement.md",
+		"/Users/juliusrichter/Documents/Lebenslauf/CV_Julius_Richter.tex",
+		"/Users/juliusrichter/Documents/dida/time_series/time_series.md",
+		"/Users/juliusrichter/Documents/dida/time_series.md",
+		"/Users/juliusrichter/Documents/dida/time series/notes.tex",
+		"/Users/juliusrichter/Documents/dida/time series/references.bib",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/notes.synctex.gz",
+		"/Users/juliusrichter/Documents/dida/review/review.tex",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/references.bib",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/src/audiofile-impl.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/src/audiofile.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/io/audiofile.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/presentation_ml.tex",
+		"/Users/juliusrichter/Documents/Versicherung Immatrikulationsnachweis.tex",
+		"/Users/juliusrichter/Documents/Uni/NIT/Presentation/On_the_Optimality_of_Treating_Interference_as_Noise.tex",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/presentation.toc",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/io/dr/dr_flac.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/io.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/all.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/src/utils.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/io/file.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/base/basic_expressions.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/io/dr/dr_wav.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/src/dr_wav.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/base.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/kfr/base/univector.hpp",
+		"/Users/juliusrichter/Downloads/soundfile-2.2/examples/readtest.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/utils.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/algorithm/include/utils.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/c++/beat_tracker.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/modified/HW065.beats",
+		"/Users/juliusrichter/.bash_history",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/models/hyperparameter_search2.log",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/notes.log",
+		"/usr/local/texlive/2017/texmf-dist/tex/latex/chronology/chronology.sty",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/notes.toc",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/notes/Notes.tex",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Ballroom/Albums-AnaBelen_Veneo-01.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/GTZAN/blues.00000.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/GTZAN/blues.00000.wav.xml",
+		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/generate.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00000.wav.jams",
+		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00001.wav.jams",
+		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00000.wav.jams",
+		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00010.wav.jams",
+		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/no_swing/blues.00010.wav.xml",
+		"/Users/juliusrichter/.bahs_h",
+		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v2_ismir2015_lbd/jams/blues.00000.wav.jams",
+		"/Library/Frameworks/iTunesLibrary.framework/Versions/A/Headers/iTunesLibrary.h",
+		"/Users/juliusrichter/Downloads/ValhallaVintageVerbKeyfileForRobinKoek.xml",
+		"/Volumes/Backupdrive 1.0/FabFilter Total Bundle 2019.03.13 macOS [R2R][dada]/R2R.nfo",
+		"/Users/juliusrichter/anaconda3/pkgs/cryptography-2.2.2-py36h1de35cc_0/info/test/tests/test_utils.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/data.csv",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/Notes/references.bib",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/Notes/Notes.tex",
+		"/usr/local/CONTRIBUTING.md",
+		"/usr/local/CODEOFCONDUCT.md",
+		"/Users/juliusrichter/anaconda3/lib/python3.6/site-packages/torch/utils/data/dataloader.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/python/model.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/hainsworth/data.txt",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/hainsworth/audio_wavs/MARSYAS_EMPTY",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/hainsworth/mats/002_info.mat",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/SMC_MIREX/anno/SMC_005.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/SMC_MIREX/SMC_MIREX_Tags/SMC_001.tag",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/madmom/madmom/evaluation/beats.py",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/predictions/Media-104711.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/predictions/test2.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/jupyter/test2.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/predictions/test.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Albums-AnaBelen_Veneo-01.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/jupyter/TestPandas.csv",
+		"/Users/juliusrichter/Documents/Uni/MI/exercise/notebooks/Neuer Clip.textClipping",
+		"/Users/juliusrichter/Documents/Uni/MI/topics/topics_overview.tex",
+		"/Users/juliusrichter/Documents/Uni/MI/topics/topics.tex",
+		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/waf",
+		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/.waf3-2.0.10-cf8ca5fa84387374f6d66295baab59ec/waflib/Scripting.py",
+		"/usr/local/Cellar/python/3.7.2_2/bin/python3-config",
+		"/Users/juliusrichter/anaconda3/bin/python3.6-config",
+		"/usr/local/Cellar/python/3.7.2_2/Frameworks/Python.framework/Versions/3.7/bin/python3.7m-config",
+		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/.waf3-2.0.10-cf8ca5fa84387374f6d66295baab59ec/waflib/Build.py",
+		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/build_android.sh",
+		"/Users/juliusrichter/Documents/Uni/MI/mi1script-master/latex/mi1.tex",
+		"/Users/juliusrichter/Documents/Uni/DNUE/Seminar/Seminararbeit/Literatur.bib",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/data.npy",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Ballroom/Albums-AnaBelen_Veneo-02.beats",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Ballroom/Media-106007.beats",
+		"/Users/juliusrichter/.bash_profile",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/Notes/roadmap.tex"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 110.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "BeatTracker/Source/Main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1691,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								75,
+								75
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": ".sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 55,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								37,
+								43
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "BeatTracker/Source/BeatTracker.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22772,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								364,
+								364
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "BeatTracker/CMakeLists.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4689,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CMake/CMake.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 30.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 30.0
+	},
+	"output.markdown":
+	{
+		"height": 30.0
+	},
+	"pinned_build_system": "",
+	"project": "beatTracker.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"data.py"
+			],
+			[
+				"sum",
+				"~/Documents/Uni/PSP/Homework/Homework_2.tex"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 592.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 221.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
