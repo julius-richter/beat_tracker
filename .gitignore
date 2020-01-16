@@ -24,8 +24,10 @@
 *.toc
 
 # ignore the build and lib dirs
-juce/Builds/*
-juce/JuceLibraryCode/*
+app/BeatTracker/build/*
+app/JuceLibraryCode/*
+app/FRUT/*
+app/JUCE/*
 
 # ignore OS generated files
 .DS_Store
