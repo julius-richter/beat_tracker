@@ -1,11 +1,6 @@
+ 
 #include "../JuceLibraryCode/JuceHeader.h"
-
-#include <torch/script.h>
-#include "utils.h"
-#include "BeatTracker.h"
-
-#include<string> 
-#include<sstream> 
+#include "MainContentComponent.h"
 
 
 class Application: public JUCEApplication
@@ -15,9 +10,6 @@ public:
 
     const String getApplicationName() override { return "BeatTracker"; }
     const String getApplicationVersion() override { return "0.0.1"; }
-
-    std::stringstream ss;
-
 
     void initialise (const String&) override { mainWindow.reset (new MainWindow ("BeatTracker", new MainContentComponent(), *this)); }
     void shutdown() override { mainWindow = nullptr; }

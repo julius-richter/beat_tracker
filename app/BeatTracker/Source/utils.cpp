@@ -1,5 +1,6 @@
 #include <string>
-#include<sstream> 
+#include <sstream> 
+#include <vector> 
 
 
 template <typename IntType>
@@ -48,3 +49,8 @@ std::string vectorToString(std::vector<T> v)
     std::string s = ss.str();
     return s;
 }
+
+
+template std::vector<float> range(float start, float stop);
+template std::vector<int> range(int start, int stop);
+template std::string vectorToString(std::vector<float>);

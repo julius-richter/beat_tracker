@@ -14,5 +14,5 @@ std::vector<IntType> range(IntType stop);
 
 
 template <typename T>
-String vectorToString(std::vector<T> v);
+std::string vectorToString(std::vector<T> v);
 

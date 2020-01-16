@@ -43,9 +43,20 @@ jucer_project_settings(
 jucer_project_files("BeatTracker/Source"
 # Compile   Xcode     Binary    File
 #           Resource  Resource
+  x         .         .         "Source/Plot.cpp"
+  .         .         .         "Source/Plot.h"
   x         .         .         "Source/utils.cpp"
   .         .         .         "Source/utils.h"
-  .         .         .         "Source/BeatTracker.h"
+  x         .         .         "Source/SimplePositionOverlay.cpp"
+  .         .         .         "Source/SimplePositionOverlay.h"
+  x         .         .         "Source/SimpleThumbnailComponent.cpp"
+  .         .         .         "Source/SimpleThumbnailComponent.h"
+  x         .         .         "Source/SpectrogramComponent.cpp"
+  .         .         .         "Source/SpectrogramComponent.h"
+  x         .         .         "Source/BeatActivationComponent.cpp"
+  .         .         .         "Source/BeatActivationComponent.h"
+  x         .         .         "Source/MainContentComponent.cpp"
+  .         .         .         "Source/BeatActivationComponent.h"
   x         .         .         "Source/Main.cpp"
 )
 
@@ -75,7 +86,7 @@ jucer_project_module(
   PATH "${JUCE_MODULES_GLOBAL_PATH}"
   # JUCE_USE_FLAC
   # JUCE_USE_OGGVORBIS
-  JUCE_USE_MP3AUDIOFORMAT
+  # JUCE_USE_MP3AUDIOFORMAT
   # JUCE_USE_LAME_AUDIO_FORMAT
   # JUCE_USE_WINDOWS_MEDIA_FORMAT
 )
@@ -222,15 +233,4 @@ jucer_export_target_configuration(
 jucer_project_end()
 
 target_link_libraries(BeatTracker PRIVATE torch)
-
-get_target_property(the_sources BeatTracker SOURCES)
-set(sources_message "")
-foreach(source IN LISTS the_sources)
-  string(APPEND sources_message "\n   ${source}")
-endforeach()
-message(STATUS "The sources are:${sources_message}")
-
-
-
-
 
