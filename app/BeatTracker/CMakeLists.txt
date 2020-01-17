@@ -10,9 +10,9 @@ include(Reprojucer)
 
 
 find_package(Torch REQUIRED)
-
 find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+
+message(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}")
 
 
 set(BeatTracker_jucer_FILE
@@ -235,5 +235,5 @@ jucer_export_target_configuration(
 
 jucer_project_end()
 
-target_link_libraries(BeatTracker PRIVATE torch)
+target_link_libraries(BeatTracker PRIVATE torch Boost::headers)
 
