@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SPECTROGRAM_COMPONENT_H
+#define SPECTROGRAM_COMPONENT_H
 
 
 class SpectrogramComponent : public Component, private Timer
@@ -32,6 +33,8 @@ public:
 
     float getValue();
 
+    std::string getText();
+
     enum
 	{
 	    fftOrder = 11, /* 2^11 = 2048 samples */
@@ -48,12 +51,18 @@ private:
     std::vector<std::vector<float> > spectogram;
     Image spectrogramImage;
 
+    std::string text;
+
     const float* signal; 
 
     int numSamples;
     int numFrames;
     float chunk[frameSize*2];
+    // std::valarray<float> chunk(size_t frameSize);
+
     float maxLevel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectrogramComponent)
 };
+
+#endif

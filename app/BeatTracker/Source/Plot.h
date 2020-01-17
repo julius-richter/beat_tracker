@@ -1,5 +1,5 @@
-#ifndef PLOT_H_INCLUDED
-#define PLOT_H_INCLUDED
+#ifndef PLOT_H
+#define PLOT_H
 
 
 class GraphPoint
@@ -54,4 +54,4 @@ private:
 	LinkedListPointer<GraphDataset>* datasets;
 };
 
-#endif // PLOT_H_INCLUDED
+#endif

@@ -1,15 +1,25 @@
-#include "../JuceLibraryCode/JuceHeader.h"
-#include <vector>
+#include <chrono> 
 #include <cmath>
-#include "utils.h"
-#include "SpectrogramComponent.h"
+#include <complex>
+#include <iostream>
+#include <valarray>
+#include <vector>
 
+#include <boost/numeric/ublas/matrix_sparse.hpp>
+#include <boost/numeric/ublas/io.hpp>
+
+#include "../JuceLibraryCode/JuceHeader.h"
+#include "SpectrogramComponent.h"
+#include "utils.h"
+ 
 
 SpectrogramComponent::SpectrogramComponent()
     : forwardFFT (fftOrder),
       spectrogramImage (Image::RGB, 1000, 81, true)
 {
     setOpaque (true);
+
+    boost::numeric::ublascompressed_matrix<double> m (3, 3, 3 * 3);
 }
 
 
@@ -39,21 +49,17 @@ void SpectrogramComponent::calculateSTFT()
 {
     for (int i = 0; i < numFrames; ++i)
     {
-
-        zeromem (chunk, sizeof chunk);
         memcpy(&chunk, signal, sizeof chunk);
 
         forwardFFT.performFrequencyOnlyForwardTransform (chunk); 
 
-        std::vector<float> freqBins(chunk, chunk + frameSize);
-
-        for (auto &elem : freqBins) 
+        for (auto &elem : chunk) 
             {  
                 elem = elem*elem;
             }
-
-        spectogram.push_back(freqBins);
         
+        std::vector<float> freqBins(chunk, chunk + frameSize);
+        spectogram.push_back(freqBins);
         signal += hopSize;
     }
 }
@@ -61,9 +67,15 @@ void SpectrogramComponent::calculateSTFT()
 
 void SpectrogramComponent::filterSpectogram()
 {
+
+    auto start1 = std::chrono::high_resolution_clock::now(); 
     std::vector<std::vector<float> > filterbank = createFilterband(numFreqBin);
     std::vector<std::vector<float> > filt(numFrames, std::vector<float>(filterbank.size(), 0.0));
+    maxLevel = std::numeric_limits<float>::lowest();
+    auto stop1 = std::chrono::high_resolution_clock::now();
+    auto duration1 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop1 - start1).count()); 
 
+    auto start2 = std::chrono::high_resolution_clock::now(); 
     for (auto t = 0 ; t < numFrames ; ++t)
     {
         for (unsigned long int m = 0 ; m < filterbank.size() ; ++m)
@@ -72,29 +84,25 @@ void SpectrogramComponent::filterSpectogram()
             for (auto f = 0 ; f < numFreqBin ; ++f)
                 filt[t][m] += filterbank[m][f] * spectogram[t][f];
             filt[t][m] = log(filt[t][m] + 1);
+            maxLevel = maxLevel < filt[t][m] ? filt[t][m] : maxLevel;
         }
     }
-
-    maxLevel = std::numeric_limits<float>::lowest();
-
-    for (const auto &v : filt)
-    {   
-        double current_max = *std::max_element(v.cbegin(), v.cend());
-        maxLevel = maxLevel < current_max ? current_max : maxLevel;
-    }
-
     filteredSpectogram = filt;
+    auto stop2 = std::chrono::high_resolution_clock::now();
+    auto duration2 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop2 - start2).count());
+
+    text = "1st part: " + duration1 + "\n2nd part " + duration2;
 }
 
 
 std::vector<std::vector<float> > SpectrogramComponent::createFilterband(int numFreqBin)
 {
     const int bandsPerOctavce = 12;
-    const float fmin = 30.0f; 
-    const float fmax = 17000.0f;
+    const float fmin = 30.0; 
+    const float fmax = 17000.0;
 
     std::vector<float> frequencies = logFrequencies(bandsPerOctavce, fmin, fmax);
-    std::vector<float> fftFrequencies = calculateFftFrequencies(frameSize, 1.0f / 44100.0f);
+    std::vector<float> fftFrequencies = calculateFftFrequencies(frameSize, 1.0 / 44100.0);
     std::vector<int> bins = frequenciesToBins(frequencies, fftFrequencies);
     std::vector<std::vector<float> > filterbank = binsToFilterbank(bins, numFreqBin); 
     return filterbank;
@@ -114,7 +122,7 @@ std::vector<float> SpectrogramComponent::logFrequencies(int bandsPerOctavce, flo
 
     for (int i = 0 ; i < numBins; ++i)
     {
-        frequencies[i] = fref * pow(2.0, (float) freqRange[i] / (float) bandsPerOctavce); 
+        frequencies[i] = fref * pow(2.0f, (float) freqRange[i] / (float) bandsPerOctavce); 
     }
 
     for (int i = 0 ; i < numBins; ++i)
@@ -136,7 +144,8 @@ std::vector<float> SpectrogramComponent::calculateFftFrequencies(int windowLengt
 }
 
 
-std::vector<int> SpectrogramComponent::frequenciesToBins(std::vector<float> frequencies, std::vector<float> fftFrequencies)
+std::vector<int> SpectrogramComponent::frequenciesToBins(std::vector<float> frequencies, 
+    std::vector<float> fftFrequencies)
 {
     std::vector<int> indices;
     std::vector<float>::iterator idx;
@@ -224,5 +233,11 @@ void SpectrogramComponent::generateSpectrogramImage()
 float SpectrogramComponent::getValue()
 {
     return 0;
+}
+
+
+std::string SpectrogramComponent::getText()
+{
+    return text;
 }
 

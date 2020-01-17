@@ -1,4 +1,5 @@
 #include "MainContentComponent.h"
+#include <chrono> 
 
 
 MainContentComponent::MainContentComponent()
@@ -219,14 +220,26 @@ void MainContentComponent::textButtonClicked()
 }
 
 void MainContentComponent::processButtonClicked()
-{
+{   
     processButton.setEnabled (false);
+
+    auto start1 = std::chrono::high_resolution_clock::now(); 
     spectrogramComp.calculateSTFT();
+    auto stop1 = std::chrono::high_resolution_clock::now();
+    auto duration1 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop1 - start1).count()); 
+ 
+    auto start2 = std::chrono::high_resolution_clock::now(); 
     spectrogramComp.filterSpectogram();
+    auto stop2 = std::chrono::high_resolution_clock::now();
+    auto duration2 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop2 - start2).count()); 
+
     spectrogramComp.generateSpectrogramImage();
     spectrogramComp.repaint();
     beatActivationComp.calculateBeatActivation();
     beatActivationComp.repaint();
-    // infoText.setText (vectorToString(beatActivationComp.getVector()), dontSendNotification);     
+
+    std::string text = "Calculate STFT: " + duration1 + "\nFilter Spectrogram: " + duration2 + "\n";
+
+    infoText.setText (text + spectrogramComp.getText(), dontSendNotification);     
 }
 

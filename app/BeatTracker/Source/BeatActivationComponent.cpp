@@ -14,7 +14,8 @@ BeatActivationComponent::BeatActivationComponent(std::vector<std::vector<float> 
     setOpaque (true);
 
     input = filteredSpectrogram;
-    model = torch::jit::load("/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/traced_model.pt");
+    model = torch::jit::load("/Users/juliusrichter/Documents/Uni/Masterarbeit/"
+    	"beat_tracker/app/BeatTracker/Source/traced_model.pt");
 }
 
 

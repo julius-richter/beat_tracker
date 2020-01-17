@@ -1,7 +1,8 @@
-#pragma once
-
+#ifndef MAIN_CONTENT_COMPONENT_H
+#define MAIN_CONTENT_COMPONENT_H
 
 #include <torch/script.h>
+#include <valarray>
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "utils.h"
@@ -78,3 +79,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
+
+#endif
