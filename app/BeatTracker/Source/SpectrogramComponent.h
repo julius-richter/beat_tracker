@@ -31,32 +31,34 @@ public:
 
     void generateSpectrogramImage();
 
+    std::vector<float> getVector();
+
     float getValue();
 
-    std::string getText();
+    int getNumFrames();
 
     enum
 	{
 	    fftOrder = 11, /* 2^11 = 2048 samples */
-	    hopSize  = 411,
+	    hopSize  = 441,
 	    frameSize  = 1 << fftOrder,
 	    numFreqBin = 1 << (fftOrder - 1)      
 	};
 
     std::vector<std::vector<float> > filteredSpectogram;
 
+    int numFrames;
+    int numSamples;
 
 private:
     dsp::FFT forwardFFT;
     std::vector<std::vector<float> > spectogram;
     Image spectrogramImage;
 
-    std::string text;
+    std::vector<float> frame;
 
     const float* signal; 
 
-    int numSamples;
-    int numFrames;
     float chunk[frameSize*2];
     // std::valarray<float> chunk(size_t frameSize);
 

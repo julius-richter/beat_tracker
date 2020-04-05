@@ -5,9 +5,6 @@
 #include <valarray>
 #include <vector>
 
-#include <boost/numeric/ublas/matrix_sparse.hpp>
-#include <boost/numeric/ublas/io.hpp>
-
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SpectrogramComponent.h"
 #include "utils.h"
@@ -18,8 +15,6 @@ SpectrogramComponent::SpectrogramComponent()
       spectrogramImage (Image::RGB, 1000, 81, true)
 {
     setOpaque (true);
-
-    boost::numeric::ublascompressed_matrix<double> m (3, 3, 3 * 3);
 }
 
 
@@ -29,11 +24,11 @@ SpectrogramComponent::~SpectrogramComponent() {}
 void SpectrogramComponent::timerCallback() {}
 
 
-void SpectrogramComponent::paint (Graphics& g) 
+void SpectrogramComponent::paint(Graphics& g) 
 {
-    g.fillAll (Colours::black);
-    g.setOpacity (1.0f);
-    g.drawImage (spectrogramImage, getLocalBounds().toFloat());
+    g.fillAll(Colour(0xffe2e1e0));
+    g.setOpacity(1.0f);
+    g.drawImage(spectrogramImage, getLocalBounds().toFloat());
 }
 
 
@@ -53,9 +48,16 @@ void SpectrogramComponent::calculateSTFT()
 
         forwardFFT.performFrequencyOnlyForwardTransform (chunk); 
 
+
+        for (auto &elem : chunk)
+        {
+            frame.push_back(elem);
+        }
+
+
         for (auto &elem : chunk) 
             {  
-                elem = elem*elem;
+                elem = elem*elem*32767.0*32767.0;
             }
         
         std::vector<float> freqBins(chunk, chunk + frameSize);
@@ -67,31 +69,37 @@ void SpectrogramComponent::calculateSTFT()
 
 void SpectrogramComponent::filterSpectogram()
 {
-
-    auto start1 = std::chrono::high_resolution_clock::now(); 
     std::vector<std::vector<float> > filterbank = createFilterband(numFreqBin);
     std::vector<std::vector<float> > filt(numFrames, std::vector<float>(filterbank.size(), 0.0));
     maxLevel = std::numeric_limits<float>::lowest();
-    auto stop1 = std::chrono::high_resolution_clock::now();
-    auto duration1 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop1 - start1).count()); 
 
-    auto start2 = std::chrono::high_resolution_clock::now(); 
+    std::vector<std::vector<int> > filterIndices;
+    std::vector<int> indices;
+
+    for (unsigned long i = 0 ; i < filterbank.size() ; ++i)
+    {        
+        for (int j = 0 ; j < numFreqBin ; ++j)
+        {   
+            if (filterbank[i][j] > 0.0f)
+                indices.push_back(j);
+        }
+        filterIndices.push_back(indices);
+        indices.erase(indices.begin(), indices.end());
+    } 
+
     for (auto t = 0 ; t < numFrames ; ++t)
     {
         for (unsigned long int m = 0 ; m < filterbank.size() ; ++m)
         {   
             filt[t][m] = 0;
-            for (auto f = 0 ; f < numFreqBin ; ++f)
-                filt[t][m] += filterbank[m][f] * spectogram[t][f];
+            for (unsigned long i = 0 ; i < filterIndices[m].size() ; ++i)
+                filt[t][m] += filterbank[m][filterIndices[m][i]] * spectogram[t][filterIndices[m][i]];
             filt[t][m] = log(filt[t][m] + 1);
             maxLevel = maxLevel < filt[t][m] ? filt[t][m] : maxLevel;
         }
     }
-    filteredSpectogram = filt;
-    auto stop2 = std::chrono::high_resolution_clock::now();
-    auto duration2 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop2 - start2).count());
 
-    text = "1st part: " + duration1 + "\n2nd part " + duration2;
+    filteredSpectogram = filt;
 }
 
 
@@ -176,6 +184,7 @@ std::vector<int> SpectrogramComponent::frequenciesToBins(std::vector<float> freq
 std::vector<std::vector<float> > SpectrogramComponent::binsToFilterbank(std::vector<int> bins, int numFreqBin)
 {
     std::vector<std::vector<float> > filterbank;
+
     int start;
     int center;
     int end;
@@ -229,6 +238,11 @@ void SpectrogramComponent::generateSpectrogramImage()
     }
 }
 
+int SpectrogramComponent::getNumFrames()
+{
+    return numFrames;
+}
+
 
 float SpectrogramComponent::getValue()
 {
@@ -236,8 +250,13 @@ float SpectrogramComponent::getValue()
 }
 
 
-std::string SpectrogramComponent::getText()
+std::vector<float> SpectrogramComponent::getVector()
 {
-    return text;
+    /*std::vector<float>::const_iterator first = frame.begin();
+    std::vector<float>::const_iterator last = frame.begin();
+    std::vector<float> newVec(first+1100, last+1150);
+    return newVec;*/
+    return spectogram[0];
 }
+
 

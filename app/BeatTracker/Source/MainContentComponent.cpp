@@ -1,59 +1,95 @@
 #include "MainContentComponent.h"
-#include <chrono> 
 
 
 MainContentComponent::MainContentComponent()
-  : state (Stopped),
-    thumbnailCache (5), 
-    thumbnailComp (512, formatManager, thumbnailCache),
-    positionOverlay (transportSource),
-    beatActivationComp (&spectrogramComp.filteredSpectogram)
+  : state(Stopped),
+    metronomeState(Off),
+    thumbnailCache(5), 
+    thumbnailComp(512, formatManager, thumbnailCache, beatIndexComp),
+    zoomThumbnailComp(512, formatManager, thumbnailCache, beatIndexComp, thumbnailComp),
+    positionOverlay(transportSource, metronome, zoomThumbnailComp, beatIndexComp, thumbnailComp),
+    beatGridOverlay1(transportSource, metronome, zoomThumbnailComp),
+    beatGridOverlay2(transportSource, metronome, zoomThumbnailComp),
+    beatGridOverlay3(transportSource, metronome, zoomThumbnailComp),
+    timeIndexComp(&thumbnailComp),
+    beatActivationComp(&spectrogramComp.filteredSpectogram)
 {
-    addAndMakeVisible (&openButton);
+    addAndMakeVisible(&layoutComp);
+
+    addAndMakeVisible(&openButton);
     openButton.setButtonText ("Open...");
     openButton.onClick = [this] { openButtonClicked(); };
 
-    addAndMakeVisible (&playButton);
+    addAndMakeVisible(&playButton);
     playButton.setButtonText ("Play");
     playButton.onClick = [this] { playButtonClicked(); };
     playButton.setColour (TextButton::buttonColourId, Colours::green);
     playButton.setEnabled (false);
 
-    addAndMakeVisible (&stopButton);
+    addAndMakeVisible(&stopButton);
     stopButton.setButtonText ("Stop");
     stopButton.onClick = [this] { stopButtonClicked(); };
     stopButton.setColour (TextButton::buttonColourId, Colours::red);
     stopButton.setEnabled (false);
 
-    addAndMakeVisible (&currentPositionLabel);
-    currentPositionLabel.setText ("00:00:000", dontSendNotification);
+    addAndMakeVisible(&currentPositionLabel);
+    currentPositionLabel.setText ("00:00:000", dontSendNotification); 
+    currentPositionLabel.setColour(Label::textColourId, Colours::black);
 
-    addAndMakeVisible (&textButton);
-    textButton.setButtonText ("Text");
-    textButton.onClick = [this] { textButtonClicked(); };  
-
-    addAndMakeVisible (&processButton);
+    addAndMakeVisible(&processButton);
     processButton.setButtonText ("Process");
     processButton.onClick = [this] { processButtonClicked(); };  
     processButton.setEnabled (false);
 
-    addAndMakeVisible (&thumbnailComp);
-    addAndMakeVisible (&positionOverlay);     
+    addAndMakeVisible(&metronomeButton);
+    metronomeButton.setButtonText ("Metronome");
+    metronomeButton.onClick = [this] { metronomeButtonClicked(); };  
+    metronomeButton.setClickingTogglesState(true);
+    metronomeButton.setToggleState(false, dontSendNotification);
+    metronomeButton.setColour(TextButton::buttonColourId, Colour(0xff656c6e));
+    metronomeButton.setColour(TextButton::buttonOnColourId, Colour(0xff1e3039));
 
-    addAndMakeVisible (infoText);
-    infoText.setColour (Label::backgroundColourId, Colours::black);
+    addAndMakeVisible(&beatGridButton);
+    beatGridButton.setButtonText ("Grid");
+    beatGridButton.onClick = [this] { beatGridButtonClicked(); };  
+    beatGridButton.setClickingTogglesState(true);
+    beatGridButton.setToggleState(false, dontSendNotification);
+    beatGridButton.setColour(TextButton::buttonColourId, Colour(0xff656c6e));
+    beatGridButton.setColour(TextButton::buttonOnColourId, Colour(0xff1e3039));
 
-    addAndMakeVisible (&spectrogramComp);
+    addAndMakeVisible(&zoomThumbnailComp);
+    addAndMakeVisible(&thumbnailComp);
+    addAndMakeVisible(&beatGridOverlay1);
+    addAndMakeVisible(&beatIndexComp);
+    addAndMakeVisible(&timeIndexComp);
+  
+    addAndMakeVisible(infoText);
+    infoText.setColour(Label::backgroundColourId, Colour(0xffe2e1e0));
+    infoText.setColour(Label::textColourId, Colour(0xff2d3342));
 
-    addAndMakeVisible (&beatActivationComp);
+    addAndMakeVisible(&spectrogramComp);
+    addAndMakeVisible(&beatGridOverlay2);
 
-    setSize (600, 500);
+    addAndMakeVisible(&beatActivationComp);
+    addAndMakeVisible(&positionOverlay);
+    addAndMakeVisible(&beatGridOverlay3);     
+
+    setSize(600, 500);
+
+    leftBoundTime = 0.0;
+    rightBoundTime = 120.0;
 
     formatManager.registerBasicFormats();
-    transportSource.addChangeListener (this);
+    transportSource.addChangeListener(this);
+    beatIndexComp.addChangeListener(this);
+    thumbnailComp.addChangeListener(this);
 
-    setAudioChannels (2, 2);
-    startTimer (20);
+
+    mixerAudioSource.addInputSource(&transportSource, false);
+    mixerAudioSource.addInputSource(&metronome.transportSource, false);
+
+    setAudioChannels(2, 2);
+    startTimer(10);
 }
 
 MainContentComponent::~MainContentComponent() 
@@ -63,10 +99,10 @@ MainContentComponent::~MainContentComponent()
 
 void MainContentComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate) 
 {
-    transportSource.prepareToPlay (samplesPerBlockExpected, sampleRate);
+    mixerAudioSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
-void MainContentComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) 
+void MainContentComponent::getNextAudioBlock(const AudioSourceChannelInfo& bufferToFill) 
 {
     if (readerSource.get() == nullptr)
     {
@@ -74,38 +110,82 @@ void MainContentComponent::getNextAudioBlock (const AudioSourceChannelInfo& buff
         return;
     }
 
-    transportSource.getNextAudioBlock (bufferToFill);
+    mixerAudioSource.getNextAudioBlock(bufferToFill);
+
 }
 
 void MainContentComponent::releaseResources() 
 {
-    transportSource.releaseResources();
+    mixerAudioSource.releaseResources();
 }
 
 void MainContentComponent::resized() 
 {
-    openButton          .setBounds (10, 10,  70, 20);
-    playButton          .setBounds (10, 40,  70, 20);
-    stopButton          .setBounds (10, 70,  70, 20);
-    currentPositionLabel.setBounds (8, 95, getWidth() - 20, 20);
+    int gap = 5;
+    int headerHeight = 20;
+    int beatIndexHeight = 25;
+    int thumbnailHeight = 100;
+    int zoomThumbnailHeight = 16;
+    int spectrogramHeight = 81;
+    int beatActivationHeight = 100;
+    int buttonWidth = 70;
+    int timeIndexHeight = 20;
+
+    layoutComp.setBounds(0, 0, getWidth(), getHeight());
     
-    Rectangle<int> thumbnailBounds (90, 10, getWidth() - 100, 100);   
-    thumbnailComp.setBounds (thumbnailBounds);
-    positionOverlay.setBounds (thumbnailBounds);
+    Rectangle<int> currentPositionBounds(getWidth()/2 - buttonWidth/2, gap, buttonWidth, headerHeight);
+    layoutComp.currentPositionRegion = currentPositionBounds;
+    currentPositionLabel.setBounds(getWidth()/2 - buttonWidth/2, gap, buttonWidth, headerHeight);
 
-    processButton       .setBounds (10, 125, 70, 20);
-    Rectangle<int> spectrogramBounds (90, 125, getWidth() - 100, 81);   
-    spectrogramComp.setBounds (spectrogramBounds);
+    openButton.setBounds(gap, gap, buttonWidth, headerHeight);
+    playButton.setBounds(gap + buttonWidth + gap, gap , buttonWidth, headerHeight);
+    stopButton.setBounds(gap + buttonWidth + gap + buttonWidth + gap, gap , buttonWidth , headerHeight);
+    
+    Rectangle<int> playerRegionBounds(gap, gap + headerHeight + gap, getWidth() - 2*gap, 
+        beatIndexHeight + zoomThumbnailHeight + gap + thumbnailHeight + gap + spectrogramHeight + gap 
+        + beatActivationHeight + timeIndexHeight);
+    layoutComp.playerRegion = playerRegionBounds;
 
-    Rectangle<int> beatActivationBounds (90, 221, getWidth() - 100, 100);   
-    beatActivationComp.setBounds (beatActivationBounds);
+    Rectangle<int> zoomThumbnailBounds(2*gap, gap + headerHeight + gap + gap, 
+        getWidth() - 4*gap, zoomThumbnailHeight);   
+    zoomThumbnailComp.setBounds(zoomThumbnailBounds);
 
-    textButton          .setBounds (10, 336, 70, 20);
-    infoText            .setBounds (90, 336, getWidth() - 100, 160);
+    Rectangle<int> beatIndexBounds(2*gap, gap + headerHeight + gap + gap + zoomThumbnailHeight, 
+        getWidth() - 4*gap, beatIndexHeight);   
+    beatIndexComp.setBounds(beatIndexBounds);
+
+    Rectangle<int> thumbnailBounds(2*gap, gap + headerHeight + gap + beatIndexHeight + zoomThumbnailHeight + gap, 
+        getWidth() - 4*gap, thumbnailHeight);   
+    thumbnailComp.setBounds(thumbnailBounds);
+    beatGridOverlay1.setBounds(thumbnailBounds);
+
+    Rectangle<int> spectrogramBounds(2*gap, gap + headerHeight + gap + beatIndexHeight + zoomThumbnailHeight + gap + 
+        thumbnailHeight + gap, getWidth() - 4*gap, spectrogramHeight);   
+    spectrogramComp.setBounds(spectrogramBounds);
+    beatGridOverlay2.setBounds(spectrogramBounds);
+
+    Rectangle<int> beatActivationBounds(2*gap, gap + headerHeight + gap + beatIndexHeight + zoomThumbnailHeight + gap + 
+        thumbnailHeight + gap + spectrogramHeight + gap, getWidth() - 4*gap, beatActivationHeight);   
+    beatActivationComp.setBounds(beatActivationBounds);
+    beatGridOverlay3.setBounds(beatActivationBounds);
+
+    Rectangle<int> timeIndexBounds(2*gap, gap + headerHeight + gap + beatIndexHeight + zoomThumbnailHeight + gap + 
+        thumbnailHeight + gap + spectrogramHeight + gap + beatActivationHeight, getWidth() - 4*gap, timeIndexHeight);    
+    timeIndexComp.setBounds(timeIndexBounds);
+
+    Rectangle<int> positionOverlayBounds(2*gap, gap + headerHeight + gap + beatIndexHeight + zoomThumbnailHeight + gap, 
+        getWidth() - 2 * gap, thumbnailHeight + gap + spectrogramHeight + gap + beatActivationHeight);
+    positionOverlay.setBounds(positionOverlayBounds);
+
+    processButton.setBounds(10, 405, 70, 20);
+    metronomeButton.setBounds(10, 435, 70, 20);
+    beatGridButton.setBounds(10, 465, 70, 20);
+
+    infoText.setBounds(90, 400, getWidth() - 100, 80);
 
 }
 
-void MainContentComponent::changeListenerCallback (ChangeBroadcaster* source) 
+void MainContentComponent::changeListenerCallback(ChangeBroadcaster* source) 
 {
     if (source == &transportSource)
     {
@@ -116,23 +196,65 @@ void MainContentComponent::changeListenerCallback (ChangeBroadcaster* source)
         else if (Pausing == state)
             changeState (Paused);
     }
+
+    if (source == &beatIndexComp)
+    {
+        leftBoundTime = thumbnailComp.startTime;
+        rightBoundTime = thumbnailComp.endTime;
+    }
+    if (source == &thumbnailComp)
+        infoText.setText(std::to_string(zoomThumbnailComp.frameWidth), dontSendNotification); 
+
 }
 
 void MainContentComponent::timerCallback() 
 {
-    RelativeTime position (transportSource.getCurrentPosition());
+    RelativeTime position(transportSource.getCurrentPosition());
 
     auto minutes = ((int) position.inMinutes()) % 60;
     auto seconds = ((int) position.inSeconds()) % 60;
     auto millis  = ((int) position.inMilliseconds()) % 1000;
+    auto positionString = String::formatted("%02d:%02d:%03d", minutes, seconds, millis);
 
-    auto positionString = String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
+    currentPositionLabel.setText(positionString, dontSendNotification);
 
-    currentPositionLabel.setText (positionString, dontSendNotification);
+    if (metronomeState == MetronomeState::On)
+    {
+        if (beats.size() > 0)
+        {
+            if (transportSource.getCurrentPosition() > beats[metronome.beatIndex])
+            {
+                metronome.transportSource.stop();
+                metronome.transportSource.setPosition(0.0);
+                metronome.transportSource.start();
+                metronome.beatIndex++;
+            }  
+        }       
+    }
 }
 
 
-void MainContentComponent::changeState (TransportState newState)
+bool MainContentComponent::keyPressed(const KeyPress &key)
+{
+    if (key == KeyPress::spaceKey)
+    {
+        if ((state == Stopped) || (state == Paused))
+            changeState(Starting);
+        else if (state == Playing)
+            changeState(Pausing);
+        return true;
+    }
+
+    return false;
+}
+
+bool MainContentComponent::keyStateChanged(bool isKeyDown)
+{
+    return false;
+}
+
+
+void MainContentComponent::changeState(TransportState newState)
 {
     if (state != newState)
     {
@@ -141,10 +263,10 @@ void MainContentComponent::changeState (TransportState newState)
         switch (state)
         {
             case Stopped:
-                playButton.setButtonText ("Play");
-                stopButton.setEnabled (false);
-                playButton.setEnabled (true);
-                transportSource.setPosition (0.0);
+                playButton.setButtonText("Play");
+                stopButton.setEnabled(false);
+                playButton.setEnabled(true);
+                transportSource.setPosition(0.0);
                 break;
 
             case Starting:
@@ -152,8 +274,8 @@ void MainContentComponent::changeState (TransportState newState)
                 break;
 
             case Playing:
-                playButton.setButtonText ("Pause");
-                stopButton.setEnabled (true);
+                playButton.setButtonText("Pause");
+                stopButton.setEnabled(true);
                 break;
 
             case Pausing:
@@ -161,12 +283,13 @@ void MainContentComponent::changeState (TransportState newState)
                 break;
 
             case Paused:
-                playButton.setButtonText ("Resume");
+                playButton.setButtonText("Resume");
                 break;
 
             case Stopping:
                 transportSource.stop();
-                currentPositionLabel.setText ("00:00:000", dontSendNotification);
+
+                currentPositionLabel.setText("00:00:000", dontSendNotification);
                 break;
         }
     }
@@ -174,25 +297,24 @@ void MainContentComponent::changeState (TransportState newState)
 
 void MainContentComponent::openButtonClicked()
 {
-    FileChooser chooser ("Select a Wave file to play...",
-                         {},
-                         "*.wav;*.mp3");
+    FileChooser chooser("Select a Wave file to play...", {}, "*.wav;*.mp3");
 
     if (chooser.browseForFileToOpen())
     {
         auto file = chooser.getResult();
-        auto* reader = formatManager.createReaderFor (file);
+        auto* reader = formatManager.createReaderFor(file);
 
         if (reader != nullptr)
         {
-            fileBuffer.setSize ((int) reader->numChannels, (int) reader->lengthInSamples); 
-            reader->read (&fileBuffer, 0, (int) reader->lengthInSamples, 0, true, true); 
+            fileBuffer.setSize((int) reader->numChannels, (int) reader->lengthInSamples); 
+            reader->read(&fileBuffer, 0, (int) reader->lengthInSamples, 0, true, true); 
             std::unique_ptr<AudioFormatReaderSource> newSource (new AudioFormatReaderSource (reader, true));
-            transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
-            playButton.setEnabled (true);
-            processButton.setEnabled(true);
-            thumbnailComp.setFile (file);
-            readerSource.reset (newSource.release());   
+            transportSource.setSource(newSource.get(), 0, nullptr, reader->sampleRate);
+            playButton.setEnabled(true);
+            processButton.setEnabled(true); 
+            zoomThumbnailComp.setFile(file);
+            thumbnailComp.setFile(file);
+            readerSource.reset(newSource.release());   
             spectrogramComp.initialize(fileBuffer);    
         }
     }
@@ -201,45 +323,69 @@ void MainContentComponent::openButtonClicked()
 void MainContentComponent::playButtonClicked()
 {
     if ((state == Stopped) || (state == Paused))
-        changeState (Starting);
+        changeState(Starting);
     else if (state == Playing)
-        changeState (Pausing);
+        changeState(Pausing);
 }
 
 void MainContentComponent::stopButtonClicked()
 {
     if (state == Paused)
-        changeState (Stopped);
+        changeState(Stopped);
     else
-        changeState (Stopping);
+        changeState(Stopping);
 }
 
-void MainContentComponent::textButtonClicked()
-{
 
+void MainContentComponent::metronomeButtonClicked()
+{
+    if (metronomeState == Off)
+        metronomeState = MetronomeState::On;
+    else
+        metronomeState = MetronomeState::Off;
+}
+
+void MainContentComponent::beatGridButtonClicked()
+{
+    if (beatGridOverlay1.isVisible())
+    {
+        beatGridOverlay1.setVisible(false);
+        beatGridOverlay2.setVisible(false);
+        beatGridOverlay3.setVisible(false);
+    }
+    else
+    {
+        beatGridOverlay1.setVisible(true);
+        beatGridOverlay2.setVisible(true);
+        beatGridOverlay3.setVisible(true);
+    }
 }
 
 void MainContentComponent::processButtonClicked()
 {   
     processButton.setEnabled (false);
 
-    auto start1 = std::chrono::high_resolution_clock::now(); 
     spectrogramComp.calculateSTFT();
-    auto stop1 = std::chrono::high_resolution_clock::now();
-    auto duration1 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop1 - start1).count()); 
- 
-    auto start2 = std::chrono::high_resolution_clock::now(); 
     spectrogramComp.filterSpectogram();
-    auto stop2 = std::chrono::high_resolution_clock::now();
-    auto duration2 = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(stop2 - start2).count()); 
-
     spectrogramComp.generateSpectrogramImage();
     spectrogramComp.repaint();
     beatActivationComp.calculateBeatActivation();
     beatActivationComp.repaint();
 
-    std::string text = "Calculate STFT: " + duration1 + "\nFilter Spectrogram: " + duration2 + "\n";
+    beats = activationsToBeats(beatActivationComp.activations);
+    beatGridOverlay1.beats = beats;
+    beatGridOverlay2.beats = beats;
+    beatGridOverlay3.beats = beats;
+    beatGridButton.setToggleState(true, dontSendNotification);
+    metronome.beats = beats;
+    metronome.determineBeatIndex();
+    metronomeButton.setToggleState(false, dontSendNotification);
 
-    infoText.setText (text + spectrogramComp.getText(), dontSendNotification);     
+    auto numFrames = std::to_string(spectrogramComp.numFrames);
+    auto duration = std::to_string(transportSource.getLengthInSeconds());
+    auto numSamples = std::to_string(spectrogramComp.numSamples);
+    auto activationSize = std::to_string(beatActivationComp.activations.size());
+
+    std::string text = vectorToString(beats);
 }
 

@@ -12,6 +12,13 @@ include(Reprojucer)
 find_package(Torch REQUIRED)
 find_package(Boost REQUIRED)
 
+if(Boost_FOUND)
+  include_directories(BEFORE "/usr/local/Cellar/boost/1.72.0/include")
+endif()
+
+include_directories(BEFORE "/Users/juliusrichter/NumCpp/include")
+
+
 message(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}")
 
 
@@ -46,6 +53,16 @@ jucer_project_settings(
 jucer_project_files("BeatTracker/Source"
 # Compile   Xcode     Binary    File
 #           Resource  Resource
+  x         .         .         "Source/BeatActivationComponent.cpp"
+  .         .         .         "Source/BeatActivationComponent.h"
+  x         .         .         "Source/BeatGridOverlay.cpp"
+  .         .         .         "Source/BeatGridOverlay.h"
+  x         .         .         "Source/BeatIndexComponent.cpp"
+  .         .         .         "Source/BeatIndexComponent.h"
+  x         .         .         "Source/Metronome.cpp"
+  .         .         .         "Source/Metronome.h"
+  x         .         .         "Source/LayoutComponent.cpp"
+  .         .         .         "Source/LayoutComponent.h"
   x         .         .         "Source/Plot.cpp"
   .         .         .         "Source/Plot.h"
   x         .         .         "Source/utils.cpp"
@@ -56,10 +73,13 @@ jucer_project_files("BeatTracker/Source"
   .         .         .         "Source/SimpleThumbnailComponent.h"
   x         .         .         "Source/SpectrogramComponent.cpp"
   .         .         .         "Source/SpectrogramComponent.h"
-  x         .         .         "Source/BeatActivationComponent.cpp"
-  .         .         .         "Source/BeatActivationComponent.h"
+  x         .         .         "Source/TemporalDecoding.cpp"
+  .         .         .         "Source/TemporalDecoding.h"
+  x         .         .         "Source/TimeIndexComponent.cpp"
+  .         .         .         "Source/TimeIndexComponent.h"
+  x         .         .         "Source/ZoomThumbnailComponent.cpp"
+  .         .         .         "Source/ZoomThumbnailComponent.h"  
   x         .         .         "Source/MainContentComponent.cpp"
-  .         .         .         "Source/BeatActivationComponent.h"
   x         .         .         "Source/Main.cpp"
 )
 
@@ -235,5 +255,4 @@ jucer_export_target_configuration(
 
 jucer_project_end()
 
-target_link_libraries(BeatTracker PRIVATE torch Boost::headers)
-
+target_link_libraries(BeatTracker PRIVATE torch)

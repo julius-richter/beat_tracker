@@ -34,7 +34,7 @@ class Graph
 {
 public:
     Graph(Rectangle<int> region, String title = "Araz Graph", String xLabel = "X-Axis", 
-        String yLabel = "Y-Axis", Colour fgColour = Colours::white, Colour bgColour = Colours::black);
+        String yLabel = "Y-Axis", Colour fgColour = Colours::black, Colour bgColour = Colour(0xffe2e1e0));
 
     ~Graph();
 

@@ -60,6 +60,62 @@ def calculate_stft(frames):
     return fft
 
 
+def stft(signal, sr, frame_size=2048, frame_rate=100):
+    hop_size = sr/frame_rate 
+    num_fft_bins = frame_size >> 1 
+    bin_frequencies = np.fft.fftfreq(frame_size, 1. / sr)[:num_fft_bins]
+    frames = slice_frames(signal, frame_size, hop_size)
+    fft = calculate_stft(frames)
+    return fft
+
+
+def log_mel_filter(power_spec, sr, frame_size=2048):
+    num_fft_bins = frame_size >> 1 
+    bin_frequencies = np.fft.fftfreq(frame_size, 1. / sr)[:num_fft_bins]
+    filterbank = np.array(create_filterbank(bin_frequencies, num_fft_bins), dtype='float32')
+    filt_spec = np.log(np.dot(power_spec, filterbank.T) + 1.0)
+    filt_spec = filt_spec[:,~np.all(filt_spec == 0, axis=0)]
+    return filt_spec
+
+
+def play_predictions(signal, sr, pred_beats):
+    signal = signal / np.max(np.abs(signal))
+    metronome = clicks(pred_beats, sr=sr, length=len(signal))
+    signal = signal + 1.0*metronome
+    signal = signal / np.max(np.abs(signal))
+    return signal 
+
+def clicks(times=None, sr=44100, length=None):
+    positions = (np.asanyarray(times) * sr).astype(int)
+    click_freq=1000.0
+    click_duration=0.1
+    angular_freq = 2 * np.pi * click_freq / float(sr)
+
+    click = np.logspace(0, -10,
+                        num=int(np.round(sr * click_duration)),
+                        base=2.0)
+
+    click *= np.sin(angular_freq * np.arange(len(click)))
+
+    if length is None:
+        length = positions.max() + click.shape[0]
+    else:
+        positions = positions[positions < length]
+
+    click_signal = np.zeros(length, dtype=np.float32)
+
+    for start in positions:
+        end = start + click.shape[0]
+
+        if end >= length:
+            click_signal[start:] += click[:length - start]
+        else:
+            click_signal[start:end] += click
+
+    return click_signal
+
+
+
 def shift_right(values):
     return np.hstack([np.zeros((values.shape[0], 1)), values[..., :-1]])
 
@@ -557,7 +613,7 @@ def cqt_response(y, n_fft, hop_length, fft_basis, mode):
     return fft_basis.dot(X)
 
 
-def stft(y, n_fft=2048, hop_length=None, win_length=None, window='hann',
+def stft_old(y, n_fft=2048, hop_length=None, win_length=None, window='hann',
          center=True, dtype=np.complex64, pad_mode='reflect'):
     if win_length is None:
         win_length = n_fft

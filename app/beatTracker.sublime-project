@@ -12,7 +12,14 @@
 		},
 		{
 			"path": "JUCE"
+		},
+		{
+			"path": "boost"
+		},
+		{
+			"path": "/Users/juliusrichter/NumCpp/include/NumCpp"
 		}
+
 	],
 
 
@@ -20,7 +27,9 @@
     [
         {
             "name": "cmake",
-            "shell_cmd": "cmake --build ../build --config Release",
+            "shell_cmd": "cmake --build ../build",
+            // "shell_cmd": "g++ -std=c++17 -I /Users/juliusrichter/NumCpp/include -o Test TemporalDecoding.cpp utils.cpp && ./Test",
+            // --config Release
             "file_regex": "/([^/:]+):(\\d+):(\\d+): "
         }
     ],

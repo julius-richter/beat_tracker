@@ -4,8 +4,136 @@
 		"selected_items":
 		[
 			[
+				"zoo",
+				"zoomThumbnailComp"
+			],
+			[
+				"to",
+				"to_string"
+			],
+			[
+				"time",
+				"timeDifference"
+			],
+			[
+				"get",
+				"getTotalLength"
+			],
+			[
+				"ne",
+				"newEndTime"
+			],
+			[
+				"beatInde",
+				"beatIndexComp"
+			],
+			[
+				"Sim",
+				"pSimpleThumbnailComp"
+			],
+			[
+				"pa",
+				"paintTime"
+			],
+			[
+				"thum",
+				"thumbnailComp"
+			],
+			[
+				"thu",
+				"thumbnailComp"
+			],
+			[
+				"start",
+				"startTime"
+			],
+			[
+				"add",
+				"addChangeListener"
+			],
+			[
+				"beatA",
+				"beatActivationHeight"
+			],
+			[
+				"Time",
+				"TimeIndexComponent"
+			],
+			[
+				"beatin",
+				"beatIndexComp"
+			],
+			[
+				"Be",
+				"BeatIndexComponent"
+			],
+			[
+				"metr",
+				"metronomeState"
+			],
+			[
+				"Re",
+				"REQUIRED"
+			],
+			[
+				"Bea",
+				"BeatTracker"
+			],
+			[
+				"dura",
+				"duration2"
+			],
+			[
+				"do",
+				"double"
+			],
+			[
+				"val",
+				"valarray"
+			],
+			[
+				"size",
+				"sizes"
+			],
+			[
+				"ver",
+				"vectorToString"
+			],
+			[
+				"si",
+				"sizes"
+			],
+			[
+				"inp",
+				"input"
+			],
+			[
+				"Main",
+				"MainContentComponent"
+			],
+			[
+				"in",
+				"input"
+			],
+			[
 				"fil",
-				"filteredSpectrogramComp"
+				"filteredSpectrogram"
+			],
+			[
+				"beat",
+				"beatActivationComp"
+			],
+			[
+				"bea",
+				"beatActivationComp"
+			],
+			[
+				"Beat",
+				"BeatActivationComponent"
+			],
+			[
+				"inc",
+				"include"
 			],
 			[
 				"filte",
@@ -58,10 +186,6 @@
 			[
 				"low",
 				"lowBound"
-			],
-			[
-				"si",
-				"size"
 			],
 			[
 				"result",
@@ -120,10 +244,6 @@
 				"spectogram"
 			],
 			[
-				"Re",
-				"ReferencePreProcessor"
-			],
-			[
 				"file",
 				"filename"
 			],
@@ -160,10 +280,6 @@
 				"convertOctalToBinary"
 			],
 			[
-				"in",
-				"initial_state"
-			],
-			[
 				"generate",
 				"generate_data"
 			],
@@ -187,43 +303,8 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "BeatTracker/Source/Main.cpp",
-			"settings":
-			{
-				"buffer_size": 1691,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": ".sublime-project",
-			"settings":
-			{
-				"buffer_size": 55,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "BeatTracker/Source/BeatTracker.h",
-			"settings":
-			{
-				"buffer_size": 22772,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "BeatTracker/CMakeLists.txt",
-			"settings":
-			{
-				"buffer_size": 4689,
-				"line_ending": "Unix"
-			}
-		}
 	],
-	"build_system": "",
+	"build_system": "cmake",
 	"build_system_choices":
 	[
 		[
@@ -413,6 +494,30 @@
 				"Packages/Python/Python.sublime-build",
 				""
 			]
+		],
+		[
+			[
+				[
+					"cmake",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/C++_Boost.sublime-build",
+					""
+				]
+			],
+			[
+				"cmake",
+				""
+			]
 		]
 	],
 	"build_varint": "",
@@ -422,6 +527,22 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"brow",
+				"Preferences: Browse Packages"
+			],
+			[
+				"cmakebu",
+				"CMakeBuilder: New Project"
+			],
+			[
+				"builder",
+				"CMakeBuilder: New Project"
+			],
+			[
+				"cmake",
+				"CMakeBuilder: New Project"
+			],
 			[
 				"ge con",
 				"Package Control: Install Package"
@@ -797,6 +918,57 @@
 	],
 	"file_history":
 	[
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/MainContentComponent.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/MainContentComponent.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/SimpleThumbnailComponent.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/SimpleThumbnailComponent.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/SimplePositionOverlay.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/ZoomThumbnailComponent.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatIndexComponent.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatIndexComponent.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/ZoomThumbnailComponent.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatGridOverlay.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/SimplePositionOverlay.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatGridOverlay.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/utils.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/utils.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/TemporalDecoding.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/TimeIndexComponent.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/TimeIndexComponent.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/CMakeLists.txt",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/TemporalDecoding.cpp",
+		"/Users/juliusrichter/.ssh/config",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatActivationComponent.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/LayoutComponent.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/JUCE/modules/juce_audio_utils/gui/juce_AudioThumbnail.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/Metronome.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/Metronome.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/JUCE/modules/juce_gui_basics/components/juce_Component.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/JUCE/modules/juce_gui_basics/keyboard/juce_KeyListener.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/juce_KeyListener.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/juce_Component.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/JUCE/modules/juce_dsp/frequency/juce_FFT.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/SpectrogramComponent.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/SpectrogramComponent.cpp",
+		"/usr/local/Cellar/boost/1.72.0/lib/cmake/Boost-1.72.0/BoostConfig.cmake",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/matrix_sparse.hpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/Plot.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatActivationComponent.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/vector",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/Plot.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/Main.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/JUCE/extras/NetworkGraphicsDemo/Source/SharedCanvas.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatTracker.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/BeatActivationComponent",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/.gitignore",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/SpectrogramComponent..cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/beatTracker.sublime-project",
+		"/Users/juliusrichter/libtorch/share/cmake/Torch/TorchConfig.cmake",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/FRUT/cmake/Reprojucer.cmake",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/FRUT/prefix/FRUT/cmake/Reprojucer.cmake",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/utuils.h",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/BeatTracker/Source/utuils.cpp",
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/app/.sublime-project",
 		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/test/JuceLibraryCode/JuceHeader.h",
 		"/Users/juliusrichter/Downloads/SimpleFFTTutorial/Source/SimpleFFTTutorial_02.h",
 		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/python/utils.py",
@@ -831,7 +1003,6 @@
 		"/Users/juliusrichter/Documents/speech_enhancement/job_application/vision.tex",
 		"/Users/juliusrichter/Documents/speech_enhancement/job_application/vision_slides.tex",
 		"/Users/juliusrichter/Documents/speech_enhancement/read/read.tex",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/.gitignore",
 		"/Users/juliusrichter/Documents/speech_enhancement/read.tex",
 		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/presentation.tex",
 		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/notes.tex",
@@ -874,61 +1045,11 @@
 		"/usr/local/texlive/2017/texmf-dist/tex/latex/chronology/chronology.sty",
 		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/doc/notes.toc",
 		"/Users/juliusrichter/Documents/Uni/Masterarbeit/notes/Notes.tex",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Ballroom/Albums-AnaBelen_Veneo-01.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/GTZAN/blues.00000.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/GTZAN/blues.00000.wav.xml",
-		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/generate.py",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00000.wav.jams",
-		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00001.wav.jams",
-		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00000.wav.jams",
-		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/jams/blues.00010.wav.jams",
-		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v1_dafx2015paper/no_swing/blues.00010.wav.xml",
-		"/Users/juliusrichter/.bahs_h",
-		"/Users/juliusrichter/Downloads/GTZAN-Rhythm_v2_ismir2015_lbd/jams/blues.00000.wav.jams",
-		"/Library/Frameworks/iTunesLibrary.framework/Versions/A/Headers/iTunesLibrary.h",
-		"/Users/juliusrichter/Downloads/ValhallaVintageVerbKeyfileForRobinKoek.xml",
-		"/Volumes/Backupdrive 1.0/FabFilter Total Bundle 2019.03.13 macOS [R2R][dada]/R2R.nfo",
-		"/Users/juliusrichter/anaconda3/pkgs/cryptography-2.2.2-py36h1de35cc_0/info/test/tests/test_utils.py",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/data.csv",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/Notes/references.bib",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/Notes/Notes.tex",
-		"/usr/local/CONTRIBUTING.md",
-		"/usr/local/CODEOFCONDUCT.md",
-		"/Users/juliusrichter/anaconda3/lib/python3.6/site-packages/torch/utils/data/dataloader.py",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/python/model.py",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/hainsworth/data.txt",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/hainsworth/audio_wavs/MARSYAS_EMPTY",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/hainsworth/mats/002_info.mat",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/SMC_MIREX/anno/SMC_005.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/data/SMC_MIREX/SMC_MIREX_Tags/SMC_001.tag",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/madmom/madmom/evaluation/beats.py",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/predictions/Media-104711.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/predictions/test2.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/jupyter/test2.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/predictions/test.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Albums-AnaBelen_Veneo-01.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/jupyter/TestPandas.csv",
-		"/Users/juliusrichter/Documents/Uni/MI/exercise/notebooks/Neuer Clip.textClipping",
-		"/Users/juliusrichter/Documents/Uni/MI/topics/topics_overview.tex",
-		"/Users/juliusrichter/Documents/Uni/MI/topics/topics.tex",
-		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/waf",
-		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/.waf3-2.0.10-cf8ca5fa84387374f6d66295baab59ec/waflib/Scripting.py",
-		"/usr/local/Cellar/python/3.7.2_2/bin/python3-config",
-		"/Users/juliusrichter/anaconda3/bin/python3.6-config",
-		"/usr/local/Cellar/python/3.7.2_2/Frameworks/Python.framework/Versions/3.7/bin/python3.7m-config",
-		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/.waf3-2.0.10-cf8ca5fa84387374f6d66295baab59ec/waflib/Build.py",
-		"/Users/juliusrichter/Library/Caches/Homebrew/essentia--git/build_android.sh",
-		"/Users/juliusrichter/Documents/Uni/MI/mi1script-master/latex/mi1.tex",
-		"/Users/juliusrichter/Documents/Uni/DNUE/Seminar/Seminararbeit/Literatur.bib",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/data.npy",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Ballroom/Albums-AnaBelen_Veneo-02.beats",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Ballroom/Media-106007.beats",
-		"/Users/juliusrichter/.bash_profile",
-		"/Users/juliusrichter/Documents/Uni/Masterarbeit/Notes/roadmap.tex"
+		"/Users/juliusrichter/Documents/Uni/Masterarbeit/beat_tracker/data/annotations/Ballroom/Albums-AnaBelen_Veneo-01.beats"
 	],
 	"find":
 	{
-		"height": 39.0
+		"height": 26.0
 	},
 	"find_in_files":
 	{
@@ -942,6 +1063,124 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"SimpleThumbnailComp",
+			"simpleThumbnailComp",
+			"SimpleThumbnailComp",
+			"simpleThumbnailComp",
+			"positionOverlay",
+			"beatInd",
+			"infotex",
+			"infote",
+			"start",
+			"startTime",
+			"start",
+			"changeLis",
+			"width",
+			"info",
+			"beatInde",
+			"beat",
+			"change",
+			"setTex",
+			"currentPositionLabel",
+			"time",
+			"beatInd",
+			"Beat",
+			"beat",
+			"Beat",
+			"beat",
+			"Beat",
+			"BEAT",
+			"Beat",
+			"beat",
+			"Beat",
+			"BEAT",
+			"currentPositionLabel",
+			"setc",
+			"keylist",
+			"keyPressed",
+			"files",
+			"filter",
+			"createFilterband",
+			"filteredSpectogram",
+			"1",
+			"std",
+			"stt",
+			"stf",
+			"double",
+			"range",
+			"double",
+			"Float",
+			"reader",
+			"filtered",
+			"filteredSpectogram",
+			"float",
+			"fileBuffe",
+			"signal",
+			"fft",
+			"Complex",
+			"data",
+			"filteredSpectogram",
+			"null",
+			"paint",
+			"lineH",
+			"width",
+			"g",
+			"label",
+			"lineH",
+			"Label",
+			"label",
+			"Left",
+			"left",
+			"title",
+			"regionGraph",
+			"title",
+			"fgColour",
+			"ArazGraph",
+			"maxX",
+			"ArazGraph",
+			"ArazGraphDataset",
+			"ArazGraphPoint",
+			"ArazGraph",
+			"ArazGraphDataset",
+			"ArazGraphPoint",
+			"ARAZGRAPH_H_INCLUDED",
+			"for",
+			"ss",
+			"override",
+			"\n",
+			"deleted",
+			"resize",
+			"{}",
+			"infoText",
+			"spectrogramComp",
+			"beatActivationComp",
+			"spectrogram",
+			"load",
+			"SpectrogramComponent",
+			"spectogram",
+			"SpectrogramComponent",
+			"spect",
+			"positionOverlay",
+			"PositionOverlay",
+			"positionOverlay",
+			"paint",
+			"spectrogramComp",
+			"filtere",
+			"+",
+			"Documents/Uni/Masterarbeit/beat_tracker/app",
+			"BeatTracker",
+			"open",
+			"main",
+			"JUCE_MODULES_GLOBAL_PATH",
+			"BeatTracker_jucer_FILE",
+			"paint",
+			"paintIfFileLoaded",
+			"source",
+			"range",
+			"linspace",
+			"example-app",
+			"add",
+			"example"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -959,127 +1198,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "BeatTracker/Source/Main.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1691,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								75,
-								75
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": ".sublime-project",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 55,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								37,
-								43
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "BeatTracker/Source/BeatTracker.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 22772,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								364,
-								364
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 54.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "BeatTracker/CMakeLists.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4689,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CMake/CMake.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1116,7 +1236,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 30.0
+		"height": 159.0
 	},
 	"output.find_results":
 	{
@@ -1180,7 +1300,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 221.0,
+	"side_bar_width": 290.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

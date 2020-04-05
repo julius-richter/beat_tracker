@@ -66,7 +66,8 @@ void Graph::paint(Graphics& g)
 
 	float maxX = FLT_MIN;
 	float minX = FLT_MAX;
-	float maxY = FLT_MIN;
+	// float maxY = FLT_MIN;
+	float maxY = 1.0f;
 	float minY = 0.0f;
 	int lineH = 1;
 
@@ -78,7 +79,7 @@ void Graph::paint(Graphics& g)
 		while (point != NULL)
 		{
 			if (point->xValue > maxX) maxX = point->xValue;
-			if (point->yValue > maxY) maxY = point->yValue;
+			// if (point->yValue > maxY) maxY = point->yValue;
 			if (point->xValue < minX) minX = point->xValue;
 			// if (point->yValue < minY) minY = point->yValue;
 			point = point->nextListItem;
@@ -104,7 +105,8 @@ void Graph::paint(Graphics& g)
 		{
 			x = (scaleX * (point->xValue - minX)) + regionGraph.getX();
 			y = regionGraph.getHeight() - (scaleY * (point->yValue - minY)) + regionGraph.getY();
-			g.drawLine(preX, preY, x, y, 2);
+			g.setColour(Colour(0xff2d3342));
+			g.drawLine(preX, preY, x, y, 1);
 			// g.fillRect(x - 2, y - 2, 5, 5);
 			preX = x;
 			preY = y;

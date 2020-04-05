@@ -22,6 +22,7 @@
 *.out
 *.snm
 *.toc
+*.eps
 
 # ignore the build and lib dirs
 app/BeatTracker/build/*
